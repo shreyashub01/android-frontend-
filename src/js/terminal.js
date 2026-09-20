@@ -513,6 +513,10 @@ export class CyberTerminal {
 
   handleCrt(state) {
     const overlay = document.querySelector('.crt-overlay');
+    if (!overlay) {
+      this.appendLine(`<span class="term-info">[*] CRT filter has been permanently decommissioned for ultra-crisp display rendering.</span>`);
+      return;
+    }
     if (state === 'on') {
       overlay.classList.remove('disabled');
       this.appendLine(`<span class="term-success">[+] CRT Scanlines and Curvature enabled.</span>`);

@@ -170,62 +170,9 @@ code, pre, .mono {
   font-family: var(--font-mono);
 }
 
-/* =========================================================
-   CRT SCREEN SCANLINES & SCREEN CURVATURE EFFECTS (TOGGLEABLE)
-   ========================================================= */
-
+/* CRT Scanlines & Flicker Overlay completely disabled per operator preference */
 .crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  transition: opacity var(--transition-normal);
-  opacity: 1;
-}
-
-.crt-overlay.disabled {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Scanline lines */
-.crt-overlay::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.35) 50%
-  ),
-  linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.03),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
-  );
-  background-size: 100% 3px, 6px 100%;
-  z-index: 2;
-}
-
-/* Subtle CRT flicker & vignette */
-.crt-overlay::after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.55) 100%);
-  animation: crtFlicker 0.15s infinite;
-  z-index: 3;
-}
-
-@keyframes crtFlicker {
-  0% { opacity: 0.97; }
-  50% { opacity: 1; }
-  100% { opacity: 0.98; }
+  display: none !important;
 }
 
 /* Matrix rain canvas in background */
