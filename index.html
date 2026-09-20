@@ -246,42 +246,128 @@
       <section id="tab-war-room" class="tab-content active">
         <div class="war-room-container">
 
-          <!-- 4 Strategic Defense Telemetry Metric Gauges -->
+          <!-- 4 Strategic Defense Telemetry Metric Gauges (Google Stitch Design System) -->
           <div class="war-room-top-metrics">
-            <div class="threat-metric-card danger">
+            <!-- GAUGE 1: Global Threat Index -->
+            <div class="threat-metric-card danger group">
               <div class="threat-metric-label">
-                <span>GLOBAL THREAT INDEX</span>
-                <span class="threat-metric-tag danger"><span class="pulse-dot danger"></span> APT CRIT</span>
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="inline-block w-2 h-2 bg-crimson-alert animate-ping" style="border-radius:50%;"></span>
+                  THREAT VECTOR INDEX
+                </span>
+                <span class="threat-metric-tag danger">DEFCON 2</span>
               </div>
-              <div class="threat-metric-value" style="color:var(--color-danger)">CRITICAL 8.9/10</div>
-              <div class="threat-metric-sub">Active State-Sponsored APT Probing Detected</div>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:6px;">
+                <div>
+                  <div class="font-headline-xl text-crimson-alert font-bold" style="font-size:26px; line-height:1; letter-spacing:-0.02em; color:var(--crimson-alert, #FF0055);">
+                    8.9<span style="font-size:14px; color:var(--text-secondary);">/10</span>
+                  </div>
+                  <div class="threat-metric-sub" style="color:rgba(255,0,85,0.9); margin-top:3px; display:flex; align-items:center; gap:4px;">
+                    <span class="material-symbols-outlined" style="font-size:13px;">warning</span> APT Probing Active
+                  </div>
+                </div>
+                <!-- Micro Bar Chart Gauge -->
+                <div style="display:flex; align-items:flex-end; gap:3px; height:28px; padding-bottom:2px;">
+                  <div style="width:5px; height:10px; background:rgba(255,0,85,0.3);"></div>
+                  <div style="width:5px; height:14px; background:rgba(255,0,85,0.5);"></div>
+                  <div style="width:5px; height:18px; background:rgba(255,0,85,0.7);"></div>
+                  <div style="width:5px; height:26px; background:#FF0055;" class="animate-pulse"></div>
+                  <div style="width:5px; height:22px; background:#FF0055;"></div>
+                  <div style="width:5px; height:16px; background:rgba(255,0,85,0.8);"></div>
+                </div>
+              </div>
+              <div class="threat-metric-footer">
+                <span>SECTOR: ASIA-PACIFIC</span>
+                <span style="color:var(--crimson-alert, #FF0055); font-weight:600;">12 PEAK SPIKES</span>
+              </div>
             </div>
 
+            <!-- GAUGE 2: Attacks Mitigated Today -->
             <div class="threat-metric-card info">
               <div class="threat-metric-label">
-                <span>ATTACKS MITIGATED TODAY</span>
-                <span class="threat-metric-tag info"><span class="pulse-dot"></span> AUTO-DROP</span>
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="inline-block w-2 h-2 bg-phosphor-green" style="border-radius:50%; background:var(--phosphor-green, #00FF66);"></span>
+                  KINETIC MITIGATIONS (24H)
+                </span>
+                <span class="threat-metric-tag info">99.98% DROP</span>
               </div>
-              <div class="threat-metric-value" id="stat-siem-total" style="color:var(--accent-secondary)">1,842,912</div>
-              <div class="threat-metric-sub">+1,420 / min (99.98% Automated Drop Rate)</div>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:6px;">
+                <div>
+                  <div class="font-headline-xl font-bold" id="stat-siem-total" style="font-size:26px; line-height:1; letter-spacing:-0.02em; color:var(--phosphor-green, #00FF66);">
+                    1,842,912
+                  </div>
+                  <div class="threat-metric-sub" style="margin-top:3px; display:flex; align-items:center; gap:4px;">
+                    <span style="color:var(--phosphor-green, #00FF66); font-weight:700;">+1,420/min</span> · ZERO ESCALATIONS
+                  </div>
+                </div>
+                <!-- Sparkline SVG -->
+                <svg style="width:70px; height:28px; stroke:var(--phosphor-green, #00FF66); fill:none; overflow:visible;" viewBox="0 0 80 40">
+                  <path d="M0,32 L15,26 L30,30 L45,12 L60,18 L75,4 L80,2" stroke-width="2.5" vector-effect="non-scaling-stroke"></path>
+                  <circle cx="80" cy="2" r="3" fill="#00FF66" class="animate-ping"></circle>
+                </svg>
+              </div>
+              <div class="threat-metric-footer">
+                <span>AUTOMATED IPS FILTER</span>
+                <span style="color:var(--phosphor-green, #00FF66); font-weight:600;">EDGE: SYN-FLOOD SHED</span>
+              </div>
             </div>
 
-            <div class="threat-metric-card">
+            <!-- GAUGE 3: Quantum Defense Cipher -->
+            <div class="threat-metric-card success">
               <div class="threat-metric-label">
-                <span>QUANTUM DEFENSE CIPHER</span>
-                <span class="threat-metric-tag success"><span class="pulse-dot"></span> QKD LOCKED</span>
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="inline-block w-2 h-2 bg-cyan-telemetry" style="border-radius:50%; background:var(--cyan-telemetry, #00E5FF);"></span>
+                  QUANTUM CIPHER ROTATION
+                </span>
+                <span class="threat-metric-tag success">L-5 HARDENED</span>
               </div>
-              <div class="threat-metric-value" style="color:var(--accent-primary)">AES-GCM-512</div>
-              <div class="threat-metric-sub">Post-Quantum Kyber-1024 Key Exchange Active</div>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:6px;">
+                <div>
+                  <div class="font-headline-xl font-bold" style="font-size:24px; line-height:1; letter-spacing:-0.02em; color:var(--cyan-telemetry, #00E5FF);">
+                    AES-GCM-512
+                  </div>
+                  <div class="threat-metric-sub" style="margin-top:3px;">
+                    KYBER-1024 POST-QUANTUM
+                  </div>
+                </div>
+                <div style="text-align:right; font-family:var(--font-mono); font-size:9px;">
+                  <div style="color:var(--text-muted); font-size:8px;">ROTATION KEY</div>
+                  <div style="color:var(--cyan-telemetry, #00E5FF); font-weight:700;">0x9F4C...B81A</div>
+                </div>
+              </div>
+              <div class="threat-metric-footer">
+                <span>ENTROPY: 99.999%</span>
+                <span style="color:var(--cyan-telemetry, #00E5FF); font-weight:600;">RE-KEY IN: 04:18m</span>
+              </div>
             </div>
 
+            <!-- GAUGE 4: Defense Satellite Uplink -->
             <div class="threat-metric-card warning">
               <div class="threat-metric-label">
-                <span>DEFENSE SATELLITE LINK</span>
-                <span class="threat-metric-tag warning"><span class="pulse-dot warning"></span> GSAT-7A</span>
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="inline-block w-2 h-2 bg-warning-amber" style="border-radius:50%; background:var(--warning-amber, #FFAA00);"></span>
+                  MIL-NET ORBITAL LINK
+                </span>
+                <span class="threat-metric-tag warning">GSAT-7A</span>
               </div>
-              <div class="threat-metric-value" style="color:var(--color-warning)">NAVIC 98% LOCK</div>
-              <div class="threat-metric-sub">Mil-Sat MilNet Uplink // BER &lt; 10⁻⁹</div>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:6px;">
+                <div>
+                  <div class="font-headline-xl font-bold" style="font-size:24px; line-height:1; letter-spacing:-0.02em; color:var(--warning-amber, #FFAA00);">
+                    NAVIC 98%
+                  </div>
+                  <div class="threat-metric-sub" style="margin-top:3px;">
+                    UPLINK LOCK · BER &lt; 10⁻⁹
+                  </div>
+                </div>
+                <div style="text-align:right; font-family:var(--font-mono); font-size:9px; color:var(--warning-amber, #FFAA00);">
+                  <div>EIRP 64dBW</div>
+                  <div style="color:var(--phosphor-green, #00FF66);">POL: RHCP</div>
+                </div>
+              </div>
+              <div class="threat-metric-footer">
+                <span>AZ: 142.4° / EL: 54.1°</span>
+                <span style="color:var(--phosphor-green, #00FF66); font-weight:600;">CARRIER-LOCK</span>
+              </div>
             </div>
           </div>
 
