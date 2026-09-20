@@ -6,6 +6,50 @@
   <meta name="description" content="Exploit-X C2 Framework: Advanced Cybersecurity Exploitation and Operations Simulation Platform for Educational Security Research.">
   <title>EXPLOIT-X // C2 Offensive Exploitation Framework & Operations Control Panel</title>
   
+  <!-- Google Fonts: JetBrains Mono & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Stitch Tailwind Framework Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-base": "#070A0F",
+            "surface-panel": "#0B0F17",
+            "surface-subtle": "#121824",
+            "surface-highlight": "#1B2436",
+            "border-dim": "#1B2A3D",
+            "border-bright": "#2E4766",
+            "crimson-alert": "#FF0055",
+            "crimson-subtle": "#2B0B17",
+            "warning-amber": "#FFAA00",
+            "warning-subtle": "#2A1D05",
+            "cyan-telemetry": "#00E5FF",
+            "cyan-subtle": "#05222E",
+            "phosphor-green": "#00FF66",
+            "phosphor-glow": "rgba(0, 255, 102, 0.15)",
+            "text-primary": "#F0F6FC",
+            "text-secondary": "#8B9BB4",
+            "text-muted": "#4B5B73"
+          },
+          fontFamily: {
+            mono: ["JetBrains Mono", "monospace"],
+            "body-sm": ["JetBrains Mono", "monospace"],
+            "headline-sm": ["JetBrains Mono", "monospace"],
+            "headline-md": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="/src/styles/main.css">
   <link rel="stylesheet" href="/src/styles/components.css">
@@ -596,18 +640,61 @@
       </section>
 
       <!-- =========================================================
-           TAB 2: TARGET RECONNAISSANCE MATRIX
+           TAB 2: TARGET RECONNAISSANCE MATRIX (STITCH BENTO GRID)
            ========================================================= -->
       <section id="tab-targets" class="tab-content">
         <div class="cyber-card corner-accent">
-          <div class="card-header">
-            <div class="card-title">
-              <span class="icon">🎯</span> DISCOVERED NETWORK TARGETS & VULNERABILITIES
+          <!-- Stitch Top Command Action Bar -->
+          <div class="w-full bg-[#0B0F17] p-4 shadow-md flex flex-wrap items-center justify-between gap-4 border-b border-[#1B2A3D]">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 bg-[#00FF66] shadow-[0_0_10px_rgba(0,255,102,0.8)]"></div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-headline-sm text-[#F0F6FC] uppercase tracking-wider font-bold">TARGET RECONNAISSANCE & VULNERABILITY MATRIX</span>
+                  <span class="bg-[#1B2436] font-label-sm text-[#00E5FF] px-2 py-0.5 uppercase tracking-widest text-[10px]">[GRID: OMEGA-4]</span>
+                </div>
+                <p class="font-body-sm text-[#8B9BB4] text-[11px] mt-0.5">Automated deep topology discovery, port fingerprinting, and weaponized CVE correlation stream.</p>
+              </div>
             </div>
-            <button class="btn-tactical active" onclick="document.querySelector('[data-tab=\'terminal\']').click(); document.getElementById('term-input-field').value='scan 192.168.1.100'; document.getElementById('term-input-field').focus();">
-              + Launch Full Subnet SYN Scan
-            </button>
+            <div class="flex items-center gap-3 flex-wrap">
+              <div class="flex items-center gap-2 bg-[#070A0F] px-3 py-1.5 border border-[#1B2A3D]">
+                <span class="text-[#00E5FF] text-sm font-bold">◉</span>
+                <div class="flex flex-col">
+                  <span class="text-[#4B5B73] text-[8px] uppercase font-mono">ACTIVE SCAN RANGE</span>
+                  <span class="text-[#00E5FF] font-mono text-[11px] font-bold">192.168.1.0/24 • 10.0.4.0/24</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 bg-[#070A0F] px-3 py-1.5 border border-[#1B2A3D]">
+                <span class="text-[#FFAA00] text-sm font-bold">⚠️</span>
+                <div class="flex flex-col">
+                  <span class="text-[#4B5B73] text-[8px] uppercase font-mono">TOTAL CVE MATCHES</span>
+                  <span class="text-[#FFAA00] font-mono text-[11px] font-bold">37 DETECTED (5 CRITICAL)</span>
+                </div>
+              </div>
+              <button class="bg-[#00FF66] text-[#070A0F] hover:bg-[#00e55b] px-4 py-2 font-mono text-[11px] uppercase tracking-wider font-bold flex items-center gap-1 shadow-[0_0_12px_rgba(0,255,102,0.4)] cursor-pointer" onclick="document.querySelector('[data-tab=\'terminal\']').click(); document.getElementById('term-input-field').value='scan 192.168.1.100'; document.getElementById('term-input-field').focus();">
+                <span>⚡</span> + Launch Full Subnet SYN Scan
+              </button>
+            </div>
           </div>
+
+          <!-- Realtime Scan Telemetry Ribbon -->
+          <div class="w-full bg-[#121824] px-4 py-2 flex items-center justify-between text-[#8B9BB4] font-mono text-[10px] overflow-x-auto border-b border-[#1B2A3D]">
+            <div class="flex items-center gap-6 whitespace-nowrap">
+              <span class="flex items-center gap-1.5 text-[#F0F6FC]">
+                <span class="w-2 h-2 rounded-full bg-[#00FF66] animate-pulse"></span>
+                NMAP-SYN ENGINE: RUNNING
+              </span>
+              <span>RATE: 24,500 PKTS/S</span>
+              <span class="text-[#00E5FF] font-bold">DISCOVERED HOSTS: 5 / 254</span>
+              <span>PAYLOAD TIMEOUT: 250ms</span>
+              <span class="text-[#FF0055] font-bold">EXPLOITABLE PATHS: 3 CONFIRMED</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span>RECON CACHE: 0.42 MB</span>
+              <span class="text-[#00FF66]">[SYN-ACK VERIFIED]</span>
+            </div>
+          </div>
+
           <div class="card-body">
             <div id="targets-grid-container" class="targets-grid">
               <!-- Dynamically populated by targets.js -->

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-bright":"#36393f","surface-container-high":"#272a30","text-primary":"#F0F6FC","border-bright":"#2E4766","error-container":"#93000a","warning-amber":"#FFAA00","on-primary":"#003911","outline-variant":"#3b4b3a","on-secondary":"#00363d","surface-dim":"#101419","on-secondary-fixed-variant":"#004f58","on-error-container":"#ffdad6","tertiary":"#fff9f5","surface-container-low":"#181c21","tertiary-fixed-dim":"#ffb952","phosphor-glow":"rgba(0, 255, 102, 0.15)","inverse-surface":"#e0e2ea","secondary":"#bdf4ff","surface-highlight":"#1B2436","primary-fixed":"#6bff83","on-surface":"#e0e2ea","on-primary-container":"#007128","warning-subtle":"#2A1D05","cyan-telemetry":"#00E5FF","secondary-container":"#00e3fd","text-secondary":"#8B9BB4","on-primary-fixed-variant":"#00531b","on-error":"#690005","surface-base":"#070A0F","cyan-subtle":"#05222E","inverse-primary":"#006e27","outline":"#849581","tertiary-fixed":"#ffddb4","on-tertiary-fixed-variant":"#633f00","surface-tint":"#00e55b","on-surface-variant":"#b9ccb5","secondary-fixed":"#9cf0ff","surface-panel":"#0B0F17","inverse-on-surface":"#2d3036","primary-container":"#00ff66","surface":"#101419","on-primary-fixed":"#002107","crimson-subtle":"#2B0B17","background":"#101419","surface-container":"#1d2025","text-muted":"#4B5B73","primary-fixed-dim":"#00e55b","on-tertiary-fixed":"#291800","on-secondary-fixed":"#001f24","tertiary-container":"#ffd7a4","surface-variant":"#32353b","primary":"#edffe8","border-dim":"#1B2A3D","crimson-alert":"#FF0055","on-secondary-container":"#00616d","on-tertiary":"#452b00","phosphor-green":"#00FF66","on-background":"#e0e2ea","secondary-fixed-dim":"#00daf3","error":"#ffb4ab","surface-container-highest":"#32353b","surface-container-lowest":"#0b0e13","surface-subtle":"#121824","on-tertiary-container":"#865700"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"0.75rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.375rem","space-xs":"0.25rem","space-md":"0.625rem","gutter":"0.5rem"},"fontFamily":{"label-md":["JetBrains Mono"],"headline-xl":["JetBrains Mono"],"body-lg":["JetBrains Mono"],"headline-lg":["JetBrains Mono"],"label-sm":["JetBrains Mono"],"headline-sm":["JetBrains Mono"],"code-stream":["JetBrains Mono"],"headline-md":["JetBrains Mono"],"body-sm":["JetBrains Mono"],"body-md":["JetBrains Mono"]},"fontSize":{"label-md":["11px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["9px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"700"}],"headline-sm":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"code-stream":["10px",{"lineHeight":"15px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"body-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"body-md":["12px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-base font-body-sm text-on-surface antialiased select-none"><div class="w-full bg-crimson-subtle border-b border-border-dim px-margin py-0.5 flex items-center justify-between text-crimson-alert font-label-sm tracking-widest uppercase z-50 relative"><div>[ TS // SCI // NOFORN // ORCON // CYBERCOM-JFHQ ] CONTROLLED ACCESS FACILITY</div><div class="flex items-center gap-space-lg font-code-stream text-text-muted"><span>KEY: NSA-ECC-521</span><span>AIR-GAP: VERIFIED ENFORCED</span><span class="text-phosphor-green">SYS-HEALTH: NOMINAL</span></div></div><header class="w-full bg-surface-panel border-b border-border-dim z-40 sticky top-0"><div class="w-full px-margin py-space-sm flex flex-wrap items-center justify-between gap-space-md border-b border-border-dim/60 bg-surface-subtle"><div class="flex items-center gap-space-md"><div class="w-2.5 h-2.5 bg-phosphor-green shadow-[0_0_8px_rgba(0,255,102,0.6)]"></div><div><span class="font-headline-sm text-text-primary uppercase tracking-wider font-bold">CYBER-SHIELD</span><span class="font-label-sm text-cyan-telemetry ml-space-xs tracking-widest">v5.2-GOV</span></div><span class="font-label-sm px-space-xs py-0.5 bg-surface-highlight border border-border-bright text-text-secondary">JFHQ-C2</span></div><div class="flex items-center gap-space-md font-label-sm"><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">POSTURE:</span><span class="bg-warning-amber text-surface-base font-bold px-1.5 py-0.5">DEFCON 2</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">SHIELD:</span><span class="text-phosphor-green font-code-stream font-bold">99.8%</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">BEACONS:</span><span class="text-cyan-telemetry font-code-stream font-bold">142</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">TARGETS:</span><span class="text-crimson-alert font-code-stream font-bold">28</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">LOOT:</span><span class="text-warning-amber font-code-stream font-bold">4.8 GB</span></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-md font-code-stream text-text-secondary"><div class="flex flex-col text-right"><span class="text-cyan-telemetry font-bold">14:28:44 ZULU</span><span class="text-text-muted font-label-sm">09:28:44 EST LOC</span></div></div><div class="flex items-center gap-space-sm pl-space-md border-l border-border-dim"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-phosphor-green/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA05Sldv2kiKsGigstMnzhEfhHWy0U4Y_m1cO8t4gxVn3MQkCZrjdtm9aatXXtYMKrs1G6GlWBhQI2k5cZ3MDpWsKfq03B07eEsGIiWEU2Xn1iGb8BLF8mi27QYpRFc5kB8CQpJYw0S6J4x62Gt3DIORjx-nVpgrE7N6yspBHSOWrbkAg-aiBQeoLfdDGW2YuYpz3XiZ2h9cHkh9TpC6AkZA6un4Qw-s0r30gIbaYSLFibZlnsz49xJ"/><div class="flex flex-col"><span class="font-label-sm text-text-primary leading-tight font-bold">MAJ. VANCE, R.</span><span class="font-label-sm text-text-muted text-[8px] leading-tight">OP-ID: 7701-ALPHA</span></div></div></div></div><div class="w-full px-margin py-1 bg-surface-base/80 border-b border-border-dim flex items-center justify-between text-text-muted font-label-sm"><div class="flex items-center gap-space-xs overflow-x-auto py-0.5"><span class="text-text-secondary font-bold mr-space-xs">KILL CHAIN:</span><span class="text-phosphor-green">RECON [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">WEAPONIZE [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">DELIVERY [✓]</span><span class="text-text-muted">→</span><span class="text-cyan-telemetry font-bold bg-cyan-subtle px-1 border border-cyan-telemetry/40">EXPLOIT [ACTIVE]</span><span class="text-text-muted">→</span><span class="text-text-muted">INSTALL</span><span class="text-text-muted">→</span><span class="text-text-muted">C2</span><span class="text-text-muted">→</span><span class="text-text-muted">ACTIONS</span></div><div class="flex items-center gap-space-sm font-code-stream"><span class="text-text-muted">OSC:</span><span class="text-phosphor-green">∿∿∿ 124.8 MHz [SYNC]</span></div></div><nav class="w-full px-margin flex items-center gap-space-xs overflow-x-auto bg-surface-panel" data-active-classes="bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold"><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="war-room" href="#">War Room / Radar</a><a aria-current="page" class="px-space-md py-space-sm uppercase tracking-wider transition-colors whitespace-nowrap bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold" data-path="operator-console" href="#">Operator Console</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="target-recon" href="#">Target Recon</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="exploit-catalog" href="#">Exploit Catalog</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="payload-builder" href="#">Payload Builder</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="active-beacons" href="#">Active Beacons</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="attack-topology" href="#">Attack Topology</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="credentials-and-loot" href="#">Credentials &amp; Loot</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="surveillance-screens" href="#">Surveillance Screens</a></nav></header><main class="w-full px-margin py-space-md min-h-[calc(100vh-140px)] bg-surface-base"><div class="flex flex-col w-full font-body-sm text-text-primary">
+<!-- TMUX Orchestrator Top Bar -->
+<div class="w-full bg-surface-panel px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm mb-space-sm shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs px-2 py-0.5 bg-surface-highlight font-label-md tracking-wider text-phosphor-green">
+<span class="material-symbols-outlined text-[15px]">terminal</span>
+<span>TMUX C2 MULTIPLEXER v3.4</span>
+</div>
+<div class="flex items-center gap-1 font-code-stream text-text-secondary">
+<span class="px-1.5 py-0.5 bg-phosphor-green text-surface-base font-bold">[0:console*]</span>
+<span class="px-1.5 py-0.5 bg-surface-subtle text-text-secondary">[1:sniffer]</span>
+<span class="px-1.5 py-0.5 bg-surface-subtle text-text-secondary">[2:htop]</span>
+</div>
+</div>
+<!-- Layout Presets Toolbar -->
+<div class="flex items-center gap-space-xs font-label-sm">
+<span class="text-text-muted mr-1">LAYOUT:</span>
+<button class="px-2 py-1 bg-surface-subtle text-text-secondary hover:text-text-primary transition-colors flex items-center gap-1" onclick="switchLayout('single')">
+<span class="material-symbols-outlined text-[13px]">crop_square</span> SINGLE
+      </button>
+<button class="px-2 py-1 bg-surface-subtle text-text-secondary hover:text-text-primary transition-colors flex items-center gap-1" onclick="switchLayout('split-v')">
+<span class="material-symbols-outlined text-[13px]">view_column</span> SPLIT VERT
+      </button>
+<button class="px-2 py-1 bg-surface-subtle text-text-secondary hover:text-text-primary transition-colors flex items-center gap-1" onclick="switchLayout('split-h')">
+<span class="material-symbols-outlined text-[13px]">table_rows</span> SPLIT HORIZ
+      </button>
+<button class="px-2 py-1 bg-surface-highlight text-phosphor-green font-bold shadow-[0_0_8px_rgba(0,255,102,0.25)] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">splitscreen</span> TRIO GRID (ACTIVE)
+      </button>
+<div class="h-4 w-px bg-surface-subtle mx-1"></div>
+<span class="px-1.5 py-0.5 bg-crimson-subtle text-crimson-alert font-bold tracking-widest text-[9px]">LIVE SYNC</span>
+</div>
+</div>
+<!-- Trio Grid Panes Container -->
+<div class="w-full grid grid-cols-1 xl:grid-cols-12 gap-space-sm h-[calc(100vh-210px)] min-h-[720px]">
+<!-- PANE 0: Exploit-X Console (Left 7 Cols) -->
+<div class="xl:col-span-7 flex flex-col bg-surface-panel shadow-md h-full overflow-hidden">
+<!-- Terminal Header Bar -->
+<div class="bg-surface-subtle px-margin py-space-xs flex items-center justify-between select-none">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 text-[10px]">
+<span class="w-2.5 h-2.5 bg-crimson-alert inline-block"></span>
+<span class="w-2.5 h-2.5 bg-warning-amber inline-block"></span>
+<span class="w-2.5 h-2.5 bg-phosphor-green inline-block"></span>
+</div>
+<span class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] exploit-x console</span>
+<span class="bg-phosphor-green text-surface-base font-label-sm px-1.5 py-0.2 font-bold uppercase">TTY1 ACTIVE</span>
+<span class="bg-surface-base text-cyan-telemetry font-code-stream px-1.5 py-0.2">AES-GCM-256</span>
+</div>
+<div class="flex items-center gap-space-sm font-label-sm text-text-muted">
+<span class="hover:text-text-primary cursor-pointer">PANE-ATTACH: 0.0</span>
+<span class="material-symbols-outlined text-[16px] text-text-secondary cursor-pointer">fullscreen</span>
+</div>
+</div>
+<!-- Quick Tactical Command Strip -->
+<div class="bg-surface-base px-margin py-1 flex items-center gap-1 overflow-x-auto whitespace-nowrap text-text-secondary text-[10px] font-label-sm">
+<span class="text-text-muted font-bold mr-1">MACRO:</span>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-phosphor-green transition-colors" onclick="injectCmd('help')">HELP</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-phosphor-green transition-colors" onclick="injectCmd('targets -a')">TARGETS</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-phosphor-green transition-colors" onclick="injectCmd('scan 10.204.0.0/24')">SCAN</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-phosphor-green transition-colors" onclick="injectCmd('use exploit/windows/smb/ms17_010_eternalblue')">USE ETERNALBLUE</button>
+<button class="px-1.5 py-0.5 bg-crimson-subtle text-crimson-alert hover:bg-crimson-alert hover:text-surface-base font-bold transition-colors" onclick="injectCmd('exploit -j -z')">EXPLOIT</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-phosphor-green transition-colors" onclick="injectCmd('sessions -l')">SESSIONS</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-cyan-telemetry transition-colors" onclick="injectCmd('interact 1')">INTERACT 1</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-warning-amber transition-colors" onclick="injectCmd('loot --all')">LOOT</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-text-primary transition-colors" onclick="injectCmd('crack --wordlist rockyou.txt')">CRACK</button>
+<button class="px-1.5 py-0.5 bg-surface-subtle hover:bg-surface-highlight hover:text-text-primary transition-colors" onclick="clearTerm()">CLEAR</button>
+</div>
+<!-- Console Output Feed (CRT raster-scanned style) -->
+<div class="flex-1 bg-surface-base p-space-md overflow-y-auto font-code-stream text-body-sm leading-relaxed text-text-primary flex flex-col space-y-1 relative" id="terminal-feed">
+<div class="text-phosphor-green font-bold text-[10px] leading-tight select-none opacity-90">
+<pre class="font-code-stream">   ______  ______  __    ____  ________     _  __    ______ ___  
+  / ____/\ \/ /   | / /   / __ \/  _/  _/    | |/ /   / ____/|__ \ 
+ / __/    \  / /| |/ /   / / / // / / /______|   /   / /     __/ / 
+/ /___    / / ___ / /___/ /_/ // /_/ /_____/   | |  / /___  / __/  
+/_____/   /_/_/  |_/_____/\____/___/___/     /_/|_|  \____/ /____/   [COVERT-C2]
+</pre>
+</div>
+<div class="text-text-muted text-[10px]">--== [ Cyber Weaponry Framework | v4.9.1-RELEASE | Node ID: KALI-AIRGAP-09 ] ==--</div>
+<div class="text-text-secondary text-[10px] pb-1">--== [ 14 Exploits Loaded | 8 Post-Exploitation Modules | 3 Active Listeners ] ==--</div>
+<div class="text-text-secondary"><span class="text-cyan-telemetry">[+]</span> Initializing offensive telemetry kernel... <span class="text-phosphor-green">[OK]</span></div>
+<div class="text-text-secondary"><span class="text-cyan-telemetry">[+]</span> Establishing encrypted proxy-chain tunnel via node-10.204.0.1... <span class="text-phosphor-green">[VERIFIED]</span></div>
+<div class="text-text-secondary"><span class="text-warning-amber">[*]</span> Target subnet scoped: <span class="text-text-primary">10.204.0.0/24</span> (Target: SCADA-ROUTER-L4)</div>
+<div class="text-text-secondary"><span class="text-phosphor-green">[✓]</span> Port 445/TCP (Microsoft-DS) detected vulnerable to MS17-010</div>
+<div class="bg-surface-subtle p-space-xs text-text-primary my-1">
+<div class="text-cyan-telemetry font-bold">exploit-x &gt; <span class="text-text-primary font-normal">use exploit/windows/smb/ms17_010_eternalblue</span></div>
+<div class="text-text-secondary mt-0.5">[*] Using configured payload: <span class="text-phosphor-green">windows/x64/meterpreter/reverse_tcp</span></div>
+<div class="text-text-secondary">[*] RHOST =&gt; 10.204.0.114 | RPORT =&gt; 445 | LHOST =&gt; 192.168.1.50 | LPORT =&gt; 4444</div>
+</div>
+<div class="text-text-secondary"><span class="text-warning-amber">[*]</span> Triggering EternalBlue SMB transaction groom...</div>
+<div class="text-text-secondary"><span class="text-phosphor-green">[+]</span> Ring 0 SMB shellcode allocated at <span class="text-cyan-telemetry">0xfffff800`01b44000</span></div>
+<div class="text-text-secondary"><span class="text-phosphor-green">[+]</span> Overwriting HAL dispatch table pointer...</div>
+<div class="text-text-secondary"><span class="text-phosphor-green">[★] Meterpreter session 1 opened (192.168.1.50:4444 -&gt; 10.204.0.114:49158) at 14:28:40 UTC</span></div>
+<!-- Dynamic interactive response area -->
+<div class="space-y-1" id="dynamic-log"></div>
+<!-- CLI Prompt Input Area -->
+<div class="flex items-center gap-space-xs pt-space-xs text-body-md mt-auto">
+<span class="text-cyan-telemetry font-bold whitespace-nowrap">exploit-x &gt;</span>
+<input autocomplete="off" class="flex-1 bg-transparent text-phosphor-green font-code-stream outline-none border-none caret-phosphor-green" id="term-input" placeholder="Type command or macro..." spellcheck="false" type="text" value=""/>
+<span class="w-2 h-4 bg-phosphor-green animate-pulse"></span>
+</div>
+</div>
+</div>
+<!-- RIGHT SPLIT COLUMN (5 Cols: Sniffer top, Htop bottom) -->
+<div class="xl:col-span-5 flex flex-col gap-space-sm h-full overflow-hidden">
+<!-- PANE 1: Live Packet Sniffer (Top Right) -->
+<div class="flex-1 bg-surface-panel shadow-md flex flex-col overflow-hidden min-h-[280px]">
+<div class="bg-surface-subtle px-margin py-space-xs flex items-center justify-between select-none">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-cyan-telemetry font-bold">[1] c2-packet-sniffer</span>
+<span class="bg-cyan-telemetry text-surface-base font-label-sm px-1 py-0.2 font-bold">ETH0: PROMISC</span>
+<span class="text-text-muted text-[10px] font-code-stream">CAP: 2.4k pkt/s</span>
+</div>
+<!-- Filter Tabs -->
+<div class="flex items-center gap-1 font-label-sm">
+<button class="px-1.5 py-0.5 bg-surface-highlight text-cyan-telemetry font-bold" id="filter-all" onclick="filterPackets('ALL')">ALL</button>
+<button class="px-1.5 py-0.5 bg-surface-base text-text-secondary hover:text-text-primary" id="filter-tls" onclick="filterPackets('TLS')">TLS</button>
+<button class="px-1.5 py-0.5 bg-surface-base text-text-secondary hover:text-text-primary" id="filter-smb" onclick="filterPackets('SMB')">SMB</button>
+<button class="px-1.5 py-0.5 bg-surface-base text-text-secondary hover:text-text-primary" id="filter-dns" onclick="filterPackets('DNS')">DNS</button>
+</div>
+</div>
+<!-- Sniffer Table Header -->
+<div class="bg-surface-dim px-margin py-1 grid grid-cols-12 gap-1 text-text-muted font-label-sm text-[9px] uppercase tracking-wider">
+<div class="col-span-2">TIME</div>
+<div class="col-span-3">SRC IP</div>
+<div class="col-span-3">DST IP</div>
+<div class="col-span-1">PROTO</div>
+<div class="col-span-3">PAYLOAD PREVIEW</div>
+</div>
+<!-- Streaming Packet Feed -->
+<div class="flex-1 overflow-y-auto bg-surface-base p-1 font-code-stream text-[10px] space-y-0.5" id="packet-stream">
+<!-- Packet Row 1 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-subtle/70 hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="SMB">
+<div class="col-span-2 text-text-secondary">14:28:40.102</div>
+<div class="col-span-3 text-phosphor-green truncate">192.168.1.50:4444</div>
+<div class="col-span-3 text-warning-amber truncate">10.204.0.114:445</div>
+<div class="col-span-1"><span class="bg-warning-amber text-surface-base px-1 font-bold text-[8px]">SMB2</span></div>
+<div class="col-span-3 text-text-primary truncate">TreeConnect \\SCADA\IPC$ (0xFE)</div>
+</div>
+<!-- Packet Row 2 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-base hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="TLS">
+<div class="col-span-2 text-text-secondary">14:28:40.419</div>
+<div class="col-span-3 text-cyan-telemetry truncate">10.204.0.114:49158</div>
+<div class="col-span-3 text-phosphor-green truncate">192.168.1.50:4444</div>
+<div class="col-span-1"><span class="bg-cyan-telemetry text-surface-base px-1 font-bold text-[8px]">TLS1.3</span></div>
+<div class="col-span-3 text-text-primary truncate">Handshake ClientKeyExchange Encrypted</div>
+</div>
+<!-- Packet Row 3 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-subtle/70 hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="SMB">
+<div class="col-span-2 text-text-secondary">14:28:40.892</div>
+<div class="col-span-3 text-warning-amber truncate">10.204.0.114:445</div>
+<div class="col-span-3 text-phosphor-green truncate">192.168.1.50:4444</div>
+<div class="col-span-1"><span class="bg-warning-amber text-surface-base px-1 font-bold text-[8px]">SMB2</span></div>
+<div class="col-span-3 text-text-primary truncate">NT_STATUS_SUCCESS Trans2 Response</div>
+</div>
+<!-- Packet Row 4 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-base hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="DNS">
+<div class="col-span-2 text-text-secondary">14:28:41.004</div>
+<div class="col-span-3 text-text-secondary truncate">10.204.0.22:53210</div>
+<div class="col-span-3 text-text-muted truncate">10.204.0.1:53</div>
+<div class="col-span-1"><span class="bg-surface-bright text-text-primary px-1 font-bold text-[8px]">DNS</span></div>
+<div class="col-span-3 text-text-primary truncate">Standard query 0x1f4a A secure.intranet</div>
+</div>
+<!-- Packet Row 5 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-subtle/70 hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="TLS">
+<div class="col-span-2 text-text-secondary">14:28:42.115</div>
+<div class="col-span-3 text-phosphor-green truncate">192.168.1.50:4444</div>
+<div class="col-span-3 text-cyan-telemetry truncate">10.204.0.114:49158</div>
+<div class="col-span-1"><span class="bg-cyan-telemetry text-surface-base px-1 font-bold text-[8px]">TLS1.3</span></div>
+<div class="col-span-3 text-text-primary truncate">Application Data [Meterpreter Heartbeat]</div>
+</div>
+<!-- Packet Row 6 -->
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-base hover:bg-surface-highlight cursor-pointer items-center packet-row" data-proto="SMB">
+<div class="col-span-2 text-text-secondary">14:28:43.080</div>
+<div class="col-span-3 text-warning-amber truncate">10.204.0.114:445</div>
+<div class="col-span-3 text-phosphor-green truncate">192.168.1.50:4444</div>
+<div class="col-span-1"><span class="bg-warning-amber text-surface-base px-1 font-bold text-[8px]">SMB</span></div>
+<div class="col-span-3 text-text-primary truncate">Echo Request [keepalive: ok]</div>
+</div>
+</div>
+<!-- Hex Inspector Drawer -->
+<div class="bg-surface-dim p-space-xs border-t-0 font-code-stream text-[9px] text-text-secondary flex items-center justify-between">
+<span class="text-phosphor-green">HEX: 4d 5a 90 00 03 00 00 00 04 00 00 00 ff ff 00 00 b8 00</span>
+<span class="text-text-muted">DUMP: MZ..............</span>
+</div>
+</div>
+<!-- PANE 2: Htop System Resource Monitor (Bottom Right) -->
+<div class="flex-1 bg-surface-panel shadow-md flex flex-col overflow-hidden min-h-[280px]">
+<div class="bg-surface-subtle px-margin py-space-xs flex items-center justify-between select-none">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-warning-amber font-bold">[2] htop-monitor</span>
+<span class="bg-surface-base text-phosphor-green font-code-stream px-1.5 py-0.2">TASKS: 184 | 4 THR</span>
+</div>
+<div class="flex items-center gap-space-md text-[10px] font-label-sm text-text-secondary">
+<span>UPTIME: 14d 06:12:44</span>
+<span class="text-phosphor-green font-bold">LOAD: 0.74 0.82 0.91</span>
+</div>
+</div>
+<!-- CPU Cores and Memory Usage Bars -->
+<div class="bg-surface-base px-margin py-space-xs space-y-1">
+<!-- Core 1 -->
+<div class="flex items-center gap-space-sm text-[10px] font-code-stream">
+<span class="w-8 text-cyan-telemetry">CPU[1]</span>
+<div class="flex-1 bg-surface-subtle h-2.5 flex overflow-hidden">
+<div class="bg-phosphor-green h-full" style="width: 42%;"></div>
+<div class="bg-crimson-alert h-full" style="width: 14%;"></div>
+</div>
+<span class="w-12 text-right text-text-primary font-bold">56.0%</span>
+</div>
+<!-- Core 2 -->
+<div class="flex items-center gap-space-sm text-[10px] font-code-stream">
+<span class="w-8 text-cyan-telemetry">CPU[2]</span>
+<div class="flex-1 bg-surface-subtle h-2.5 flex overflow-hidden">
+<div class="bg-phosphor-green h-full" style="width: 68%;"></div>
+<div class="bg-crimson-alert h-full" style="width: 8%;"></div>
+</div>
+<span class="w-12 text-right text-text-primary font-bold">76.0%</span>
+</div>
+<!-- Core 3 -->
+<div class="flex items-center gap-space-sm text-[10px] font-code-stream">
+<span class="w-8 text-cyan-telemetry">CPU[3]</span>
+<div class="flex-1 bg-surface-subtle h-2.5 flex overflow-hidden">
+<div class="bg-phosphor-green h-full" style="width: 25%;"></div>
+</div>
+<span class="w-12 text-right text-text-primary font-bold">25.0%</span>
+</div>
+<!-- Core 4 -->
+<div class="flex items-center gap-space-sm text-[10px] font-code-stream">
+<span class="w-8 text-cyan-telemetry">CPU[4]</span>
+<div class="flex-1 bg-surface-subtle h-2.5 flex overflow-hidden">
+<div class="bg-phosphor-green h-full" style="width: 89%;"></div>
+<div class="bg-warning-amber h-full" style="width: 5%;"></div>
+</div>
+<span class="w-12 text-right text-crimson-alert font-bold">94.0%</span>
+</div>
+<!-- Memory Usage -->
+<div class="flex items-center gap-space-sm text-[10px] font-code-stream pt-0.5">
+<span class="w-8 text-warning-amber">MEM</span>
+<div class="flex-1 bg-surface-subtle h-2.5 flex overflow-hidden">
+<div class="bg-warning-amber h-full" style="width: 12.2%;"></div>
+</div>
+<span class="text-right text-text-primary whitespace-nowrap text-[9px]">3.82G / 31.2G</span>
+</div>
+</div>
+<!-- Live Linux Process Table -->
+<div class="flex-1 overflow-y-auto bg-surface-base">
+<div class="bg-surface-dim px-2 py-0.5 grid grid-cols-12 gap-1 text-text-muted font-label-sm text-[9px] sticky top-0 uppercase">
+<div class="col-span-2">PID</div>
+<div class="col-span-2">USER</div>
+<div class="col-span-1">CPU%</div>
+<div class="col-span-1">MEM%</div>
+<div class="col-span-6">COMMAND</div>
+</div>
+<div class="divide-y-0 text-[10px] font-code-stream p-1 space-y-0.5">
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-highlight text-text-primary items-center">
+<div class="col-span-2 text-cyan-telemetry">40912</div>
+<div class="col-span-2 text-text-secondary">root</div>
+<div class="col-span-1 text-phosphor-green font-bold">91.4</div>
+<div class="col-span-1 text-text-primary">4.2</div>
+<div class="col-span-6 text-crimson-alert truncate font-bold">hashcat -m 1000 -a 0 ntlm.hash</div>
+</div>
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-subtle/50 text-text-primary items-center">
+<div class="col-span-2 text-cyan-telemetry">1802</div>
+<div class="col-span-2 text-text-secondary">c2admin</div>
+<div class="col-span-1 text-phosphor-green">38.2</div>
+<div class="col-span-1 text-text-primary">3.1</div>
+<div class="col-span-6 text-phosphor-green truncate">exploit-x-c2 --daemon --bind 0.0.0.0</div>
+</div>
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-base text-text-secondary items-center">
+<div class="col-span-2 text-cyan-telemetry">943</div>
+<div class="col-span-2 text-text-secondary">root</div>
+<div class="col-span-1 text-phosphor-green">14.1</div>
+<div class="col-span-1 text-text-primary">2.8</div>
+<div class="col-span-6 text-text-primary truncate">suricata -c /etc/suricata/threat.yaml -i eth0</div>
+</div>
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-subtle/50 text-text-secondary items-center">
+<div class="col-span-2 text-cyan-telemetry">1104</div>
+<div class="col-span-2 text-text-secondary">zeek</div>
+<div class="col-span-1 text-phosphor-green">8.6</div>
+<div class="col-span-1 text-text-primary">1.9</div>
+<div class="col-span-6 text-text-primary truncate">zeek-ids -i eth0 local-network.zeek</div>
+</div>
+<div class="grid grid-cols-12 gap-1 px-1 py-0.5 bg-surface-base text-text-muted items-center">
+<div class="col-span-2 text-cyan-telemetry">32</div>
+<div class="col-span-2 text-text-secondary">root</div>
+<div class="col-span-1 text-text-secondary">0.1</div>
+<div class="col-span-1 text-text-secondary">0.0</div>
+<div class="col-span-6 text-text-muted truncate">[kworker/u8:2-events_unbound]</div>
+</div>
+</div>
+</div>
+<!-- Htop Function Keys Footer -->
+<div class="bg-surface-subtle px-1 py-0.5 flex items-center justify-between text-[9px] font-label-sm text-text-muted select-none">
+<span><b class="text-surface-base bg-phosphor-green px-1">F1</b>Help</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F2</b>Setup</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F3</b>Search</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F4</b>Filter</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F5</b>Tree</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F9</b>Kill</span>
+<span><b class="text-surface-base bg-phosphor-green px-1">F10</b>Quit</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Iconic Green TMUX Global Status Bar -->
+<div class="w-full bg-phosphor-green text-surface-base font-code-stream text-body-sm px-margin py-0.5 mt-space-sm flex flex-wrap items-center justify-between font-bold select-none shadow-[0_0_12px_rgba(0,255,102,0.35)]">
+<!-- Windows List -->
+<div class="flex items-center gap-space-sm">
+<span class="bg-surface-base text-phosphor-green px-1.5 py-0.2">[exploit-x:0]</span>
+<span class="bg-surface-highlight text-text-primary px-1.5 py-0.2">0:console*</span>
+<span class="text-surface-base hover:text-surface-highlight cursor-pointer">1:sniffer-</span>
+<span class="text-surface-base hover:text-surface-highlight cursor-pointer">2:htop</span>
+</div>
+<!-- Telemetry & Node Metrics -->
+<div class="flex items-center gap-space-lg text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">computer</span>
+<span>kali-c2</span>
+</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">hub</span>
+<span>LISTENER: 0.0.0.0:4444 [UP]</span>
+</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lan</span>
+<span>IP: 192.168.1.50</span>
+</span>
+<span class="bg-surface-base text-phosphor-green px-2 py-0.2" id="tmux-clock">14:28:44 UTC</span>
+</div>
+</div>
+</div>
+<script>
+  function updateTmuxClock() {
+    const clockEl = document.getElementById('tmux-clock');
+    if (!clockEl) return;
+    const d = new Date();
+    const hrs = String(d.getUTCHours()).padStart(2, '0');
+    const mins = String(d.getUTCMinutes()).padStart(2, '0');
+    const secs = String(d.getUTCSeconds()).padStart(2, '0');
+    clockEl.textContent = `${hrs}:${mins}:${secs} UTC`;
+  }
+  setInterval(updateTmuxClock, 1000);
+  updateTmuxClock();
+
+  function injectCmd(cmd) {
+    const input = document.getElementById('term-input');
+    if (input) {
+      input.value = cmd;
+      input.focus();
+      triggerExecution(cmd);
+    }
+  }
+
+  function clearTerm() {
+    const log = document.getElementById('dynamic-log');
+    if (log) log.innerHTML = '';
+  }
+
+  function triggerExecution(cmd) {
+    const log = document.getElementById('dynamic-log');
+    if (!log) return;
+    const entry = document.createElement('div');
+    entry.className = 'text-text-primary py-0.5';
+
+    if (cmd === 'help') {
+      entry.innerHTML = `<span class="text-cyan-telemetry">CORE COMMANDS:</span><br>
+        <span class="text-text-secondary pl-4">targets [-a]</span> - Enumerate live target table<br>
+        <span class="text-text-secondary pl-4">scan [cidr]</span>   - Run stealth SYN/SMB pipeline<br>
+        <span class="text-text-secondary pl-4">sessions -l</span>   - List active Meterpreter beacons<br>
+        <span class="text-text-secondary pl-4">interact &lt;id&gt;</span> - Hook into interactive TTY shell<br>
+        <span class="text-text-secondary pl-4">loot --all</span>    - Pull cached NTDS / SAM dumps`;
+    } else if (cmd.includes('targets')) {
+      entry.innerHTML = `<span class="text-phosphor-green">[+] ACTIVE SCOPED TARGETS:</span><br>
+        <span class="text-text-primary pl-4">10.204.0.114 SCADA-ROUTER-L4 [WIN-SRV-2016] [VULNERABLE]</span><br>
+        <span class="text-text-primary pl-4">10.204.0.105 DC-PRIMARY-EAST  [WIN-SRV-2022] [PATCHED]</span><br>
+        <span class="text-text-primary pl-4">10.204.0.220 PLC-CONTROLLER-8 [EMBEDDED-RTOS] [AUTH-BYPASS]</span>`;
+    } else if (cmd.includes('sessions')) {
+      entry.innerHTML = `<span class="text-phosphor-green">Active Sessions:</span><br>
+        <span class="text-text-secondary pl-2">Id: 1 | Type: Meterpreter x64 | Target: SCADA-ROUTER-L4 (10.204.0.114) | User: NT AUTHORITY\\SYSTEM</span>`;
+    } else if (cmd.includes('interact')) {
+      entry.innerHTML = `<span class="text-cyan-telemetry">[*] Hooking into session 1...</span><br>
+        <span class="text-phosphor-green">meterpreter ></span> sysinfo<br>
+        <span class="text-text-secondary pl-4">OS: Windows Server 2016 Standard (10.0 Build 14393)</span><br>
+        <span class="text-text-secondary pl-4">Architecture: x64 | Logged On Users: 3 | Domain: ENCLAVE-MIL</span>`;
+    } else if (cmd.includes('loot')) {
+      entry.innerHTML = `<span class="text-warning-amber">[+] LOOT RETRIEVED:</span><br>
+        <span class="text-text-primary pl-4">HASH: Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br>
+        <span class="text-text-primary pl-4">KERBEROS TICKET: krbtgt/ENCLAVE-MIL (Saved to /loot/tickets/tgt.kirbi)</span>`;
+    } else if (cmd.includes('crack')) {
+      entry.innerHTML = `<span class="text-cyan-telemetry">[*] Initializing Hashcat OpenCL engine...</span><br>
+        <span class="text-phosphor-green">[+] 1/1 Hash Cracked: Administrator : Super$ecret2024!</span>`;
+    } else {
+      entry.innerHTML = `<span class="text-cyan-telemetry">exploit-x &gt;</span> ${cmd}<br><span class="text-text-secondary">[*] Command executed in operational thread #4.</span>`;
+    }
+    log.appendChild(entry);
+    const feed = document.getElementById('terminal-feed');
+    if (feed) feed.scrollTop = feed.scrollHeight;
+  }
+
+  const termInput = document.getElementById('term-input');
+  if (termInput) {
+    termInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = termInput.value.trim();
+        if (val) {
+          triggerExecution(val);
+          termInput.value = '';
+        }
+      }
+    });
+  }
+
+  function filterPackets(type) {
+    ['all', 'tls', 'smb', 'dns'].forEach(t => {
+      const b = document.getElementById(`filter-${t}`);
+      if (b) {
+        if (t === type.toLowerCase()) {
+          b.className = 'px-1.5 py-0.5 bg-surface-highlight text-cyan-telemetry font-bold';
+        } else {
+          b.className = 'px-1.5 py-0.5 bg-surface-base text-text-secondary hover:text-text-primary';
+        }
+      }
+    });
+
+    const rows = document.querySelectorAll('.packet-row');
+    rows.forEach(r => {
+      if (type === 'ALL' || r.getAttribute('data-proto') === type) {
+        r.style.display = 'grid';
+      } else {
+        r.style.display = 'none';
+      }
+    });
+  }
+
+  function switchLayout(preset) {
+    // Micro-interaction indicator for TMUX pane preset toggle
+    const termFeed = document.getElementById('terminal-feed');
+    if (termFeed) {
+      const note = document.createElement('div');
+      note.className = 'text-warning-amber text-[10px] italic';
+      note.textContent = `[TMUX] Layout reconfigured: ${preset.toUpperCase()}`;
+      termFeed.appendChild(note);
+      termFeed.scrollTop = termFeed.scrollHeight;
+    }
+  }
+</script></main><footer class="w-full bg-surface-panel border-t border-border-dim px-margin py-space-xs flex flex-wrap items-center justify-between font-label-sm text-text-muted sticky bottom-0 z-40"><div class="flex items-center gap-space-lg"><span class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-phosphor-green rounded-full"></span>LINK: SATCOM-MIL-04 [UP]</span><span>CIPHER: AES-GCM-512 HARDENED</span><span>LATENCY: 4.2ms</span><span>ROUTE: TOR-DARKNET-DEFENSE-ENC</span></div><div class="flex items-center gap-space-md font-code-stream"><span>PING: 10.204.0.1 (RTT: 0.8ms)</span><span class="text-phosphor-green">AIR-GAP PASS</span><span>SEC-LEVEL: REDACTED-L5</span></div></footer></body></html>

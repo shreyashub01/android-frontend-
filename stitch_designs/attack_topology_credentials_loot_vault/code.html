@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-bright":"#36393f","surface-container-high":"#272a30","text-primary":"#F0F6FC","border-bright":"#2E4766","error-container":"#93000a","warning-amber":"#FFAA00","on-primary":"#003911","outline-variant":"#3b4b3a","on-secondary":"#00363d","surface-dim":"#101419","on-secondary-fixed-variant":"#004f58","on-error-container":"#ffdad6","tertiary":"#fff9f5","surface-container-low":"#181c21","tertiary-fixed-dim":"#ffb952","phosphor-glow":"rgba(0, 255, 102, 0.15)","inverse-surface":"#e0e2ea","secondary":"#bdf4ff","surface-highlight":"#1B2436","primary-fixed":"#6bff83","on-surface":"#e0e2ea","on-primary-container":"#007128","warning-subtle":"#2A1D05","cyan-telemetry":"#00E5FF","secondary-container":"#00e3fd","text-secondary":"#8B9BB4","on-primary-fixed-variant":"#00531b","on-error":"#690005","surface-base":"#070A0F","cyan-subtle":"#05222E","inverse-primary":"#006e27","outline":"#849581","tertiary-fixed":"#ffddb4","on-tertiary-fixed-variant":"#633f00","surface-tint":"#00e55b","on-surface-variant":"#b9ccb5","secondary-fixed":"#9cf0ff","surface-panel":"#0B0F17","inverse-on-surface":"#2d3036","primary-container":"#00ff66","surface":"#101419","on-primary-fixed":"#002107","crimson-subtle":"#2B0B17","background":"#101419","surface-container":"#1d2025","text-muted":"#4B5B73","primary-fixed-dim":"#00e55b","on-tertiary-fixed":"#291800","on-secondary-fixed":"#001f24","tertiary-container":"#ffd7a4","surface-variant":"#32353b","primary":"#edffe8","border-dim":"#1B2A3D","crimson-alert":"#FF0055","on-secondary-container":"#00616d","on-tertiary":"#452b00","phosphor-green":"#00FF66","on-background":"#e0e2ea","secondary-fixed-dim":"#00daf3","error":"#ffb4ab","surface-container-highest":"#32353b","surface-container-lowest":"#0b0e13","surface-subtle":"#121824","on-tertiary-container":"#865700"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"0.75rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.375rem","space-xs":"0.25rem","space-md":"0.625rem","gutter":"0.5rem"},"fontFamily":{"label-md":["JetBrains Mono"],"headline-xl":["JetBrains Mono"],"body-lg":["JetBrains Mono"],"headline-lg":["JetBrains Mono"],"label-sm":["JetBrains Mono"],"headline-sm":["JetBrains Mono"],"code-stream":["JetBrains Mono"],"headline-md":["JetBrains Mono"],"body-sm":["JetBrains Mono"],"body-md":["JetBrains Mono"]},"fontSize":{"label-md":["11px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["9px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"700"}],"headline-sm":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"code-stream":["10px",{"lineHeight":"15px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"body-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"body-md":["12px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-base font-body-sm text-on-surface antialiased select-none"><div class="w-full bg-crimson-subtle border-b border-border-dim px-margin py-0.5 flex items-center justify-between text-crimson-alert font-label-sm tracking-widest uppercase z-50 relative"><div>[ TS // SCI // NOFORN // ORCON // CYBERCOM-JFHQ ] CONTROLLED ACCESS FACILITY</div><div class="flex items-center gap-space-lg font-code-stream text-text-muted"><span>KEY: NSA-ECC-521</span><span>AIR-GAP: VERIFIED ENFORCED</span><span class="text-phosphor-green">SYS-HEALTH: NOMINAL</span></div></div><header class="w-full bg-surface-panel border-b border-border-dim z-40 sticky top-0"><div class="w-full px-margin py-space-sm flex flex-wrap items-center justify-between gap-space-md border-b border-border-dim/60 bg-surface-subtle"><div class="flex items-center gap-space-md"><div class="w-2.5 h-2.5 bg-phosphor-green shadow-[0_0_8px_rgba(0,255,102,0.6)]"></div><div><span class="font-headline-sm text-text-primary uppercase tracking-wider font-bold">CYBER-SHIELD</span><span class="font-label-sm text-cyan-telemetry ml-space-xs tracking-widest">v5.2-GOV</span></div><span class="font-label-sm px-space-xs py-0.5 bg-surface-highlight border border-border-bright text-text-secondary">JFHQ-C2</span></div><div class="flex items-center gap-space-md font-label-sm"><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">POSTURE:</span><span class="bg-warning-amber text-surface-base font-bold px-1.5 py-0.5">DEFCON 2</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">SHIELD:</span><span class="text-phosphor-green font-code-stream font-bold">99.8%</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">BEACONS:</span><span class="text-cyan-telemetry font-code-stream font-bold">142</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">TARGETS:</span><span class="text-crimson-alert font-code-stream font-bold">28</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">LOOT:</span><span class="text-warning-amber font-code-stream font-bold">4.8 GB</span></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-md font-code-stream text-text-secondary"><div class="flex flex-col text-right"><span class="text-cyan-telemetry font-bold">14:28:44 ZULU</span><span class="text-text-muted font-label-sm">09:28:44 EST LOC</span></div></div><div class="flex items-center gap-space-sm pl-space-md border-l border-border-dim"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-phosphor-green/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA05Sldv2kiKsGigstMnzhEfhHWy0U4Y_m1cO8t4gxVn3MQkCZrjdtm9aatXXtYMKrs1G6GlWBhQI2k5cZ3MDpWsKfq03B07eEsGIiWEU2Xn1iGb8BLF8mi27QYpRFc5kB8CQpJYw0S6J4x62Gt3DIORjx-nVpgrE7N6yspBHSOWrbkAg-aiBQeoLfdDGW2YuYpz3XiZ2h9cHkh9TpC6AkZA6un4Qw-s0r30gIbaYSLFibZlnsz49xJ"/><div class="flex flex-col"><span class="font-label-sm text-text-primary leading-tight font-bold">MAJ. VANCE, R.</span><span class="font-label-sm text-text-muted text-[8px] leading-tight">OP-ID: 7701-ALPHA</span></div></div></div></div><div class="w-full px-margin py-1 bg-surface-base/80 border-b border-border-dim flex items-center justify-between text-text-muted font-label-sm"><div class="flex items-center gap-space-xs overflow-x-auto py-0.5"><span class="text-text-secondary font-bold mr-space-xs">KILL CHAIN:</span><span class="text-phosphor-green">RECON [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">WEAPONIZE [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">DELIVERY [✓]</span><span class="text-text-muted">→</span><span class="text-cyan-telemetry font-bold bg-cyan-subtle px-1 border border-cyan-telemetry/40">EXPLOIT [ACTIVE]</span><span class="text-text-muted">→</span><span class="text-text-muted">INSTALL</span><span class="text-text-muted">→</span><span class="text-text-muted">C2</span><span class="text-text-muted">→</span><span class="text-text-muted">ACTIONS</span></div><div class="flex items-center gap-space-sm font-code-stream"><span class="text-text-muted">OSC:</span><span class="text-phosphor-green">∿∿∿ 124.8 MHz [SYNC]</span></div></div><nav class="w-full px-margin flex items-center gap-space-xs overflow-x-auto bg-surface-panel" data-active-classes="bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold"><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="war-room" href="#">War Room / Radar</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="operator-console" href="#">Operator Console</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="target-recon" href="#">Target Recon</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="exploit-catalog" href="#">Exploit Catalog</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="payload-builder" href="#">Payload Builder</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="active-beacons" href="#">Active Beacons</a><a aria-current="page" class="px-space-md py-space-sm uppercase tracking-wider transition-colors whitespace-nowrap bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold" data-path="attack-topology" href="#">Attack Topology</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="credentials-and-loot" href="#">Credentials &amp; Loot</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="surveillance-screens" href="#">Surveillance Screens</a></nav></header><main class="w-full px-margin py-space-md min-h-[calc(100vh-140px)] bg-surface-base"><div class="flex flex-col w-full gap-space-md">
+<!-- Interactive Attack & Pivoting Topology Section -->
+<section class="w-full bg-surface-panel p-space-md flex flex-col gap-space-sm relative overflow-hidden shadow-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-sm bg-surface-subtle p-space-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-crimson-alert animate-ping"></span>
+<h2 class="font-headline-sm text-text-primary uppercase tracking-wider">Live Network Attack &amp; Pivoting Topology</h2>
+</div>
+<span class="font-label-sm text-text-muted uppercase tracking-widest">Interactive Canvas (Drag nodes to reposition)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm px-space-xs py-0.5 bg-surface-base text-cyan-telemetry">TOPOLOGY: AD-FOREST-09</span>
+<button class="bg-surface-base hover:bg-surface-highlight text-text-secondary hover:text-cyan-telemetry font-label-sm px-space-sm py-1 transition-colors uppercase" id="resetGraphBtn">
+          Reset Layout
+        </button>
+</div>
+</div>
+<!-- Canvas Simulation Area -->
+<div class="relative w-full h-[380px] bg-surface-base overflow-hidden select-none" id="graphContainer">
+<!-- Background CRT Scanline Effect -->
+<div class="absolute inset-0 pointer-events-none bg-[radial-gradient(#1B2A3D_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.4)_50%)] [background-size:100%_4px]"></div>
+<!-- SVG Connection Canvas -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" id="topologySvg">
+<defs>
+<lineargradient id="c2-to-dc" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#00FF66"></stop>
+<stop offset="100%" stop-color="#FF0055"></stop>
+</lineargradient>
+<lineargradient id="dc-to-db" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FF0055"></stop>
+<stop offset="100%" stop-color="#00E5FF"></stop>
+</lineargradient>
+<lineargradient id="dc-to-scada" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FF0055"></stop>
+<stop offset="100%" stop-color="#FFAA00"></stop>
+</lineargradient>
+</defs>
+<!-- Lines will be dynamically updated by JS -->
+<line class="animate-[dash_1s_linear_infinite]" id="link-c2-pivot" stroke="url(#c2-to-dc)" stroke-dasharray="6,4" stroke-width="2"></line>
+<line id="link-pivot-db" stroke="url(#dc-to-db)" stroke-dasharray="4,4" stroke-width="2"></line>
+<line id="link-pivot-api" stroke="url(#dc-to-db)" stroke-dasharray="4,4" stroke-width="2"></line>
+<line id="link-pivot-scada" stroke="url(#dc-to-scada)" stroke-dasharray="3,3" stroke-width="1.5"></line>
+<line id="link-pivot-cam" stroke="url(#dc-to-scada)" stroke-dasharray="3,3" stroke-width="1.5"></line>
+</svg>
+<!-- Draggable Nodes -->
+<!-- Node: Central C2 Master -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_12px_rgba(0,255,102,0.3)] w-48 flex flex-col gap-0.5" data-id="c2" id="node-c2" style="left: 70px; top: 140px;">
+<div class="flex items-center justify-between bg-surface-subtle px-1 py-0.5">
+<span class="font-label-sm text-phosphor-green font-bold">[C2 MASTER]</span>
+<span class="w-2 h-2 bg-phosphor-green shadow-[0_0_6px_#00FF66]"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">KALI-OPS-C2</div>
+<div class="font-code-stream text-cyan-telemetry">192.168.1.50</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>PORT: 4444</span>
+<span class="text-phosphor-green">ESTABLISHED</span>
+</div>
+</div>
+<!-- Node: Compromised Pivot Host -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_14px_rgba(255,0,85,0.4)] w-52 flex flex-col gap-0.5" data-id="pivot" id="node-pivot" style="left: 320px; top: 130px;">
+<div class="flex items-center justify-between bg-crimson-subtle px-1 py-0.5">
+<span class="font-label-sm text-crimson-alert font-bold">[PIVOT / COMPROMISED]</span>
+<span class="w-2 h-2 bg-crimson-alert animate-pulse shadow-[0_0_8px_#FF0055]"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">CORP-DC01.CORP.INT</div>
+<div class="font-code-stream text-crimson-alert">192.168.1.100</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>DOMAIN CNTRL</span>
+<span class="text-crimson-alert">SYSTEM ACCESS</span>
+</div>
+</div>
+<!-- Node: Target 1 (Oracle DB) -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_10px_rgba(0,229,255,0.25)] w-48 flex flex-col gap-0.5" data-id="db" id="node-db" style="left: 630px; top: 50px;">
+<div class="flex items-center justify-between bg-cyan-subtle px-1 py-0.5">
+<span class="font-label-sm text-cyan-telemetry font-bold">[TARGET REACHABLE]</span>
+<span class="w-1.5 h-1.5 bg-cyan-telemetry"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">FIN-ORACLE-DB</div>
+<div class="font-code-stream text-text-secondary">10.40.2.14</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>ORACLE-1521</span>
+<span class="text-cyan-telemetry">TUNNELED</span>
+</div>
+</div>
+<!-- Node: Target 2 (API Gateway) -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_10px_rgba(0,229,255,0.25)] w-48 flex flex-col gap-0.5" data-id="api" id="node-api" style="left: 630px; top: 160px;">
+<div class="flex items-center justify-between bg-cyan-subtle px-1 py-0.5">
+<span class="font-label-sm text-cyan-telemetry font-bold">[TARGET REACHABLE]</span>
+<span class="w-1.5 h-1.5 bg-cyan-telemetry"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">PROD-API-GATEWAY</div>
+<div class="font-code-stream text-text-secondary">10.40.1.200</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>PORT 443 / 8080</span>
+<span class="text-cyan-telemetry">SOCKSV5</span>
+</div>
+</div>
+<!-- Node: Recon 1 (SCADA PLC) -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_10px_rgba(255,170,0,0.25)] w-48 flex flex-col gap-0.5" data-id="scada" id="node-scada" style="left: 630px; top: 270px;">
+<div class="flex items-center justify-between bg-warning-subtle px-1 py-0.5">
+<span class="font-label-sm text-warning-amber font-bold">[RECONNAISSANCE]</span>
+<span class="w-1.5 h-1.5 bg-warning-amber animate-ping"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">SCADA-PLC-SUBSTATION</div>
+<div class="font-code-stream text-warning-amber">10.60.8.2</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>MODBUS-TCP</span>
+<span class="text-warning-amber">PROBING</span>
+</div>
+</div>
+<!-- Node: Recon 2 (SEC-CAM) -->
+<div class="topology-node absolute z-10 cursor-grab active:cursor-grabbing bg-surface-panel p-space-xs shadow-[0_0_10px_rgba(255,170,0,0.25)] w-48 flex flex-col gap-0.5" data-id="cam" id="node-cam" style="left: 360px; top: 290px;">
+<div class="flex items-center justify-between bg-warning-subtle px-1 py-0.5">
+<span class="font-label-sm text-warning-amber font-bold">[RECONNAISSANCE]</span>
+<span class="w-1.5 h-1.5 bg-warning-amber"></span>
+</div>
+<div class="font-body-sm text-text-primary font-bold">SEC-CAM-DVR01</div>
+<div class="font-code-stream text-warning-amber">192.168.1.18</div>
+<div class="font-label-sm text-text-muted flex justify-between pt-0.5">
+<span>RTSP-STREAM</span>
+<span class="text-warning-amber">RTSP-SCAN</span>
+</div>
+</div>
+<!-- Floating Tactical Legend -->
+<div class="absolute bottom-space-xs right-space-xs bg-surface-panel/95 p-space-xs flex flex-col gap-1 z-20 pointer-events-auto backdrop-blur-sm">
+<div class="font-label-sm text-text-muted uppercase pb-0.5">Topology Matrix Key</div>
+<div class="flex items-center gap-space-xs font-label-sm">
+<span class="w-2.5 h-2.5 bg-phosphor-green shadow-[0_0_6px_#00FF66]"></span>
+<span class="text-text-primary">C2 Master Node</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm">
+<span class="w-2.5 h-2.5 bg-crimson-alert shadow-[0_0_6px_#FF0055]"></span>
+<span class="text-text-primary">Compromised / Pivot Host</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm">
+<span class="w-2.5 h-2.5 bg-cyan-telemetry shadow-[0_0_6px_#00E5FF]"></span>
+<span class="text-text-primary">Target Accessible (Tunneled)</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm">
+<span class="w-2.5 h-2.5 bg-warning-amber shadow-[0_0_6px_#FFAA00]"></span>
+<span class="text-text-primary">Active Reconnaissance Target</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Harvested Credentials & Loot Locker Section -->
+<section class="w-full flex flex-col gap-space-md">
+<!-- Section Header Ribbon -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm bg-surface-subtle px-space-md py-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-warning-amber" style="font-variation-settings: 'FILL' 1;">lock_open</span>
+<h2 class="font-headline-sm text-text-primary uppercase tracking-wider">Harvested Credentials &amp; Loot Locker</h2>
+</div>
+<div class="flex items-center gap-space-sm font-label-sm">
+<span class="text-text-muted">SESSION VAULT:</span>
+<span class="font-code-stream text-phosphor-green font-bold">OP-IRON-FORGE-2025</span>
+<span class="bg-surface-base text-text-secondary px-space-xs py-0.5">SYNC: 100%</span>
+</div>
+</div>
+<!-- Summary Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm">
+<!-- Card 1 -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-text-muted uppercase">Total Captured Secrets</span>
+<span class="material-symbols-outlined text-text-secondary">folder_special</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-headline-xl text-text-primary font-bold">5</span>
+<span class="font-label-sm text-text-muted">ENTRIES IN VAULT</span>
+</div>
+<div class="w-full bg-surface-base h-1 mt-space-sm overflow-hidden">
+<div class="bg-cyan-telemetry h-full w-full"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-phosphor-green uppercase font-bold">Cracked Passwords</span>
+<span class="material-symbols-outlined text-phosphor-green">check_circle</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-headline-xl text-phosphor-green font-bold drop-shadow-[0_0_8px_rgba(0,255,102,0.6)]">2</span>
+<span class="font-label-sm text-phosphor-green">REVEALED PLAINTEXT</span>
+</div>
+<div class="w-full bg-surface-base h-1 mt-space-sm overflow-hidden">
+<div class="bg-phosphor-green h-full w-[40%] shadow-[0_0_6px_#00FF66]"></div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-text-muted uppercase">Active Kerberos Tickets</span>
+<span class="material-symbols-outlined text-cyan-telemetry">key</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-headline-xl text-cyan-telemetry font-bold">1</span>
+<span class="font-label-sm text-text-muted">TGT GOLDEN TICKET</span>
+</div>
+<div class="w-full bg-surface-base h-1 mt-space-sm overflow-hidden">
+<div class="bg-cyan-telemetry h-full w-[100%]"></div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-text-muted uppercase">Cloud API Keys</span>
+<span class="material-symbols-outlined text-warning-amber">cloud_sync</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-sm">
+<span class="font-headline-xl text-warning-amber font-bold">1</span>
+<span class="font-label-sm text-text-muted">AWS INFRA SCOPE</span>
+</div>
+<div class="w-full bg-surface-base h-1 mt-space-sm overflow-hidden">
+<div class="bg-warning-amber h-full w-[50%]"></div>
+</div>
+</div>
+</div>
+<!-- Hashcat Accelerator Panel -->
+<div class="w-full bg-surface-panel p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-cyan-telemetry">memory</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-text-primary uppercase">Hashcat GPU Wordlist Cracker Accelerator</span>
+<span class="font-code-stream text-cyan-telemetry font-bold">NVIDIA RTX 4090 OpenCL | Wordlist: rockyou.txt (Ready) | Rule: Best64</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="bg-primary-container text-on-primary font-label-md font-bold px-space-md py-1.5 hover:shadow-[0_0_12px_rgba(0,255,102,0.5)] transition-all uppercase flex items-center gap-1" id="startCrackerBtn">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+            Start Hashcat Cracker
+          </button>
+</div>
+</div>
+<!-- Cracker Telemetry Bar -->
+<div class="w-full bg-surface-base p-space-sm flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-sm">
+<span class="text-text-muted flex items-center gap-1">
+<span class="w-2 h-2 bg-text-muted" id="crackerStatusIndicator"></span>
+            STATUS: <span class="text-text-secondary" id="crackerStatusText">IDLE - STANDBY</span>
+</span>
+<span class="font-code-stream text-text-primary" id="crackerSpeedText">0.00 MH/s</span>
+</div>
+<div class="w-full bg-surface-panel h-2 overflow-hidden relative">
+<div class="h-full w-0 bg-gradient-to-r from-cyan-telemetry via-phosphor-green to-warning-amber transition-all duration-300 shadow-[0_0_8px_rgba(0,255,102,0.5)]" id="crackerProgressBar"></div>
+</div>
+<div class="flex justify-between font-code-stream text-text-muted pt-0.5">
+<span id="crackerProgressText">PROGRESS: 0 / 14,344,392 (0.00%)</span>
+<span id="crackerEta">ETA: --:--:--</span>
+</div>
+</div>
+</div>
+<!-- Loot Records Table -->
+<div class="w-full bg-surface-panel shadow-md overflow-x-auto">
+<div class="w-full min-w-[760px]">
+<!-- Table Header -->
+<div class="grid grid-cols-12 bg-surface-subtle p-space-xs font-label-sm text-text-muted uppercase tracking-wider">
+<div class="col-span-2">Target / Origin</div>
+<div class="col-span-2">Account / User</div>
+<div class="col-span-2">Credential Type</div>
+<div class="col-span-3">Encrypted Hash / Key</div>
+<div class="col-span-1 text-center">Status</div>
+<div class="col-span-2 text-right">Plaintext Password</div>
+</div>
+<!-- Table Body Rows -->
+<!-- Row 1: Admin NTLM (Cracked) -->
+<div class="grid grid-cols-12 p-space-xs items-center bg-surface-panel hover:bg-surface-highlight transition-colors">
+<div class="col-span-2 font-code-stream text-text-primary font-bold">192.168.1.100 (CORP-DC01)</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-crimson-alert">person</span>
+<span class="font-body-sm text-text-primary font-bold">Administrator</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-sm px-1 py-0.5 bg-surface-base text-cyan-telemetry">NTLM Hash (1000)</span>
+</div>
+<div class="col-span-3 font-code-stream text-text-muted truncate pr-2" title="aad3b435b51404eeaad3b435b51404ee:8846f7eaee8fb117ad06bdd830b7586c">
+            8846f7eaee8fb117ad06bdd830b7586c
+          </div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-base text-phosphor-green font-bold shadow-[0_0_6px_rgba(0,255,102,0.2)]">CRACKED</span>
+</div>
+<div class="col-span-2 text-right font-code-stream text-phosphor-green font-bold drop-shadow-[0_0_4px_rgba(0,255,102,0.5)]">
+            Winter2024!
+          </div>
+</div>
+<!-- Row 2: Linux Root SHA-512 (Cracked) -->
+<div class="grid grid-cols-12 p-space-xs items-center bg-surface-base hover:bg-surface-highlight transition-colors">
+<div class="col-span-2 font-code-stream text-text-primary font-bold">10.40.1.200 (API-GW)</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-cyan-telemetry">terminal</span>
+<span class="font-body-sm text-text-primary font-bold">root</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-sm px-1 py-0.5 bg-surface-panel text-cyan-telemetry">SHA-512 (1800)</span>
+</div>
+<div class="col-span-3 font-code-stream text-text-muted truncate pr-2" title="$6$s9J8X$uN8s0p...9Kd30">
+            $6$s9J8X$uN8s0pM8vT9xQ2dZ87k.
+          </div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-panel text-phosphor-green font-bold shadow-[0_0_6px_rgba(0,255,102,0.2)]">CRACKED</span>
+</div>
+<div class="col-span-2 text-right font-code-stream text-phosphor-green font-bold drop-shadow-[0_0_4px_rgba(0,255,102,0.5)]">
+            SuperAdmin#2024
+          </div>
+</div>
+<!-- Row 3: SCADA PLC Admin (Pending Cracking) -->
+<div class="grid grid-cols-12 p-space-xs items-center bg-surface-panel hover:bg-surface-highlight transition-colors">
+<div class="col-span-2 font-code-stream text-text-primary font-bold">10.60.8.2 (SCADA-PLC)</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-warning-amber">precision_manufacturing</span>
+<span class="font-body-sm text-text-primary font-bold">scada_admin</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-sm px-1 py-0.5 bg-surface-base text-warning-amber">MD5-CRYPT (500)</span>
+</div>
+<div class="col-span-3 font-code-stream text-text-muted truncate pr-2" title="$1$p987$kL3m8Zq7">
+            $1$p987$kL3m8Zq7O9p112d8a01f
+          </div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-base text-warning-amber font-bold">PENDING</span>
+</div>
+<div class="col-span-2 text-right font-code-stream text-text-muted">
+            [QUEUED IN HASHCAT]
+          </div>
+</div>
+<!-- Row 4: Oracle DB Service Kerberos TGT (Active) -->
+<div class="grid grid-cols-12 p-space-xs items-center bg-surface-base hover:bg-surface-highlight transition-colors">
+<div class="col-span-2 font-code-stream text-text-primary font-bold">10.40.2.14 (ORACLE-DB)</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-cyan-telemetry">database</span>
+<span class="font-body-sm text-text-primary font-bold">db_svc</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-sm px-1 py-0.5 bg-surface-panel text-cyan-telemetry">Kerberos TGT (Kirbi)</span>
+</div>
+<div class="col-span-3 font-code-stream text-text-muted truncate pr-2" title="doIFqDCCBaSgAwIBBaEDAgEWooIE...">
+            doIFqDCCBaSgAwIBBaEDAgEWooIE...
+          </div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-panel text-cyan-telemetry font-bold">ACTIVE</span>
+</div>
+<div class="col-span-2 text-right font-code-stream text-cyan-telemetry">
+            VALID (PASS-THE-TICKET)
+          </div>
+</div>
+<!-- Row 5: Cloud API Gateway Key (Active) -->
+<div class="grid grid-cols-12 p-space-xs items-center bg-surface-panel hover:bg-surface-highlight transition-colors">
+<div class="col-span-2 font-code-stream text-text-primary font-bold">AWS:us-east-1</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-warning-amber">cloud</span>
+<span class="font-body-sm text-text-primary font-bold">deploy_ci_bot</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-sm px-1 py-0.5 bg-surface-base text-warning-amber">AWS Secret Key</span>
+</div>
+<div class="col-span-3 font-code-stream text-text-muted truncate pr-2" title="AKIAIOSFODNN7EXAMPLE">
+            AKIAIOSFODNN7EXAMPLE...
+          </div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-base text-cyan-telemetry font-bold">ACTIVE</span>
+</div>
+<div class="col-span-2 text-right font-code-stream text-cyan-telemetry">
+            s3://corp-backups-live
+          </div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  (function initTopologyAndVault() {
+    const container = document.getElementById('graphContainer');
+    const nodes = document.querySelectorAll('.topology-node');
+    const links = {
+      'link-c2-pivot': { from: 'node-c2', to: 'node-pivot' },
+      'link-pivot-db': { from: 'node-pivot', to: 'node-db' },
+      'link-pivot-api': { from: 'node-pivot', to: 'node-api' },
+      'link-pivot-scada': { from: 'node-pivot', to: 'node-scada' },
+      'link-pivot-cam': { from: 'node-pivot', to: 'node-cam' }
+    };
+
+    const initialPositions = {
+      'node-c2': { x: 70, y: 140 },
+      'node-pivot': { x: 320, y: 130 },
+      'node-db': { x: 630, y: 50 },
+      'node-api': { x: 630, y: 160 },
+      'node-scada': { x: 630, y: 270 },
+      'node-cam': { x: 360, y: 290 }
+    };
+
+    function updateLinkLines() {
+      const containerRect = container.getBoundingClientRect();
+      for (const [lineId, pair] of Object.entries(links)) {
+        const lineEl = document.getElementById(lineId);
+        const fromEl = document.getElementById(pair.from);
+        const toEl = document.getElementById(pair.to);
+        if (!lineEl || !fromEl || !toEl) continue;
+
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+
+        const x1 = fromRect.left - containerRect.left + fromRect.width / 2;
+        const y1 = fromRect.top - containerRect.top + fromRect.height / 2;
+        const x2 = toRect.left - containerRect.left + toRect.width / 2;
+        const y2 = toRect.top - containerRect.top + toRect.height / 2;
+
+        lineEl.setAttribute('x1', x1);
+        lineEl.setAttribute('y1', y1);
+        lineEl.setAttribute('x2', x2);
+        lineEl.setAttribute('y2', y2);
+      }
+    }
+
+    // Draggable Nodes Logic
+    let activeNode = null;
+    let offset = { x: 0, y: 0 };
+
+    nodes.forEach(node => {
+      node.addEventListener('mousedown', (e) => {
+        activeNode = node;
+        const rect = node.getBoundingClientRect();
+        offset.x = e.clientX - rect.left;
+        offset.y = e.clientY - rect.top;
+        node.style.zIndex = '30';
+      });
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!activeNode) return;
+      const containerRect = container.getBoundingClientRect();
+      let newX = e.clientX - containerRect.left - offset.x;
+      let newY = e.clientY - containerRect.top - offset.y;
+
+      // Restrict within container boundaries
+      newX = Math.max(10, Math.min(newX, containerRect.width - activeNode.offsetWidth - 10));
+      newY = Math.max(10, Math.min(newY, containerRect.height - activeNode.offsetHeight - 10));
+
+      activeNode.style.left = newX + 'px';
+      activeNode.style.top = newY + 'px';
+      updateLinkLines();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (activeNode) {
+        activeNode.style.zIndex = '10';
+        activeNode = null;
+      }
+    });
+
+    // Reset Layout Button
+    const resetBtn = document.getElementById('resetGraphBtn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        for (const [id, pos] of Object.entries(initialPositions)) {
+          const el = document.getElementById(id);
+          if (el) {
+            el.style.left = pos.x + 'px';
+            el.style.top = pos.y + 'px';
+          }
+        }
+        updateLinkLines();
+      });
+    }
+
+    // Hashcat Cracker Simulation
+    const startCrackerBtn = document.getElementById('startCrackerBtn');
+    const progressBar = document.getElementById('crackerProgressBar');
+    const statusText = document.getElementById('crackerStatusText');
+    const speedText = document.getElementById('crackerSpeedText');
+    const progressText = document.getElementById('crackerProgressText');
+    const etaText = document.getElementById('crackerEta');
+    const indicator = document.getElementById('crackerStatusIndicator');
+
+    let crackerInterval = null;
+    let progress = 0;
+
+    if (startCrackerBtn) {
+      startCrackerBtn.addEventListener('click', () => {
+        if (crackerInterval) {
+          clearInterval(crackerInterval);
+          crackerInterval = null;
+          startCrackerBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">bolt</span> Start Hashcat Cracker';
+          statusText.textContent = 'PAUSED / IDLE';
+          speedText.textContent = '0.00 MH/s';
+          indicator.className = 'w-2 h-2 bg-warning-amber';
+          return;
+        }
+
+        startCrackerBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">stop</span> Halt Cracker';
+        statusText.textContent = 'CRACKING (ACTIVE GPU CORE 0)';
+        statusText.className = 'text-phosphor-green font-bold';
+        indicator.className = 'w-2 h-2 bg-phosphor-green animate-pulse shadow-[0_0_6px_#00FF66]';
+
+        crackerInterval = setInterval(() => {
+          progress += Math.random() * 4 + 2;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(crackerInterval);
+            crackerInterval = null;
+            startCrackerBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">done_all</span> Finished';
+            statusText.textContent = 'WORDLIST EXHAUSTED / CANDIDATES FOUND';
+            speedText.textContent = '0.00 MH/s';
+            etaText.textContent = 'COMPLETE';
+          } else {
+            const currentSpeed = (24800 + Math.floor(Math.random() * 850)).toLocaleString();
+            speedText.textContent = currentSpeed + ' kH/s';
+            const totalWords = 14344392;
+            const currentWords = Math.floor((progress / 100) * totalWords).toLocaleString();
+            progressText.textContent = `PROGRESS: ${currentWords} / ${totalWords.toLocaleString()} (${progress.toFixed(2)}%)`;
+            const secondsLeft = Math.max(1, Math.floor((100 - progress) * 0.4));
+            etaText.textContent = `ETA: 00:00:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
+          }
+          progressBar.style.width = progress + '%';
+        }, 300);
+      });
+    }
+
+    // Initial link draw
+    setTimeout(updateLinkLines, 50);
+    window.addEventListener('resize', updateLinkLines);
+  })();
+</script></main><footer class="w-full bg-surface-panel border-t border-border-dim px-margin py-space-xs flex flex-wrap items-center justify-between font-label-sm text-text-muted sticky bottom-0 z-40"><div class="flex items-center gap-space-lg"><span class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-phosphor-green rounded-full"></span>LINK: SATCOM-MIL-04 [UP]</span><span>CIPHER: AES-GCM-512 HARDENED</span><span>LATENCY: 4.2ms</span><span>ROUTE: TOR-DARKNET-DEFENSE-ENC</span></div><div class="flex items-center gap-space-md font-code-stream"><span>PING: 10.204.0.1 (RTT: 0.8ms)</span><span class="text-phosphor-green">AIR-GAP PASS</span><span>SEC-LEVEL: REDACTED-L5</span></div></footer></body></html>

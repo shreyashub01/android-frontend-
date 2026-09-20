@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-bright":"#36393f","surface-container-high":"#272a30","text-primary":"#F0F6FC","border-bright":"#2E4766","error-container":"#93000a","warning-amber":"#FFAA00","on-primary":"#003911","outline-variant":"#3b4b3a","on-secondary":"#00363d","surface-dim":"#101419","on-secondary-fixed-variant":"#004f58","on-error-container":"#ffdad6","tertiary":"#fff9f5","surface-container-low":"#181c21","tertiary-fixed-dim":"#ffb952","phosphor-glow":"rgba(0, 255, 102, 0.15)","inverse-surface":"#e0e2ea","secondary":"#bdf4ff","surface-highlight":"#1B2436","primary-fixed":"#6bff83","on-surface":"#e0e2ea","on-primary-container":"#007128","warning-subtle":"#2A1D05","cyan-telemetry":"#00E5FF","secondary-container":"#00e3fd","text-secondary":"#8B9BB4","on-primary-fixed-variant":"#00531b","on-error":"#690005","surface-base":"#070A0F","cyan-subtle":"#05222E","inverse-primary":"#006e27","outline":"#849581","tertiary-fixed":"#ffddb4","on-tertiary-fixed-variant":"#633f00","surface-tint":"#00e55b","on-surface-variant":"#b9ccb5","secondary-fixed":"#9cf0ff","surface-panel":"#0B0F17","inverse-on-surface":"#2d3036","primary-container":"#00ff66","surface":"#101419","on-primary-fixed":"#002107","crimson-subtle":"#2B0B17","background":"#101419","surface-container":"#1d2025","text-muted":"#4B5B73","primary-fixed-dim":"#00e55b","on-tertiary-fixed":"#291800","on-secondary-fixed":"#001f24","tertiary-container":"#ffd7a4","surface-variant":"#32353b","primary":"#edffe8","border-dim":"#1B2A3D","crimson-alert":"#FF0055","on-secondary-container":"#00616d","on-tertiary":"#452b00","phosphor-green":"#00FF66","on-background":"#e0e2ea","secondary-fixed-dim":"#00daf3","error":"#ffb4ab","surface-container-highest":"#32353b","surface-container-lowest":"#0b0e13","surface-subtle":"#121824","on-tertiary-container":"#865700"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"0.75rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.375rem","space-xs":"0.25rem","space-md":"0.625rem","gutter":"0.5rem"},"fontFamily":{"label-md":["JetBrains Mono"],"headline-xl":["JetBrains Mono"],"body-lg":["JetBrains Mono"],"headline-lg":["JetBrains Mono"],"label-sm":["JetBrains Mono"],"headline-sm":["JetBrains Mono"],"code-stream":["JetBrains Mono"],"headline-md":["JetBrains Mono"],"body-sm":["JetBrains Mono"],"body-md":["JetBrains Mono"]},"fontSize":{"label-md":["11px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["9px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"700"}],"headline-sm":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"code-stream":["10px",{"lineHeight":"15px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"body-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"body-md":["12px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-base font-body-sm text-on-surface antialiased select-none"><div class="w-full bg-crimson-subtle border-b border-border-dim px-margin py-0.5 flex items-center justify-between text-crimson-alert font-label-sm tracking-widest uppercase z-50 relative"><div>[ TS // SCI // NOFORN // ORCON // CYBERCOM-JFHQ ] CONTROLLED ACCESS FACILITY</div><div class="flex items-center gap-space-lg font-code-stream text-text-muted"><span>KEY: NSA-ECC-521</span><span>AIR-GAP: VERIFIED ENFORCED</span><span class="text-phosphor-green">SYS-HEALTH: NOMINAL</span></div></div><header class="w-full bg-surface-panel border-b border-border-dim z-40 sticky top-0"><div class="w-full px-margin py-space-sm flex flex-wrap items-center justify-between gap-space-md border-b border-border-dim/60 bg-surface-subtle"><div class="flex items-center gap-space-md"><div class="w-2.5 h-2.5 bg-phosphor-green shadow-[0_0_8px_rgba(0,255,102,0.6)]"></div><div><span class="font-headline-sm text-text-primary uppercase tracking-wider font-bold">CYBER-SHIELD</span><span class="font-label-sm text-cyan-telemetry ml-space-xs tracking-widest">v5.2-GOV</span></div><span class="font-label-sm px-space-xs py-0.5 bg-surface-highlight border border-border-bright text-text-secondary">JFHQ-C2</span></div><div class="flex items-center gap-space-md font-label-sm"><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">POSTURE:</span><span class="bg-warning-amber text-surface-base font-bold px-1.5 py-0.5">DEFCON 2</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">SHIELD:</span><span class="text-phosphor-green font-code-stream font-bold">99.8%</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">BEACONS:</span><span class="text-cyan-telemetry font-code-stream font-bold">142</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">TARGETS:</span><span class="text-crimson-alert font-code-stream font-bold">28</span></div><div class="flex items-center gap-space-xs bg-surface-base px-space-sm py-1 border border-border-dim"><span class="text-text-muted">LOOT:</span><span class="text-warning-amber font-code-stream font-bold">4.8 GB</span></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-md font-code-stream text-text-secondary"><div class="flex flex-col text-right"><span class="text-cyan-telemetry font-bold">14:28:44 ZULU</span><span class="text-text-muted font-label-sm">09:28:44 EST LOC</span></div></div><div class="flex items-center gap-space-sm pl-space-md border-l border-border-dim"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-phosphor-green/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA05Sldv2kiKsGigstMnzhEfhHWy0U4Y_m1cO8t4gxVn3MQkCZrjdtm9aatXXtYMKrs1G6GlWBhQI2k5cZ3MDpWsKfq03B07eEsGIiWEU2Xn1iGb8BLF8mi27QYpRFc5kB8CQpJYw0S6J4x62Gt3DIORjx-nVpgrE7N6yspBHSOWrbkAg-aiBQeoLfdDGW2YuYpz3XiZ2h9cHkh9TpC6AkZA6un4Qw-s0r30gIbaYSLFibZlnsz49xJ"/><div class="flex flex-col"><span class="font-label-sm text-text-primary leading-tight font-bold">MAJ. VANCE, R.</span><span class="font-label-sm text-text-muted text-[8px] leading-tight">OP-ID: 7701-ALPHA</span></div></div></div></div><div class="w-full px-margin py-1 bg-surface-base/80 border-b border-border-dim flex items-center justify-between text-text-muted font-label-sm"><div class="flex items-center gap-space-xs overflow-x-auto py-0.5"><span class="text-text-secondary font-bold mr-space-xs">KILL CHAIN:</span><span class="text-phosphor-green">RECON [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">WEAPONIZE [✓]</span><span class="text-text-muted">→</span><span class="text-phosphor-green">DELIVERY [✓]</span><span class="text-text-muted">→</span><span class="text-cyan-telemetry font-bold bg-cyan-subtle px-1 border border-cyan-telemetry/40">EXPLOIT [ACTIVE]</span><span class="text-text-muted">→</span><span class="text-text-muted">INSTALL</span><span class="text-text-muted">→</span><span class="text-text-muted">C2</span><span class="text-text-muted">→</span><span class="text-text-muted">ACTIONS</span></div><div class="flex items-center gap-space-sm font-code-stream"><span class="text-text-muted">OSC:</span><span class="text-phosphor-green">∿∿∿ 124.8 MHz [SYNC]</span></div></div><nav class="w-full px-margin flex items-center gap-space-xs overflow-x-auto bg-surface-panel" data-active-classes="bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold"><a aria-current="page" class="px-space-md py-space-sm uppercase tracking-wider transition-colors whitespace-nowrap bg-surface-highlight text-phosphor-green border-b-2 border-phosphor-green font-bold" data-path="war-room" href="#">War Room / Radar</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="operator-console" href="#">Operator Console</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="target-recon" href="#">Target Recon</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="exploit-catalog" href="#">Exploit Catalog</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="payload-builder" href="#">Payload Builder</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="active-beacons" href="#">Active Beacons</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="attack-topology" href="#">Attack Topology</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="credentials-and-loot" href="#">Credentials &amp; Loot</a><a class="px-space-md py-space-sm font-label-md uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors whitespace-nowrap" data-path="surveillance-screens" href="#">Surveillance Screens</a></nav></header><main class="w-full px-margin py-space-md min-h-[calc(100vh-140px)] bg-surface-base"><div class="flex flex-col w-full gap-space-md font-body-sm text-on-surface">
+<!-- TOP TELEMETRY RIBBON: 4 STRATEGIC DEFENSE GAUGES -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-sm w-full">
+<!-- GAUGE 1: Global Threat Index -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-widest text-text-muted flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 bg-crimson-alert animate-ping"></span>
+          THREAT VECTOR INDEX
+        </span>
+<span class="font-label-sm px-1.5 py-0.5 bg-crimson-alert text-text-primary uppercase font-bold tracking-wider">DEFCON 2</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<div>
+<div class="font-headline-xl text-crimson-alert font-bold tracking-tight">8.9<span class="text-headline-sm text-text-secondary">/10</span></div>
+<div class="font-code-stream text-crimson-alert/90 flex items-center gap-1 uppercase tracking-wide">
+<span class="material-symbols-outlined text-[14px]">warning</span> APT Probing Active
+          </div>
+</div>
+<!-- Micro Bar Chart Gauge -->
+<div class="w-20 h-10 flex items-end gap-1 pb-1">
+<div class="w-2 h-4 bg-crimson-alert/30"></div>
+<div class="w-2 h-6 bg-crimson-alert/50"></div>
+<div class="w-2 h-8 bg-crimson-alert/70"></div>
+<div class="w-2 h-10 bg-crimson-alert animate-pulse"></div>
+<div class="w-2 h-9 bg-crimson-alert"></div>
+<div class="w-2 h-7 bg-crimson-alert/80"></div>
+</div>
+</div>
+<div class="mt-space-xs pt-space-xs flex justify-between font-label-sm text-text-muted bg-surface-subtle px-1.5 py-0.5">
+<span>SECTOR: ASIA-PACIFIC</span>
+<span class="text-crimson-alert font-code-stream">12 PEAK SPIKES</span>
+</div>
+</div>
+<!-- GAUGE 2: Attacks Mitigated Today -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-widest text-text-muted flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 bg-phosphor-green"></span>
+          KINETIC MITIGATIONS (24H)
+        </span>
+<span class="font-label-sm px-1.5 py-0.5 bg-phosphor-green text-surface-base font-bold">99.98% DROP</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<div>
+<div class="font-headline-xl text-phosphor-green font-bold tracking-tight">1,842,912</div>
+<div class="font-code-stream text-text-secondary flex items-center gap-1">
+<span class="text-phosphor-green font-bold">+1,420/min</span> · ZERO ESCALATIONS
+          </div>
+</div>
+<!-- Sparkline SVG -->
+<svg class="w-20 h-10 text-phosphor-green stroke-current fill-none overflow-visible" viewbox="0 0 80 40">
+<path d="M0,32 L15,26 L30,30 L45,12 L60,18 L75,4 L80,2" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle class="fill-phosphor-green animate-ping" cx="80" cy="2" r="2.5"></circle>
+</svg>
+</div>
+<div class="mt-space-xs pt-space-xs flex justify-between font-label-sm text-text-muted bg-surface-subtle px-1.5 py-0.5">
+<span>AUTOMATED IPS FILTER</span>
+<span class="text-phosphor-green font-code-stream">EDGE: SYN-FLOOD SHED</span>
+</div>
+</div>
+<!-- GAUGE 3: Quantum Defense Cipher -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-widest text-text-muted flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 bg-cyan-telemetry"></span>
+          QUANTUM CIPHER ROTATION
+        </span>
+<span class="font-label-sm px-1.5 py-0.5 bg-cyan-subtle text-cyan-telemetry uppercase font-bold">L-5 HARDENED</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<div>
+<div class="font-headline-xl text-cyan-telemetry font-bold tracking-tight">AES-GCM-512</div>
+<div class="font-code-stream text-text-secondary flex items-center gap-1">
+            KYBER-1024 POST-QUANTUM
+          </div>
+</div>
+<div class="font-code-stream text-right">
+<div class="text-text-muted text-[8px]">ROTATION KEY</div>
+<div class="text-cyan-telemetry font-bold">0x9F4C...B81A</div>
+</div>
+</div>
+<div class="mt-space-xs pt-space-xs flex justify-between font-label-sm text-text-muted bg-surface-subtle px-1.5 py-0.5">
+<span>ENTROPY: 99.999%</span>
+<span class="text-cyan-telemetry font-code-stream">RE-KEY IN: 04:18m</span>
+</div>
+</div>
+<!-- GAUGE 4: Defense Satellite Uplink -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-widest text-text-muted flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 bg-warning-amber"></span>
+          MIL-NET ORBITAL LINK
+        </span>
+<span class="font-label-sm px-1.5 py-0.5 bg-warning-amber text-surface-base uppercase font-bold">GSAT-7A</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<div>
+<div class="font-headline-xl text-warning-amber font-bold tracking-tight">NAVIC 98%</div>
+<div class="font-code-stream text-text-secondary flex items-center gap-1">
+            UPLINK LOCK · BER &lt; 10⁻⁹
+          </div>
+</div>
+<div class="w-12 h-10 flex flex-col justify-center items-end text-right font-code-stream text-warning-amber">
+<span class="text-label-sm">EIRP 64dBW</span>
+<span class="text-label-sm text-phosphor-green">POL: RHCP</span>
+</div>
+</div>
+<div class="mt-space-xs pt-space-xs flex justify-between font-label-sm text-text-muted bg-surface-subtle px-1.5 py-0.5">
+<span>AZ: 142.4° / EL: 54.1°</span>
+<span class="text-phosphor-green font-code-stream">CARRIER-LOCK</span>
+</div>
+</div>
+</section>
+<!-- MID SECTION: RADAR CARD (LEFT 15 COL) + THREAT INTEL / DEFENSE COUNTERMEASURES (RIGHT 9 COL) -->
+<section class="grid grid-cols-1 xl:grid-cols-24 gap-space-sm w-full">
+<!-- GEOSPATIAL CYBER WARFARE RADAR CARD (15 Cols) -->
+<div class="xl:col-span-15 bg-surface-panel p-space-md flex flex-col justify-between shadow-md relative min-h-[500px]">
+<!-- Card HUD Topbar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm bg-surface-panel">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 bg-crimson-alert shadow-[0_0_8px_rgba(255,0,85,0.8)] animate-ping"></span>
+<span class="font-headline-sm uppercase text-text-primary font-bold tracking-wider">GEOSPATIAL WARFARE RADAR // LIVE THEATER</span>
+<span class="font-code-stream text-text-muted text-[10px] hidden sm:inline">[LAT: 19.0760° N, LON: 72.8777° E]</span>
+</div>
+<!-- Tactical Command Micro-Buttons -->
+<div class="flex items-center gap-1.5 font-label-sm">
+<button class="px-2 py-1 bg-surface-subtle hover:bg-surface-highlight text-text-secondary hover:text-cyan-telemetry transition-colors uppercase font-bold tracking-wider" type="button">
+            ⚡ DDOS Burst
+          </button>
+<button class="px-2 py-1 bg-phosphor-green text-surface-base font-bold tracking-wider uppercase shadow-[0_0_8px_rgba(0,255,102,0.4)]" type="button">
+            🛡️ CERT-In Shield [ON]
+          </button>
+<button class="px-2 py-1 bg-surface-subtle hover:bg-surface-highlight text-text-secondary uppercase" type="button">
+            1.0x Realtime
+          </button>
+<button class="px-2 py-1 bg-surface-subtle hover:bg-surface-highlight text-crimson-alert uppercase" type="button">
+            ↺ Reset Baseline
+          </button>
+</div>
+</div>
+<!-- Radar Display Canvas Overlay Container -->
+<div class="relative w-full h-[380px] bg-surface-base overflow-hidden flex items-center justify-center select-none">
+<!-- CRT Monitor Raster Scanlines & Radial Backdrop Grid -->
+<div class="absolute inset-0 bg-[radial-gradient(#1B2436_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-telemetry/5 to-transparent pointer-events-none"></div>
+<!-- Concentric Tactical Radar Rings Centered on Mumbai Coordinates -->
+<svg class="absolute inset-0 w-full h-full text-border-bright stroke-current fill-none opacity-40" preserveaspectratio="xMidYMid slice" viewbox="0 0 1000 500">
+<!-- Concentric Distance Rings -->
+<circle cx="500" cy="250" r="70" stroke-dasharray="4,4"></circle>
+<circle cx="500" cy="250" r="140" stroke-width="1"></circle>
+<circle cx="500" cy="250" r="210" stroke-dasharray="2,6"></circle>
+<circle class="text-phosphor-green/30" cx="500" cy="250" r="290" stroke-width="1"></circle>
+<!-- Crosshairs -->
+<line class="text-text-muted" stroke-dasharray="2,4" x1="100" x2="900" y1="250" y2="250"></line>
+<line class="text-text-muted" stroke-dasharray="2,4" x1="500" x2="500" y1="30" y2="470"></line>
+</svg>
+<!-- World Geospatial Continents Outline (Simplified Tactical Coordinates Projection) -->
+<svg class="absolute inset-0 w-full h-full fill-none stroke-border-bright/50" preserveaspectratio="xMidYMid slice" viewbox="0 0 1000 500">
+<!-- Tactical World Landmass Geometry -->
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M150,120 L230,110 L280,140 L310,210 L250,260 L180,240 L130,170 Z" stroke-width="1"></path>
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M220,290 L260,280 L290,340 L260,420 L220,380 Z" stroke-width="1"></path>
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M440,110 L520,95 L560,130 L490,160 L440,140 Z" stroke-width="1"></path>
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M460,190 L520,180 L540,240 L510,320 L470,270 Z" stroke-width="1"></path>
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M560,110 L760,100 L840,150 L810,240 L690,230 L600,160 Z" stroke-width="1"></path>
+<path class="fill-surface-subtle/50 stroke-border-dim" d="M720,320 L810,310 L830,370 L750,400 Z" stroke-width="1"></path>
+<!-- Ballistic Inbound Cyber Warfare Arcs to Mumbai Command Center (500, 250) -->
+<!-- Origin: Eastern Europe (620, 130) Fancy Bear MS17-010 -->
+<path class="stroke-crimson-alert fill-none" d="M620,130 Q580,180 500,250" stroke-dasharray="6,4" stroke-width="2">
+<animate attributename="stroke-dashoffset" dur="1.8s" repeatcount="indefinite" values="40;0"></animate>
+</path>
+<!-- Origin: North America West (190, 160) Zero-Day Probe -->
+<path class="stroke-warning-amber fill-none" d="M190,160 Q340,150 500,250" stroke-dasharray="8,4" stroke-width="1.8">
+<animate attributename="stroke-dashoffset" dur="2.4s" repeatcount="indefinite" values="60;0"></animate>
+</path>
+<!-- Origin: East Asia / Pacific Rim (770, 180) Volt Typhoon Modbus Infiltration -->
+<path class="stroke-crimson-alert fill-none" d="M770,180 Q660,180 500,250" stroke-dasharray="4,2" stroke-width="2.5">
+<animate attributename="stroke-dashoffset" dur="1.2s" repeatcount="indefinite" values="30;0"></animate>
+</path>
+<!-- Origin: Allied Node Diego Garcia (540, 360) MilNet Uplink Telemetry -->
+<path class="stroke-cyan-telemetry fill-none" d="M540,360 Q520,300 500,250" stroke-dasharray="3,3" stroke-width="1.5"></path>
+<!-- CERT-In Perimeter Shield Ring Around Central Node -->
+<circle class="stroke-phosphor-green fill-phosphor-green/10" cx="500" cy="250" r="42" stroke-dasharray="5,2" stroke-width="1.5"></circle>
+<!-- Central Hub: MUMBAI COMMAND C2 -->
+<circle class="fill-phosphor-green" cx="500" cy="250" r="5"></circle>
+<circle class="stroke-phosphor-green fill-none animate-ping" cx="500" cy="250" r="10"></circle>
+<!-- Threat Emitter Markers with Pulsing Beacons -->
+<circle class="fill-crimson-alert" cx="620" cy="130" r="4"></circle>
+<circle class="fill-warning-amber" cx="190" cy="160" r="3.5"></circle>
+<circle class="fill-crimson-alert" cx="770" cy="180" r="4.5"></circle>
+<circle class="fill-cyan-telemetry" cx="540" cy="360" r="3.5"></circle>
+</svg>
+<!-- Dynamic Floating Labels over the Radar -->
+<div class="absolute top-10 left-12 font-code-stream text-warning-amber bg-surface-panel/90 px-1.5 py-0.5 pointer-events-none">
+          PROBE: US-PACNW // IP 198.51.100.22
+        </div>
+<div class="absolute top-14 right-28 font-code-stream text-crimson-alert bg-surface-panel/90 px-1.5 py-0.5 pointer-events-none">
+          EXPL: APT-28 // 44.2 Gbps SYN-FLOOD
+        </div>
+<div class="absolute bottom-16 right-36 font-code-stream text-crimson-alert bg-surface-panel/90 px-1.5 py-0.5 pointer-events-none">
+          RECON: VOLT TYPHOON // MODBUS TCP 502
+        </div>
+<!-- Mumbai Command Center Target Lock Overlay -->
+<div class="absolute top-[43%] left-[44%] -translate-x-1/2 -translate-y-1/2 pointer-events-none flex flex-col items-center">
+<div class="px-1.5 py-0.5 bg-surface-panel/90 text-phosphor-green font-label-sm tracking-widest font-bold whitespace-nowrap shadow-[0_0_8px_rgba(0,255,102,0.3)]">
+            ◉ MUMBAI COMMAND [HQ]
+          </div>
+<span class="font-code-stream text-text-muted text-[8px]">SHIELD: CERT-IN HARDENED</span>
+</div>
+<!-- Scanning Line Sweep -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-phosphor-green/10 to-transparent w-24 h-full pointer-events-none animate-[pulse_3s_ease-in-out_infinite] -translate-x-full"></div>
+</div>
+<!-- Radar Legend & Geolocation Footer Bar -->
+<div class="mt-space-sm pt-space-xs flex flex-wrap items-center justify-between gap-space-sm font-label-sm bg-surface-subtle px-space-sm py-1.5">
+<div class="flex flex-wrap items-center gap-space-md">
+<span class="flex items-center gap-1 text-crimson-alert">
+<span class="w-2.5 h-1 bg-crimson-alert inline-block"></span> APT Exploit Arcs (#FF0055)
+          </span>
+<span class="flex items-center gap-1 text-warning-amber">
+<span class="w-2.5 h-1 bg-warning-amber inline-block"></span> Zero-Day Probes (#FFAA00)
+          </span>
+<span class="flex items-center gap-1 text-cyan-telemetry">
+<span class="w-2.5 h-1 bg-cyan-telemetry inline-block"></span> Allied Mil-Net (#00E5FF)
+          </span>
+<span class="flex items-center gap-1 text-phosphor-green">
+<span class="w-2.5 h-2.5 bg-phosphor-green/30 inline-block"></span> CERT-In Shield Perimeter
+          </span>
+</div>
+<div class="font-code-stream text-text-secondary">
+          COORD: <span class="text-text-primary">19.0760° N, 72.8777° E</span> [MUMBAI COMMAND]
+        </div>
+</div>
+</div>
+<!-- THREAT INTEL & DEFENSE ACTIONS PANEL (9 Cols) -->
+<div class="xl:col-span-9 flex flex-col gap-space-sm">
+<!-- TOP: ACTIVE APT THREAT TRACKER (MITRE ATT&CK Mapped) -->
+<div class="bg-surface-panel p-space-md flex flex-col justify-between shadow-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-crimson-alert"></span>
+<span class="font-headline-sm uppercase text-text-primary font-bold tracking-wider">ACTIVE APT THREAT TRACKER</span>
+</div>
+<span class="font-label-sm text-text-muted font-code-stream">[MITRE MATRIX v14.1]</span>
+</div>
+<!-- Threat List -->
+<div class="flex flex-col gap-space-xs mt-space-xs">
+<!-- Threat 1: APT28 -->
+<div class="p-space-sm bg-surface-base hover:bg-surface-highlight transition-colors flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-text-primary font-bold">APT28 / FANCY BEAR</span>
+<span class="px-1 py-0.2 bg-crimson-alert text-text-primary font-label-sm">CRITICAL</span>
+</div>
+<div class="font-code-stream text-text-secondary text-[10px] mt-0.5">
+                VULN: <span class="text-crimson-alert">MS17-010 EternalBlue</span> // PORT 445 SMBv1
+              </div>
+</div>
+<div class="text-right font-code-stream">
+<div class="text-cyan-telemetry text-label-sm font-bold">T1210: Exploit Service</div>
+<div class="text-text-muted text-[9px]">ORIGIN: RU-FED [SIGINT]</div>
+</div>
+</div>
+<!-- Threat 2: Volt Typhoon -->
+<div class="p-space-sm bg-surface-base hover:bg-surface-highlight transition-colors flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-text-primary font-bold">VOLT TYPHOON</span>
+<span class="px-1 py-0.2 bg-warning-amber text-surface-base font-label-sm font-bold">HIGH RISK</span>
+</div>
+<div class="font-code-stream text-text-secondary text-[10px] mt-0.5">
+                TARGET: <span class="text-warning-amber">SCADA / Modbus TCP 502</span> // Grid Telemetry
+              </div>
+</div>
+<div class="text-right font-code-stream">
+<div class="text-cyan-telemetry text-label-sm font-bold">T0807: Command Signal</div>
+<div class="text-text-muted text-[9px]">LIVING-OFF-THE-LAND</div>
+</div>
+</div>
+<!-- Threat 3: Lazarus Group -->
+<div class="p-space-sm bg-surface-base hover:bg-surface-highlight transition-colors flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-text-primary font-bold">LAZARUS GROUP</span>
+<span class="px-1 py-0.2 bg-crimson-alert text-text-primary font-label-sm">CRITICAL</span>
+</div>
+<div class="font-code-stream text-text-secondary text-[10px] mt-0.5">
+                VULN: <span class="text-crimson-alert">Log4j2 CVE-2021-44228</span> // JNDI Injection
+              </div>
+</div>
+<div class="text-right font-code-stream">
+<div class="text-cyan-telemetry text-label-sm font-bold">T1190: Internet App</div>
+<div class="text-text-muted text-[9px]">ORIGIN: DPRK-RGB</div>
+</div>
+</div>
+<!-- Threat 4: Sandworm GRU -->
+<div class="p-space-sm bg-surface-base hover:bg-surface-highlight transition-colors flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-text-primary font-bold">SANDWORM (GRU 74455)</span>
+<span class="px-1 py-0.2 bg-cyan-subtle text-cyan-telemetry font-label-sm font-bold">ACTIVE PROBE</span>
+</div>
+<div class="font-code-stream text-text-secondary text-[10px] mt-0.5">
+                VULN: <span class="text-cyan-telemetry">Zerologon Netlogon PrivEsc</span> // RPC-AD
+              </div>
+</div>
+<div class="text-right font-code-stream">
+<div class="text-cyan-telemetry text-label-sm font-bold">T1068: Priv Escalation</div>
+<div class="text-text-muted text-[9px]">STATUS: CONTAINED</div>
+</div>
+</div>
+</div>
+</div>
+<!-- BOTTOM: RAPID DEFENSE COUNTERMEASURES -->
+<div class="bg-surface-panel p-space-md shadow-md flex-1 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-phosphor-green text-[18px]">verified_user</span>
+<span class="font-headline-sm uppercase text-text-primary font-bold tracking-wider">RAPID DEFENSE ACTIONS</span>
+</div>
+<span class="font-label-sm px-1.5 py-0.5 bg-surface-highlight text-text-secondary">EMERGENCY PROTOCOLS</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs mt-space-xs">
+<!-- Action 1: Harden Shield -->
+<button class="p-space-sm bg-surface-subtle hover:bg-surface-highlight flex flex-col text-left group transition-all" type="button">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-phosphor-green group-hover:text-text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">shield</span> HARDEN SHIELD
+              </span>
+<span class="font-code-stream text-phosphor-green text-[10px]">[ARMED]</span>
+</div>
+<span class="text-text-muted font-label-sm text-[9px] mt-1">Block all inbound L4 transit ports except encrypted GRE tunnels</span>
+</button>
+<!-- Action 2: Purge BGP -->
+<button class="p-space-sm bg-crimson-subtle hover:bg-surface-highlight flex flex-col text-left group transition-all" type="button">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-crimson-alert group-hover:text-text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">router</span> PURGE BGP ROUTE
+              </span>
+<span class="font-code-stream text-crimson-alert text-[10px]">[Y/N]</span>
+</div>
+<span class="text-text-muted font-label-sm text-[9px] mt-1">Blackhole AS4291 hijacked routes via null route injection</span>
+</button>
+<!-- Action 3: Flush KRBTGT -->
+<button class="p-space-sm bg-surface-subtle hover:bg-surface-highlight flex flex-col text-left group transition-all" type="button">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-warning-amber group-hover:text-text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">vpn_key</span> FLUSH KRBTGT
+              </span>
+<span class="font-code-stream text-warning-amber text-[10px]">TGT-2x</span>
+</div>
+<span class="text-text-muted font-label-sm text-[9px] mt-1">Dual-cycle Domain Kerberos Ticket granting secret to sever golden tickets</span>
+</button>
+<!-- Action 4: Alert SIGINT -->
+<button class="p-space-sm bg-surface-subtle hover:bg-surface-highlight flex flex-col text-left group transition-all" type="button">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-md text-cyan-telemetry group-hover:text-text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">satellite_alt</span> ALERT SIGINT HQ
+              </span>
+<span class="font-code-stream text-cyan-telemetry text-[10px]">AUTO</span>
+</div>
+<span class="text-text-muted font-label-sm text-[9px] mt-1">Direct wire telemetry dispatch to Air-Gapped Cyber Defense Command</span>
+</button>
+</div>
+<div class="mt-space-sm p-space-xs bg-surface-base flex items-center justify-between font-code-stream text-[10px]">
+<span class="text-text-muted">ACTIVE DEFENSE OPERATOR:</span>
+<span class="text-phosphor-green">TOKEN_KEY #9901-ALPHA [VALIDATED]</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM SECTION: FULL-WIDTH REAL-TIME SOC / SIEM INTRUSION DETECTION FEED -->
+<section class="bg-surface-panel p-space-md shadow-md flex flex-col w-full">
+<!-- Header with Stream Filters -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-phosphor-green text-[18px]">terminal</span>
+<span class="font-headline-sm uppercase text-text-primary font-bold tracking-wider">REAL-TIME SOC // SIEM INTRUSION DETECTION FEED</span>
+<span class="font-code-stream text-phosphor-green text-[10px] bg-surface-subtle px-1.5 py-0.5">● LIVE TELEMETRY STREAM</span>
+</div>
+<!-- Filter Chips & Stream Controls -->
+<div class="flex flex-wrap items-center gap-1 font-label-sm">
+<span class="text-text-muted mr-1 font-bold">FILTERS:</span>
+<button class="px-2 py-0.5 bg-surface-highlight text-phosphor-green font-bold uppercase tracking-wider" type="button">
+          ALL EVENTS
+        </button>
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-surface-highlight text-crimson-alert uppercase tracking-wider font-bold" type="button">
+          CRITICAL [6]
+        </button>
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-surface-highlight text-warning-amber uppercase tracking-wider" type="button">
+          HIGH SEV
+        </button>
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-surface-highlight text-cyan-telemetry uppercase tracking-wider" type="button">
+          APT GROUPS
+        </button>
+<div class="h-3 w-px bg-border-dim mx-1"></div>
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-surface-highlight text-text-secondary hover:text-text-primary flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[12px]">pause</span> PAUSE
+        </button>
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-surface-highlight text-text-secondary hover:text-text-primary flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[12px]">clear_all</span> CLEAR
+        </button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="w-full overflow-x-auto mt-space-xs">
+<table class="w-full text-left font-code-stream border-collapse">
+<thead>
+<tr class="bg-surface-subtle text-text-muted font-label-sm uppercase text-[9px] tracking-wider">
+<th class="py-1.5 px-space-sm">TIME (UTC)</th>
+<th class="py-1.5 px-space-sm">SEVERITY</th>
+<th class="py-1.5 px-space-sm">ENGINE</th>
+<th class="py-1.5 px-space-sm">DETECTION RULE &amp; MITRE ATT&amp;CK</th>
+<th class="py-1.5 px-space-sm">TRAFFIC FLOW (SRC ➔ DST)</th>
+<th class="py-1.5 px-space-sm">ATTRIBUTED ACTOR</th>
+<th class="py-1.5 px-space-sm text-right">ACTION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dim/40 text-[11px]">
+<!-- Event 1: Suricata Critical -->
+<tr class="hover:bg-surface-highlight/70 transition-colors bg-surface-base">
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">14:28:43.109</td>
+<td class="py-1.5 px-space-sm whitespace-nowrap">
+<span class="px-1.5 py-0.5 bg-crimson-alert text-text-primary font-bold text-[9px] tracking-widest uppercase">CRITICAL</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-primary font-bold">SURICATA-IDS</td>
+<td class="py-1.5 px-space-sm text-text-primary">
+<span class="text-crimson-alert font-bold">ET EXPLOIT [MS17-010] SMB Remote Code Execution Request</span>
+<span class="text-text-muted text-[10px] ml-1">[MITRE: T1210 / Lateral Movement]</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">
+<span class="text-warning-amber">185.220.101.5:445</span> ➔ <span class="text-phosphor-green">10.204.14.92:445</span>
+</td>
+<td class="py-1.5 px-space-sm text-crimson-alert font-bold whitespace-nowrap">APT28 / FANCY BEAR</td>
+<td class="py-1.5 px-space-sm text-right whitespace-nowrap">
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-crimson-alert hover:text-text-primary text-cyan-telemetry text-[10px] font-bold tracking-wider uppercase transition-colors" type="button">
+                [ INVESTIGATE ]
+              </button>
+</td>
+</tr>
+<!-- Event 2: Zeek High -->
+<tr class="hover:bg-surface-highlight/70 transition-colors bg-surface-panel">
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">14:28:41.884</td>
+<td class="py-1.5 px-space-sm whitespace-nowrap">
+<span class="px-1.5 py-0.5 bg-warning-amber text-surface-base font-bold text-[9px] tracking-widest uppercase">ELEVATED</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-primary font-bold">ZEEK-BRO</td>
+<td class="py-1.5 px-space-sm text-text-primary">
+<span class="text-warning-amber font-bold">SCADA / Modbus Malformed Function 0x05 Write Coil Broadcast</span>
+<span class="text-text-muted text-[10px] ml-1">[MITRE: T0855 / Impair Process Control]</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">
+<span class="text-warning-amber">114.119.130.8:502</span> ➔ <span class="text-phosphor-green">192.168.44.10:502</span>
+</td>
+<td class="py-1.5 px-space-sm text-warning-amber font-bold whitespace-nowrap">VOLT TYPHOON</td>
+<td class="py-1.5 px-space-sm text-right whitespace-nowrap">
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-warning-amber hover:text-surface-base text-cyan-telemetry text-[10px] font-bold tracking-wider uppercase transition-colors" type="button">
+                [ INVESTIGATE ]
+              </button>
+</td>
+</tr>
+<!-- Event 3: Wazuh HIDS Critical -->
+<tr class="hover:bg-surface-highlight/70 transition-colors bg-surface-base">
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">14:28:39.420</td>
+<td class="py-1.5 px-space-sm whitespace-nowrap">
+<span class="px-1.5 py-0.5 bg-crimson-alert text-text-primary font-bold text-[9px] tracking-widest uppercase">CRITICAL</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-primary font-bold">WAZUH-HIDS</td>
+<td class="py-1.5 px-space-sm text-text-primary">
+<span class="text-crimson-alert font-bold">JNDI Injection via Log4j Header Payload in Web Request</span>
+<span class="text-text-muted text-[10px] ml-1">[MITRE: T1190 / Initial Access]</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">
+<span class="text-warning-amber">91.240.118.14:389</span> ➔ <span class="text-phosphor-green">10.204.8.12:8443</span>
+</td>
+<td class="py-1.5 px-space-sm text-crimson-alert font-bold whitespace-nowrap">LAZARUS GROUP</td>
+<td class="py-1.5 px-space-sm text-right whitespace-nowrap">
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-crimson-alert hover:text-text-primary text-cyan-telemetry text-[10px] font-bold tracking-wider uppercase transition-colors" type="button">
+                [ INVESTIGATE ]
+              </button>
+</td>
+</tr>
+<!-- Event 4: Snort 3 Info/Mitigated -->
+<tr class="hover:bg-surface-highlight/70 transition-colors bg-surface-panel">
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">14:28:37.012</td>
+<td class="py-1.5 px-space-sm whitespace-nowrap">
+<span class="px-1.5 py-0.5 bg-phosphor-green text-surface-base font-bold text-[9px] tracking-widest uppercase">DROPPED</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-primary font-bold">SNORT-3 IPS</td>
+<td class="py-1.5 px-space-sm text-text-primary">
+<span class="text-phosphor-green font-bold">SYN-Flood Threshold Exceeded (55,000 pps) Auto-Shunted</span>
+<span class="text-text-muted text-[10px] ml-1">[MITRE: T1498 / Denial of Service]</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">
+<span class="text-warning-amber">BOTNET-MIRAI-V8</span> ➔ <span class="text-phosphor-green">WAN-GATEWAY-01</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary whitespace-nowrap">UNKNOWN BOTNET</td>
+<td class="py-1.5 px-space-sm text-right whitespace-nowrap">
+<button class="px-2 py-0.5 bg-surface-subtle hover:bg-phosphor-green hover:text-surface-base text-text-secondary text-[10px] font-bold tracking-wider uppercase transition-colors" type="button">
+                [ LOG PACKET ]
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- SIEM Buffer Status Sub-Bar -->
+<div class="mt-space-sm pt-space-xs flex flex-wrap items-center justify-between text-[10px] font-code-stream text-text-muted bg-surface-subtle px-space-sm py-1">
+<div class="flex items-center gap-space-md">
+<span>EVENTS IN BUFFER: <span class="text-text-primary font-bold">84,102</span></span>
+<span>DROP QUEUE: <span class="text-phosphor-green font-bold">0</span></span>
+<span>CORRELATION ENGINE: <span class="text-cyan-telemetry font-bold">ACTIVE (CLUSTER-04)</span></span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-text-secondary">EXPORT TELEMETRY:</span>
+<span class="text-cyan-telemetry cursor-pointer hover:underline">[JSON]</span>
+<span class="text-cyan-telemetry cursor-pointer hover:underline">[PCAP]</span>
+<span class="text-cyan-telemetry cursor-pointer hover:underline">[STIX 2.1]</span>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-panel border-t border-border-dim px-margin py-space-xs flex flex-wrap items-center justify-between font-label-sm text-text-muted sticky bottom-0 z-40"><div class="flex items-center gap-space-lg"><span class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-phosphor-green rounded-full"></span>LINK: SATCOM-MIL-04 [UP]</span><span>CIPHER: AES-GCM-512 HARDENED</span><span>LATENCY: 4.2ms</span><span>ROUTE: TOR-DARKNET-DEFENSE-ENC</span></div><div class="flex items-center gap-space-md font-code-stream"><span>PING: 10.204.0.1 (RTT: 0.8ms)</span><span class="text-phosphor-green">AIR-GAP PASS</span><span>SEC-LEVEL: REDACTED-L5</span></div></footer></body></html>

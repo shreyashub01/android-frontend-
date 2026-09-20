@@ -195,37 +195,66 @@ class AppController {
       grid.innerHTML = '';
       targets.forEach(t => {
         const card = document.createElement('div');
-        card.className = `target-card ${t.isCompromised ? 'compromised' : ''}`;
+        const topBarColor = t.isCompromised 
+          ? 'bg-[#FF0055] shadow-[0_0_10px_rgba(255,0,85,0.8)]' 
+          : t.cvssMax >= 9.0 
+          ? 'bg-[#FFAA00] shadow-[0_0_10px_rgba(255,170,0,0.8)]' 
+          : 'bg-[#00FF66] shadow-[0_0_10px_rgba(0,255,102,0.8)]';
+
+        const statusDot = t.isCompromised 
+          ? '<span class="w-2.5 h-2.5 bg-[#FF0055] animate-ping inline-block rounded-full"></span>' 
+          : '<span class="w-2.5 h-2.5 bg-[#00FF66] inline-block rounded-full"></span>';
 
         const portsHtml = t.ports.map(p => 
-          `<span class="port-pill ${p.vuln ? 'vuln' : ''}">${p.port}/${p.service}</span>`
+          `<span class="px-2 py-0.5 font-mono text-[10px] ${p.vuln ? 'bg-[#2B0B17] border border-[#FF0055]/50 text-[#FF0055] font-bold' : 'bg-[#070A0F] border border-[#1B2A3D] text-[#00E5FF]'}">${p.port}/${p.service}</span>`
         ).join('');
 
         const vulnsHtml = t.vulns.map(v =>
-          `<span class="vuln-tag">⚠️ ${v.cve}: ${v.name.slice(0, 24)}... (CVSS ${v.cvss})</span>`
+          `<div class="bg-[#2B0B17] border border-[#FF0055]/40 text-[#FF0055] font-mono px-2 py-1 text-[11px] flex items-center justify-between">
+             <span class="font-bold">⚠️ ${v.cve}</span>
+             <span class="text-[10px] text-[#8B9BB4]">${v.name.slice(0, 26)}...</span>
+             <span class="bg-[#FF0055] text-[#070A0F] text-[9px] font-bold px-1.5 py-0.2">CVSS ${v.cvss}</span>
+           </div>`
         ).join('');
 
+        card.className = `bg-[#0B0F17] border border-[#1B2A3D] p-4 flex flex-col justify-between relative group hover:border-[#2E4766] transition-all shadow-md gap-3`;
+
         card.innerHTML = `
-          <div class="target-head">
-            <div class="target-host">
-              <span class="target-name">${t.name}</span>
-              <span class="target-ip">${t.ip} • <span style="color:var(--text-muted)">${t.type}</span></span>
+          <div class="absolute top-0 right-0 w-28 h-1 ${topBarColor}"></div>
+          
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                ${statusDot}
+                <span class="font-mono text-[#F0F6FC] font-bold text-sm tracking-tight">${t.name}</span>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-[#00E5FF] text-[11px] mt-1">
+                <span>${t.ip}</span>
+                <span class="text-[#4B5B73]">•</span>
+                <span class="text-[#8B9BB4] text-[10px] uppercase">${t.type}</span>
+              </div>
             </div>
-            <span class="target-os">${t.os}</span>
+            <span class="bg-[#1B2436] border border-[#2E4766] text-[#F0F6FC] font-mono text-[10px] px-2 py-0.5 uppercase">${t.os}</span>
           </div>
-          <div style="font-size:12px; color:var(--text-main)">${t.info}</div>
+
+          <div class="text-[11.5px] font-mono text-[#8B9BB4] leading-relaxed bg-[#121824] p-2 border-l-2 border-[#00E5FF]">${t.info}</div>
+
           <div>
-            <div style="font-size:10px; color:var(--text-muted); margin-bottom:4px; font-family:var(--font-mono)">OPEN PORTS & SERVICES:</div>
-            <div class="ports-list">${portsHtml}</div>
+            <div class="text-[9px] text-[#4B5B73] font-mono font-bold uppercase mb-1.5">OPEN PORTS & SERVICES:</div>
+            <div class="flex flex-wrap gap-1.5">${portsHtml}</div>
           </div>
+
           <div>
-            <div style="font-size:10px; color:var(--text-muted); margin-bottom:4px; font-family:var(--font-mono)">DETECTED VULNERABILITIES:</div>
-            <div class="vuln-tags">${vulnsHtml}</div>
+            <div class="text-[9px] text-[#4B5B73] font-mono font-bold uppercase mb-1.5">DETECTED VULNERABILITIES:</div>
+            <div class="flex flex-col gap-1.5">${vulnsHtml}</div>
           </div>
-          <div class="target-actions">
-            <button class="btn-tactical target-scan-btn" data-ip="${t.ip}">🔍 Deep Scan</button>
-            <button class="btn-tactical ${t.isCompromised ? 'danger' : 'active'} target-exploit-btn" data-ip="${t.ip}" data-mod="${t.vulns[0] ? t.vulns[0].module : ''}">
-              ${t.isCompromised ? '⚡ Session Active' : '💥 Arm Exploit'}
+
+          <div class="flex items-center gap-2 pt-2 border-t border-[#1B2A3D]">
+            <button class="target-scan-btn flex-1 bg-[#1B2436] hover:bg-[#2E4766] text-[#F0F6FC] font-mono text-[11px] font-bold py-1.5 px-3 border border-[#2E4766] transition-all cursor-pointer" data-ip="${t.ip}">
+              🔍 DEEP RECON
+            </button>
+            <button class="target-exploit-btn flex-1 ${t.isCompromised ? 'bg-[#FF0055] text-white' : 'bg-[#00FF66] text-[#070A0F] hover:bg-[#00e55b]'} font-mono text-[11px] font-bold py-1.5 px-3 transition-all shadow-[0_0_10px_rgba(0,255,102,0.3)] cursor-pointer" data-ip="${t.ip}" data-mod="${t.vulns[0] ? t.vulns[0].module : ''}">
+              ${t.isCompromised ? '⚡ SESSION ACTIVE' : '💥 ARM EXPLOIT'}
             </button>
           </div>
         `;
