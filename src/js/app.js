@@ -18,6 +18,7 @@ import { CyberKillChain } from './killchain.js';
 import { CyberThreatMap } from './threat-map.js';
 import { SiemStreamManager } from './siem.js';
 import { DefconController } from './defcon.js';
+import { frameworksManager } from './frameworks.js';
 
 class AppController {
   constructor() {
@@ -58,6 +59,7 @@ class AppController {
     this.preface = new CyberPreface();
     this.oscilloscope = new CyberOscilloscope('hud-oscilloscope-canvas');
     this.killChain = new CyberKillChain(this);
+    frameworksManager.init();
   }
 
   initTheme() {

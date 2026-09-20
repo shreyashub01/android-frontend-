@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/src/styles/main.css">
   <link rel="stylesheet" href="/src/styles/components.css">
   <link rel="stylesheet" href="/src/styles/terminal.css">
+  <link rel="stylesheet" href="/src/styles/frameworks.css">
 </head>
 <body>
 
@@ -176,7 +177,7 @@
           <span>🎯</span> TARGET RECON <span class="tab-badge">5</span>
         </button>
         <button class="tab-btn" data-tab="modules">
-          <span>⚡</span> EXPLOIT CATALOG <span class="tab-badge">5</span>
+          <span>⚔️</span> EXPLOIT FRAMEWORKS & C2 <span class="tab-badge" style="background:rgba(0,229,255,0.2); color:#00e5ff; border-color:#00e5ff">PRO</span>
         </button>
         <button class="tab-btn" data-tab="payloads">
           <span>🛠️</span> PAYLOAD BUILDER
@@ -616,51 +617,494 @@
       </section>
 
       <!-- =========================================================
-           TAB 3: EXPLOIT MODULES REPOSITORY
+           TAB 3: ADVANCED EXPLOITATION FRAMEWORKS & C2 EMULATION SUITE
            ========================================================= -->
       <section id="tab-modules" class="tab-content">
         <div class="cyber-card corner-accent">
           <div class="card-header">
             <div class="card-title">
-              <span class="icon">⚡</span> EXPLOIT MODULES & CVE REPOSITORY
+              <span class="icon">⚔️</span> ADVANCED EXPLOITATION FRAMEWORKS & C2 EMULATION SUITE
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">AIR-GAPPED CYBER SUITE</span>
+              <button id="btn-open-embed-modal" class="btn-tactical active" title="Get Embed iFrame or Android WebView code">
+                <span class="icon">⚡</span> EMBED / SHARE SUITE
+              </button>
             </div>
           </div>
           <div class="card-body">
             
-            <!-- Filter Toolbar -->
-            <div class="catalog-toolbar">
-              <div class="search-box">
-                <span style="color:var(--text-muted)">🔍</span>
-                <input id="module-search-input" class="search-input" type="text" placeholder="Search exploits by CVE, name, or platform...">
+            <div class="frameworks-container">
+
+              <!-- Sub-Navigation Bar -->
+              <div class="frameworks-subnav">
+                <button class="fw-subnav-btn active" data-fw="cobalt">
+                  <span>🛰️</span> COBALT STRIKE C2
+                </button>
+                <button class="fw-subnav-btn" data-fw="caldera">
+                  <span>🏛️</span> MITRE CALDERA APT
+                </button>
+                <button class="fw-subnav-btn" data-fw="bloodhound">
+                  <span>🩸</span> BLOODHOUND ACTIVE DIRECTORY
+                </button>
+                <button class="fw-subnav-btn" data-fw="havoc">
+                  <span>🗡️</span> HAVOC & SLIVER EVASION
+                </button>
+                <button class="fw-subnav-btn" data-fw="archive">
+                  <span>📜</span> CVE & EXPLOIT ARCHIVE
+                </button>
               </div>
 
-              <div class="category-filter">
-                <button class="filter-btn active" data-cat="all">ALL (5)</button>
-                <button class="filter-btn" data-cat="rce">RCE</button>
-                <button class="filter-btn" data-cat="web">WEB APPS</button>
-                <button class="filter-btn" data-cat="privesc">PRIVILEGE ESCALATION</button>
-                <button class="filter-btn" data-cat="lateral">LATERAL MOVEMENT</button>
-              </div>
-            </div>
+              <!-- =====================================================
+                   SUBPANEL 1: COBALT STRIKE C2 & MALLEABLE PROFILES
+                   ===================================================== -->
+              <div id="fw-panel-cobalt" class="fw-panel active">
+                <div class="cs-grid">
+                  
+                  <!-- Left: Profile Selector & Jitter Visualizer -->
+                  <div class="cs-card">
+                    <div class="cs-card-title">
+                      <span>🛰️ MALLEABLE C2 TRAFFIC PROFILES</span>
+                      <span style="font-size:9px; color:var(--accent-primary)">HTTP/S STEALTH ENGINE</span>
+                    </div>
 
-            <!-- Modules Table -->
-            <div class="modules-table-container">
-              <table class="cyber-table">
-                <thead>
-                  <tr>
-                    <th>CVE ID</th>
-                    <th>MODULE NAME / PATH</th>
-                    <th>CATEGORY</th>
-                    <th>TARGET OS</th>
-                    <th>CVSS</th>
-                    <th>RELIABILITY</th>
-                    <th>ACTION</th>
-                  </tr>
-                </thead>
-                <tbody id="modules-table-body">
-                  <!-- Dynamically populated by modules.js -->
-                </tbody>
-              </table>
+                    <div class="cs-profiles-list">
+                      <div class="cs-profile-card active" data-profile="amazon_cloudfront">
+                        <div class="cs-profile-name">☁️ Amazon CloudFront</div>
+                        <div class="cs-profile-sub">CDN Traffic Masking // Jitter 25%</div>
+                      </div>
+                      <div class="cs-profile-card" data-profile="azure_blob">
+                        <div class="cs-profile-name">🔷 Azure Blob Storage</div>
+                        <div class="cs-profile-sub">SAS Token Sync // Jitter 40%</div>
+                      </div>
+                      <div class="cs-profile-card" data-profile="google_recaptcha">
+                        <div class="cs-profile-name">🛡️ Google reCAPTCHA v3</div>
+                        <div class="cs-profile-sub">Enterprise Token Poll // Jitter 30%</div>
+                      </div>
+                      <div class="cs-profile-card" data-profile="cloudflare_worker">
+                        <div class="cs-profile-name">⚡ Cloudflare Edge Worker</div>
+                        <div class="cs-profile-sub">DoH & Diagnostic Trace // Jitter 50%</div>
+                      </div>
+                    </div>
+
+                    <!-- Beacon Jitter & Sleep Sliders -->
+                    <div class="jitter-controls">
+                      <div class="jitter-slider-row">
+                        <span>BEACON SLEEP INTERVAL:</span>
+                        <input id="cs-sleep-slider" class="jitter-slider" type="range" min="1" max="30" value="5">
+                        <span id="cs-sleep-val" style="color:var(--accent-primary); font-weight:700; min-width:30px;">5s</span>
+                      </div>
+                      <div class="jitter-slider-row">
+                        <span>BEACON JITTER RANDOMIZATION:</span>
+                        <input id="cs-jitter-slider" class="jitter-slider" type="range" min="0" max="75" value="37">
+                        <span id="cs-jitter-val" style="color:var(--accent-secondary); font-weight:700; min-width:30px;">37%</span>
+                      </div>
+                    </div>
+
+                    <!-- Live Jitter Timeline Track -->
+                    <div class="jitter-timeline-box">
+                      <div style="display:flex; justify-content:space-between; font-size:9px; font-family:var(--font-mono); color:var(--text-muted);">
+                        <span>C2 BEACON HEARTBEAT SIMULATOR</span>
+                        <span style="color:#00ff66;">ACTIVE CHECK-IN TIMELINE</span>
+                      </div>
+                      <div class="jitter-timeline-track">
+                        <div id="cs-beacon-pulse" class="jitter-beacon-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right: Malleable Code Preview & Pivot Graph -->
+                  <div class="cs-card">
+                    <div class="cs-card-title">
+                      <span>📄 MALLEABLE PROFILE INSPECTOR (.cna)</span>
+                      <button id="btn-export-cs-profile" class="btn-tactical" style="padding:2px 8px; font-size:10px;">
+                        📋 COPY PROFILE
+                      </button>
+                    </div>
+
+                    <pre id="cs-profile-preview" class="cs-preview-box"># Cobalt Strike Malleable C2 - Amazon CloudFront Profile
+set sample_name "Amazon CloudFront Edge";
+set sleeptime "5000";
+set jitter    "25";
+set useragent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
+
+http-get {
+    set uri "/cf/v1/telemetry/events /metrics/cdn/dist";
+    client {
+        header "Host" "d3c1x9a2k8l.cloudfront.net";
+        header "Accept" "application/json, text/plain, */*";
+        metadata {
+            base64url;
+            prepend "session=";
+            header "Cookie";
+        }
+    }
+}</pre>
+
+                    <!-- SMB Named Pipe Pivoting Diagram -->
+                    <div style="margin-top:6px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:10px; font-family:var(--font-mono); font-weight:700; color:var(--text-bright);">🔀 SMB NAMED PIPE PIVOT TOPOLOGY</span>
+                        <button id="btn-spawn-pipe" class="btn-tactical" style="padding:2px 8px; font-size:10px;">
+                          ➕ SPAWN PIVOT
+                        </button>
+                      </div>
+
+                      <div id="cs-pivot-nodes" class="pivot-flow-diagram">
+                        <div class="pivot-node c2">
+                          <div style="font-weight:700;">TEAMSERVER</div>
+                          <div style="font-size:8px; color:var(--text-muted)">192.168.1.50</div>
+                          <span style="font-size:8px; color:var(--accent-primary)">HTTPS C2</span>
+                        </div>
+                        <div class="pivot-arrow">➔<span style="font-size:8px;">HTTPS</span></div>
+                        <div class="pivot-node edge">
+                          <div style="font-weight:700;">EDGE-SRV-01</div>
+                          <div style="font-size:8px; color:var(--text-muted)">192.168.1.100</div>
+                          <span style="font-size:8px; color:var(--accent-secondary)">BEACON-01</span>
+                        </div>
+                        <div class="pivot-arrow">➔<span style="font-size:8px;">PIPE</span></div>
+                        <div class="pivot-node airgap">
+                          <div style="font-weight:700;">AIRGAP-DC-01</div>
+                          <div style="font-size:8px; color:var(--text-muted)">\\pipe\\msse-491</div>
+                          <span style="font-size:8px; color:#ff5577">INTERNAL SMB</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- =====================================================
+                   SUBPANEL 2: MITRE CALDERA AUTOMATED ADVERSARY EMULATION
+                   ===================================================== -->
+              <div id="fw-panel-caldera" class="fw-panel">
+                <div class="caldera-grid">
+
+                  <!-- Left: Adversary Emulation Plan & Steps -->
+                  <div class="cs-card">
+                    <div class="cs-card-title">
+                      <span>🏛️ CALDERA ADVERSARY OPERATION RUNNER</span>
+                      <span id="caldera-target-label" style="font-size:9px; color:var(--accent-secondary)">Subnet: 192.168.1.0/24</span>
+                    </div>
+
+                    <!-- Adversary Selector Pills -->
+                    <div class="apt-selector-row">
+                      <button class="apt-pill-btn active" data-apt="apt28">🐻 APT28 / FANCY BEAR</button>
+                      <button class="apt-pill-btn" data-apt="fin7">💳 FIN7 / CARBANAK</button>
+                      <button class="apt-pill-btn" data-apt="sandworm">⚡ SANDWORM (SCADA)</button>
+                    </div>
+
+                    <!-- Operational Controls -->
+                    <div style="display:flex; gap:8px; margin-bottom:12px;">
+                      <button id="btn-caldera-play" class="btn-tactical active" style="flex:1;">
+                        <span>▶</span> START OPERATION
+                      </button>
+                      <button id="btn-caldera-step" class="btn-tactical" style="padding:4px 12px;">
+                        <span>⏩</span> STEP
+                      </button>
+                      <button id="btn-caldera-reset" class="btn-tactical" style="padding:4px 12px;">
+                        <span>🔄</span> RESET
+                      </button>
+                    </div>
+
+                    <!-- Steps Execution Track -->
+                    <div id="caldera-steps-track" class="caldera-op-track">
+                      <!-- Dynamically rendered by frameworks.js -->
+                    </div>
+                  </div>
+
+                  <!-- Right: MITRE Heatmap & Telemetry Feed -->
+                  <div class="cs-card">
+                    <div class="cs-card-title">
+                      <span>🗺️ MITRE ATT&CK HEATMAP MATRIX</span>
+                      <span style="font-size:9px; color:#00ff66;">ENTERPRISE v14</span>
+                    </div>
+
+                    <!-- 7-Column Mini Heatmap Grid -->
+                    <div class="mitre-heatmap-grid">
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">ACCESS</div>
+                        <div class="mitre-cell hit-red" data-tactic="T1566.001" data-default="active">T1566</div>
+                        <div class="mitre-cell" data-tactic="T1190">T1190</div>
+                        <div class="mitre-cell" data-tactic="T1195.002">T1195</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">EXEC</div>
+                        <div class="mitre-cell" data-tactic="T1059.001">T1059</div>
+                        <div class="mitre-cell" data-tactic="T1204.002">T1204</div>
+                        <div class="mitre-cell" data-tactic="T1047">T1047</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">PERSIST</div>
+                        <div class="mitre-cell" data-tactic="T1053.005">T1053</div>
+                        <div class="mitre-cell" data-tactic="T1547">T1547</div>
+                        <div class="mitre-cell" data-tactic="T1543">T1543</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">PRIVESC</div>
+                        <div class="mitre-cell hit-red" data-tactic="T1068" data-default="active">T1068</div>
+                        <div class="mitre-cell" data-tactic="T1055">T1055</div>
+                        <div class="mitre-cell" data-tactic="T1134">T1134</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">EVASION</div>
+                        <div class="mitre-cell hit-red" data-tactic="T1027.002" data-default="active">T1027</div>
+                        <div class="mitre-cell" data-tactic="T1562.001">T1562</div>
+                        <div class="mitre-cell" data-tactic="T1140">T1140</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">CREDS</div>
+                        <div class="mitre-cell hit-red" data-tactic="T1003.001" data-default="active">T1003</div>
+                        <div class="mitre-cell" data-tactic="T1558.003">T1558</div>
+                        <div class="mitre-cell" data-tactic="T1552">T1552</div>
+                      </div>
+                      <div class="mitre-tactic-col">
+                        <div class="mitre-tactic-hdr">LATERAL</div>
+                        <div class="mitre-cell" data-tactic="T1021.002">T1021</div>
+                        <div class="mitre-cell" data-tactic="T1210">T1210</div>
+                        <div class="mitre-cell" data-tactic="T1570">T1570</div>
+                      </div>
+                    </div>
+
+                    <!-- Real-Time Telemetry Log Box -->
+                    <div style="margin-top:8px;">
+                      <div style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); margin-bottom:4px;">
+                        LIVE OPERATION TELEMETRY LOG:
+                      </div>
+                      <div id="caldera-log-box" class="cs-preview-box" style="height:120px;">
+                        <div><span style="color:var(--text-muted)">[READY]</span> Caldera Engine loaded. Agent initialized on 192.168.1.100.</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- =====================================================
+                   SUBPANEL 3: BLOODHOUND ACTIVE DIRECTORY GRAPH
+                   ===================================================== -->
+              <div id="fw-panel-bloodhound" class="fw-panel">
+                <div class="bh-container">
+                  
+                  <!-- Attack Path Visualizer Canvas -->
+                  <div class="bh-path-canvas-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-family:var(--font-mono); font-size:11px;">
+                      <div>
+                        <span style="color:#ff3366; font-weight:700;">🩸 SHORTEST ATTACK PATH TO DOMAIN ADMIN:</span>
+                        <span style="color:var(--text-bright);"> CORP.LOCAL\jdoe ➔ DOMAIN CONTROLLERS</span>
+                      </div>
+                      <span style="font-size:9px; color:#00ff66;">HOP DISTANCE: 4 EDGES</span>
+                    </div>
+
+                    <!-- Flow Nodes & Relationships -->
+                    <div class="bh-path-nodes">
+                      <!-- Node 1: Compromised User -->
+                      <div class="bh-node user">
+                        <div style="font-size:9px;">👤 COMPROMISED USER</div>
+                        <div class="bh-node-title">jdoe@CORP.LOCAL</div>
+                        <div class="bh-node-meta">Initial Stager // Low Privs</div>
+                      </div>
+
+                      <div class="bh-edge-label">MemberOf ➔</div>
+
+                      <!-- Node 2: Group -->
+                      <div class="bh-node group">
+                        <div style="font-size:9px;">👥 SECURITY GROUP</div>
+                        <div class="bh-node-title">IT-SUPPORT-GPO</div>
+                        <div class="bh-node-meta">Local Admin Tier // SID 513</div>
+                      </div>
+
+                      <div class="bh-edge-label">GenericAll ➔</div>
+
+                      <!-- Node 3: Database Server -->
+                      <div class="bh-node server">
+                        <div style="font-size:9px;">🖥️ MEMBER SERVER</div>
+                        <div class="bh-node-title">SQL-SRV-01.CORP</div>
+                        <div class="bh-node-meta">Service: MSSQLSvc // SPN Set</div>
+                      </div>
+
+                      <div class="bh-edge-label">AdminTo / DCSync ➔</div>
+
+                      <!-- Node 4: Domain Controller -->
+                      <div class="bh-node dc">
+                        <div style="font-size:9px;">👑 DOMAIN CONTROLLER</div>
+                        <div class="bh-node-title">DC01.CORP.LOCAL</div>
+                        <div class="bh-node-meta">KRBTGT Key // NTDS.dit</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Active Directory Exploitation Tooling Actions -->
+                  <div class="cs-card">
+                    <div class="cs-card-title">
+                      <span>🛠️ ACTIVE DIRECTORY ATTACK TOOLING (BLOODHOUND ACTIONS)</span>
+                      <span style="font-size:9px; color:var(--accent-primary)">KERBEROS & DCSYNC TOOLKIT</span>
+                    </div>
+
+                    <div class="bh-actions-toolbar">
+                      <button id="btn-bh-kerberoast" class="btn-tactical active">
+                        🔥 RUN KERBEROASTING (GetUserSPNs.py)
+                      </button>
+                      <button id="btn-bh-golden" class="btn-tactical">
+                        👑 FORGE GOLDEN TICKET (mimikatz)
+                      </button>
+                      <button id="btn-bh-dcsync" class="btn-tactical">
+                        ⚡ DCSYNC NTDS.dit (secretsdump.py)
+                      </button>
+                      <button id="btn-bh-reset" class="btn-tactical">
+                        🔄 RESET GRAPH
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- =====================================================
+                   SUBPANEL 4: HAVOC & SLIVER ADVANCED EVASION ENGINE
+                   ===================================================== -->
+              <div id="fw-panel-havoc" class="fw-panel">
+                <div class="cs-card" style="margin-bottom:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                      <div style="font-size:12px; font-weight:700; color:var(--text-bright); font-family:var(--font-display);">
+                        🗡️ HAVOC DEMON & SLIVER ADVANCED EVASION MATRIX
+                      </div>
+                      <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">
+                        Dynamic ring-3 payload obfuscation, sleep encryption, and userland EDR unhooking
+                      </div>
+                    </div>
+                    <div style="text-align:right; font-family:var(--font-mono);">
+                      <div style="font-size:9px; color:var(--text-muted);">EDR BYPASS PROBABILITY</div>
+                      <span id="evasion-bypass-score" style="font-size:20px; font-weight:800; color:#00ff66;">83%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="havoc-evasion-grid">
+                  <!-- Evasion Card 1 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">⏳ Ekko Sleep Obfuscation</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="ekko" style="padding:2px 8px;">
+                        <span class="evasion-status-pill active">● ACTIVE</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Uses ROP chains and Win32 timer callbacks to encrypt beacon memory with RC4/AES during sleep intervals, blinding memory scanners.
+                    </div>
+                  </div>
+
+                  <!-- Evasion Card 2 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">🛡️ Indirect Syscalls (TartarusGate)</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="syscalls" style="padding:2px 8px;">
+                        <span class="evasion-status-pill active">● ACTIVE</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Dynamically computes SSNs and jumps directly to <code>syscall; ret</code> inside clean <code>ntdll.dll</code> memory to bypass userland hooks.
+                    </div>
+                  </div>
+
+                  <!-- Evasion Card 3 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">⚡ AMSI & ETW In-Memory Patching</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="amsi" style="padding:2px 8px;">
+                        <span class="evasion-status-pill active">● ACTIVE</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Patches <code>AmsiScanBuffer</code> and <code>EtwEventWrite</code> instructions to return <code>S_OK (0x0)</code>, neutralizing script logging.
+                    </div>
+                  </div>
+
+                  <!-- Evasion Card 4 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">🔒 Sliver mTLS & AES-GCM Encrypted Stager</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="mtls" style="padding:2px 8px;">
+                        <span class="evasion-status-pill active">● ACTIVE</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Establishes cryptographically authenticated mutual TLS channels preventing network DPI appliances from decrypting beacons.
+                    </div>
+                  </div>
+
+                  <!-- Evasion Card 5 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">🎭 Module Stomping & DLL Overwrite</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="stomping" style="padding:2px 8px;">
+                        <span class="evasion-status-pill" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted)">○ DISABLED</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Loads a legitimate Microsoft-signed DLL from disk and writes shellcode directly into its <code>.text</code> section to conceal memory allocation.
+                    </div>
+                  </div>
+
+                  <!-- Evasion Card 6 -->
+                  <div class="evasion-card">
+                    <div class="evasion-header">
+                      <div class="evasion-name">🧱 Synthetic Call Stack Spoofing</div>
+                      <button class="evasion-toggle-btn btn-tactical" data-feature="stack" style="padding:2px 8px;">
+                        <span class="evasion-status-pill active">● ACTIVE</span>
+                      </button>
+                    </div>
+                    <div class="evasion-desc">
+                      Synthesizes a realistic call stack pointing to benign Windows APIs when executing beacon commands to evade stack-walking heuristics.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =====================================================
+                   SUBPANEL 5: CVE & EXPLOIT ARCHIVE (ORIGINAL REPO)
+                   ===================================================== -->
+              <div id="fw-panel-archive" class="fw-panel">
+                <div class="cs-card">
+                  <div class="catalog-toolbar">
+                    <div class="search-box">
+                      <span style="color:var(--text-muted)">🔍</span>
+                      <input id="module-search-input" class="search-input" type="text" placeholder="Search exploits by CVE, name, or platform...">
+                    </div>
+
+                    <div class="category-filter">
+                      <button class="filter-btn active" data-cat="all">ALL (5)</button>
+                      <button class="filter-btn" data-cat="rce">RCE</button>
+                      <button class="filter-btn" data-cat="web">WEB APPS</button>
+                      <button class="filter-btn" data-cat="privesc">PRIVILEGE ESCALATION</button>
+                      <button class="filter-btn" data-cat="lateral">LATERAL MOVEMENT</button>
+                    </div>
+                  </div>
+
+                  <!-- Modules Table -->
+                  <div class="modules-table-container">
+                    <table class="cyber-table">
+                      <thead>
+                        <tr>
+                          <th>CVE ID</th>
+                          <th>MODULE NAME / PATH</th>
+                          <th>CATEGORY</th>
+                          <th>TARGET OS</th>
+                          <th>CVSS</th>
+                          <th>RELIABILITY</th>
+                          <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody id="modules-table-body">
+                        <!-- Dynamically populated by modules.js -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -1033,6 +1477,87 @@
             Block TCP Port 445 on perimeter firewalls, isolate infected host IP, and apply latest security patch rollup.
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embed & Share Suite Modal -->
+  <div id="embed-code-modal" class="embed-modal-overlay">
+    <div class="embed-modal-box">
+      <div class="embed-modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--accent-primary)">⚡</span>
+          <span>EMBED EXPLOITATION SUITE // SHARING CODE GENERATOR</span>
+        </div>
+        <button id="btn-close-embed-modal" class="btn-tactical" style="padding:2px 8px; font-size:11px;">✕ CLOSE</button>
+      </div>
+
+      <div class="embed-modal-body">
+        <div style="color:var(--text-muted); font-size:11px;">
+          Embed this live CYBER-SHIELD C2 Operations platform directly into any web dashboard, team portal, or native Android WebView application.
+        </div>
+
+        <!-- Embed Mode Tabs -->
+        <div style="display:flex; gap:6px;">
+          <button class="embed-tab-btn fw-subnav-btn active" data-target="iframe">🌐 HTML iFrame</button>
+          <button class="embed-tab-btn fw-subnav-btn" data-target="android">📱 Android WebView (Kotlin)</button>
+          <button class="embed-tab-btn fw-subnav-btn" data-target="cloud">☁️ Cloud Hosted URL</button>
+        </div>
+
+        <!-- Pane 1: iFrame -->
+        <div id="embed-pane-iframe" class="embed-tab-pane">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:700; color:var(--text-bright);">HTML5 IFRAME EMBED CODE:</span>
+            <button class="btn-copy-embed btn-tactical" data-copy-target="snippet-iframe">📋 COPY CODE</button>
+          </div>
+          <pre id="snippet-iframe" class="embed-code-snippet">&lt;!-- CYBER-SHIELD v5.2-GOV C2 Exploitation Framework Embed --&gt;
+&lt;iframe 
+  src="https://shreyashub01.github.io/android-frontend-/" 
+  width="100%" 
+  height="900px" 
+  frameborder="0" 
+  allow="camera; microphone; fullscreen; clipboard-read; clipboard-write" 
+  allowfullscreen&gt;
+&lt;/iframe&gt;</pre>
+        </div>
+
+        <!-- Pane 2: Android WebView -->
+        <div id="embed-pane-android" class="embed-tab-pane" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:700; color:var(--text-bright);">ANDROID KOTLIN WEBVIEW INTEGRATION:</span>
+            <button class="btn-copy-embed btn-tactical" data-copy-target="snippet-android">📋 COPY CODE</button>
+          </div>
+          <pre id="snippet-android" class="embed-code-snippet">// In your Android MainActivity.kt:
+import android.webkit.WebView
+import android.webkit.WebViewClient
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val webView: WebView = findViewById(R.id.cyberShieldWebView)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.allowFileAccess = true
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl("https://shreyashub01.github.io/android-frontend-/")
+    }
+}</pre>
+        </div>
+
+        <!-- Pane 3: Cloud Hosted URL -->
+        <div id="embed-pane-cloud" class="embed-tab-pane" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:700; color:var(--text-bright);">DIRECT PRODUCTION CLOUD URL:</span>
+            <button class="btn-copy-embed btn-tactical" data-copy-target="snippet-cloud">📋 COPY LINK</button>
+          </div>
+          <pre id="snippet-cloud" class="embed-code-snippet">https://shreyashub01.github.io/android-frontend-/</pre>
+          <div style="margin-top:8px; font-size:10px; color:var(--text-muted);">
+            GitHub Repository: &lt;a href="https://github.com/shreyashub01/android-frontend-" target="_blank" style="color:var(--accent-primary)"&gt;https://github.com/shreyashub01/android-frontend-&lt;/a&gt;
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
