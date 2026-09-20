@@ -1,0 +1,525 @@
+/* =========================================================
+   EXPLOIT-X C2 CONSOLE & TMUX MULTIPLEXER STYLES
+   ========================================================= */
+
+/* --- TMUX WRAPPER & CONTAINER --- */
+.tmux-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - 180px);
+  min-height: 580px;
+  background: rgba(5, 8, 12, 0.96);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-dim);
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- TMUX TOP MULTIPLEXER TOOLBAR --- */
+.tmux-top-toolbar {
+  height: 38px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  user-select: none;
+}
+
+.tmux-brand-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.tmux-brand-icon {
+  background: var(--accent-primary);
+  color: #000000;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: 900;
+}
+
+.tmux-layout-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tmux-layout-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--transition-fast);
+}
+
+.tmux-layout-btn:hover,
+.tmux-layout-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* --- TMUX SPLIT GRID --- */
+.tmux-grid {
+  flex: 1;
+  display: grid;
+  gap: 6px;
+  padding: 6px;
+  background: #020408;
+  overflow: hidden;
+}
+
+/* Layout: Single Pane */
+.tmux-grid.layout-single {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Layout: Split Vertical (2 Columns) */
+.tmux-grid.layout-split-v {
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-rows: 1fr;
+}
+
+/* Layout: Split Horizontal (2 Rows) */
+.tmux-grid.layout-split-h {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.2fr 0.8fr;
+}
+
+/* Layout: Trio Grid (Console Left, Sniffer + Htop Right) */
+.tmux-grid.layout-trio {
+  grid-template-columns: 1.2fr 0.9fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.tmux-grid.layout-trio #pane-terminal {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+}
+.tmux-grid.layout-trio #pane-sniffer {
+  grid-row: 1;
+  grid-column: 2;
+}
+.tmux-grid.layout-trio #pane-htop {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+/* --- TMUX PANES --- */
+.tmux-pane {
+  background: rgba(8, 12, 18, 0.94);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tmux-pane.active {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-dim);
+}
+
+.tmux-pane-header {
+  height: 28px;
+  background: rgba(14, 22, 35, 0.85);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.tmux-pane.active .tmux-pane-header {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+.pane-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.pane-badge {
+  font-size: 9px;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* --- TERMINAL BODY & INPUT (PANE 1) --- */
+.terminal-body {
+  flex: 1;
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-main);
+  scroll-behavior: smooth;
+}
+
+.terminal-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.quick-cmd-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 2px 7px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.quick-cmd-btn:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: 0 0 6px var(--accent-glow);
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.45);
+  border-top: 1px solid var(--border-color);
+  position: relative;
+}
+
+.terminal-prompt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  margin-right: 6px;
+  user-select: none;
+}
+
+.terminal-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-bright);
+  caret-color: var(--accent-primary);
+}
+
+.terminal-autocomplete-popup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 10px var(--accent-dim);
+  z-index: 1000;
+  max-height: 160px;
+  overflow-y: auto;
+  min-width: 250px;
+  display: none;
+}
+.terminal-autocomplete-popup.show {
+  display: block;
+}
+
+.autocomplete-item {
+  padding: 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.autocomplete-item:hover {
+  background: var(--accent-dim);
+  color: var(--accent-primary);
+}
+
+/* Syntax Highlighting */
+.term-line {
+  margin-bottom: 2px;
+  word-break: break-word;
+}
+.term-banner {
+  color: var(--accent-primary);
+  font-weight: 700;
+  text-shadow: 0 0 8px var(--accent-glow);
+  margin-bottom: 8px;
+  font-size: 10px;
+  line-height: 1.15;
+  white-space: pre;
+  overflow-x: auto;
+}
+.term-success { color: var(--accent-primary); }
+.term-info { color: var(--accent-secondary); }
+.term-warning { color: var(--color-warning); }
+.term-error { color: var(--color-danger); }
+.term-muted { color: var(--text-muted); }
+.term-highlight { color: #ffffff; font-weight: 600; }
+.token-success { color: var(--accent-primary); font-weight: 700; }
+.token-error { color: var(--color-danger); font-weight: 700; }
+.token-info { color: var(--accent-secondary); font-weight: 700; }
+.prompt-module { color: var(--color-danger); }
+.prompt-session { color: var(--accent-secondary); }
+
+/* --- PANE 2: PACKET SNIFFER STYLES --- */
+.sniffer-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.sniffer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border-color);
+  gap: 6px;
+}
+
+.sniff-filters {
+  display: flex;
+  gap: 4px;
+}
+
+.sniff-filter-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.sniff-filter-btn:hover,
+.sniff-filter-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.sniffer-stream {
+  flex: 1;
+  padding: 8px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sniff-row {
+  display: grid;
+  grid-template-columns: 75px 180px 65px 45px 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sniff-row:hover {
+  background: rgba(0, 255, 102, 0.08);
+}
+.sniff-time { color: var(--text-muted); }
+.sniff-ip { color: var(--accent-secondary); }
+.sniff-len { color: var(--color-warning); text-align: right; }
+.sniff-info { color: var(--text-main); overflow: hidden; text-overflow: ellipsis; }
+
+.sniff-proto {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  text-align: center;
+}
+.proto-tls { background: rgba(0, 255, 102, 0.15); color: #00ff66; border: 1px solid #00ff66; }
+.proto-smb { background: rgba(255, 0, 85, 0.15); color: #ff3366; border: 1px solid #ff3366; }
+.proto-other { background: rgba(0, 229, 255, 0.15); color: #00e5ff; border: 1px solid #00e5ff; }
+
+/* --- PANE 3: HTOP SYSTEM RESOURCE MONITOR --- */
+.htop-body {
+  flex: 1;
+  padding: 8px 10px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.htop-meters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+}
+
+.htop-bar-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.htop-label { color: var(--text-bright); }
+.htop-val { color: var(--accent-primary); font-weight: 700; }
+
+.htop-proc-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.htop-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+.htop-table th {
+  text-align: left;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  padding: 3px 6px;
+}
+.htop-table td {
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   THE ICONIC TMUX GREEN BOTTOM STATUS BAR
+   ========================================================= */
+.tmux-status-bar {
+  height: 26px;
+  background: #008700; /* Classic tmux green */
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  user-select: none;
+}
+
+[data-theme="cyberpunk"] .tmux-status-bar {
+  background: #0087af;
+}
+[data-theme="crimson"] .tmux-status-bar {
+  background: #af005f;
+  color: #ffffff;
+}
+[data-theme="amber"] .tmux-status-bar {
+  background: #d78700;
+}
+
+.tmux-status-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tmux-session-name {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 800;
+}
+
+.tmux-win-tab {
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 2px;
+}
+.tmux-win-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.tmux-win-tab.active {
+  background: #000000;
+  color: #00ff66;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+[data-theme="cyberpunk"] .tmux-win-tab.active { color: #00e5ff; }
+[data-theme="crimson"] .tmux-win-tab.active { color: #ff3366; }
+[data-theme="amber"] .tmux-win-tab.active { color: #ffb700; }
+
+.tmux-status-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+}
+
+.tmux-status-host {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1px 6px;
+  border-radius: 2px;
+}

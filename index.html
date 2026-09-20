@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="matrix">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Exploit-X C2 Framework: Advanced Cybersecurity Exploitation and Operations Simulation Platform for Educational Security Research.">
+  <title>EXPLOIT-X // C2 Offensive Exploitation Framework & Operations Control Panel</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/terminal.css">
+</head>
+<body>
+
+  <!-- Ambient FX -->
+  <canvas id="matrix-canvas"></canvas>
+  <div class="ambient-grid"></div>
+  <div class="crt-overlay"></div>
+
+  <!-- Top National Security Classification Ribbon -->
+  <div class="gov-classification-banner">
+    <div class="gov-banner-inner">
+      <div class="gov-classification-left">
+        <span class="gov-seal-icon">🇮🇳</span>
+        <span>TOP SECRET // LEVEL-5 TS-SCI // NATIONAL CYBER DEFENSE OPERATIONS COMMAND (NCDOC)</span>
+      </div>
+      <div class="gov-classification-right">
+        <span class="gov-header-tag">AIR-GAPPED DEFENSE GRID</span>
+        <span>CERT-IN SIMULATION LAB // RESTRICTED ACCESS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application Wrapper -->
+  <div id="app">
+
+    <!-- Top HUD Telemetry Bar -->
+    <header class="hud-header">
+      <div class="hud-header-inner">
+        <div class="brand-section">
+          <div class="brand-icon" title="National Cyber Defense Agency">🛡️</div>
+          <div class="brand-title">
+            <div class="brand-name">
+              CYBER-SHIELD <span class="brand-version">v5.2-GOV</span>
+            </div>
+            <div class="brand-sub">NATIONAL CYBER WARFARE OPERATIONS & MITRE SIMULATION</div>
+          </div>
+        </div>
+
+        <!-- Live Telemetry Statuses -->
+        <div class="hud-telemetry">
+          <!-- Interactive DEFCON Threat Posture Badge -->
+          <div id="hud-defcon-badge" class="defcon-badge defcon-level-2" title="Click to Cycle DEFCON Threat Posture">
+            <span class="defcon-dot">⚠️</span>
+            <div class="defcon-info">
+              <span id="hud-defcon-label" class="defcon-title">DEFCON 2</span>
+              <span id="hud-defcon-desc" class="defcon-desc">HIGH RISK POSTURE</span>
+            </div>
+          </div>
+
+          <div class="telemetry-item">
+            <span class="pulse-dot"></span>
+            <div class="telemetry-meta">
+              <span class="telemetry-label">SHIELD</span>
+              <span class="telemetry-value" style="color:var(--accent-primary)">99.8%</span>
+            </div>
+          </div>
+
+          <div class="telemetry-item">
+            <span class="pulse-dot danger"></span>
+            <div class="telemetry-meta">
+              <span class="telemetry-label">BEACONS</span>
+              <span class="telemetry-value" id="hud-active-sessions">2</span>
+            </div>
+          </div>
+
+          <div class="telemetry-item">
+            <div class="telemetry-meta">
+              <span class="telemetry-label">TARGETS</span>
+              <span class="telemetry-value" id="hud-target-count">5</span>
+            </div>
+          </div>
+
+          <div class="telemetry-item">
+            <div class="telemetry-meta">
+              <span class="telemetry-label">LOOT</span>
+              <span class="telemetry-value" id="hud-loot-count">5</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Audio / RF Waveform Oscilloscope -->
+          <div class="hud-oscilloscope-box" title="Telemetry Audio Waveform Oscilloscope">
+            <span style="font-size:9px; font-family:var(--font-mono); color:var(--accent-primary); font-weight:700;">RF-WAVE</span>
+            <canvas id="hud-oscilloscope-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Controls & Toggles -->
+        <div class="hud-controls">
+          <div class="theme-dropdown">
+            <select id="theme-select" class="theme-select" title="Theme Selector">
+              <option value="matrix">🟢 MATRIX</option>
+              <option value="cyberpunk">🔵 CYAN</option>
+              <option value="crimson">🔴 CRIMSON</option>
+              <option value="amber">🟡 AMBER</option>
+            </select>
+          </div>
+
+          <button id="btn-system-reboot" class="btn-tactical active" title="Run Ring-0 System Diagnostic Bootloader">
+            <span class="icon">⚡</span> BOOT
+          </button>
+
+          <button id="btn-toggle-audio" class="btn-tactical active" title="Toggle Tactical Audio">
+            <span class="icon">🔊</span> AUDIO
+          </button>
+
+          <button id="btn-toggle-crt" class="btn-tactical active" title="Toggle CRT Filter">
+            <span class="icon">📺</span> CRT
+          </button>
+
+          <!-- Media & Recording Controls -->
+          <div id="hud-rec-indicator" class="hud-rec-indicator">
+            <span class="pulse-dot danger"></span> REC <span id="hud-rec-timer">00:00</span>
+          </div>
+
+          <button id="btn-hud-snapshot" class="btn-tactical" title="Capture Mission Debrief PNG Snapshot">
+            <span class="icon">📸</span> SNAP
+          </button>
+
+          <button id="btn-hud-record" class="btn-tactical active" title="Record Dashboard Screen Video">
+            <span class="icon">⏺</span> REC
+          </button>
+
+          <!-- Dual Military Clock -->
+          <div id="hud-live-clock" class="hud-military-clock" title="ZULU / Military Time">
+            <div><span style="color:var(--accent-secondary)">ZULU:</span> <span id="clock-zulu">06:50:00Z</span></div>
+            <div><span style="color:var(--accent-primary)">LOCAL:</span> <span id="clock-local">12:20:00 IST</span></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="main-content">
+
+      <!-- Educational Safety Disclaimer Banner -->
+      <div class="edu-disclaimer">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="edu-badge">GOVERNMENT DEFENSE LAB</span>
+          <span>National Cyber Warfare Command Simulation Environment. Built strictly for defensive readiness, red-team emulation, and security research.</span>
+        </div>
+        <div style="color:var(--accent-primary); font-weight:600;">DEFENSE SIMULATION SANDBOX ACTIVE</div>
+      </div>
+
+      <!-- Cyber Kill Chain Interactive Progression Bar -->
+      <div class="killchain-hud-bar">
+        <div class="kc-label-tag">
+          <span>⚡ ATTACK KILL CHAIN</span>
+          <span style="font-size:9px; color:var(--text-muted)">[MITRE / LOCKHEED]</span>
+        </div>
+        <div id="killchain-steps-container" class="kc-steps-track">
+          <!-- Dynamically populated by killchain.js -->
+        </div>
+      </div>
+
+      <!-- Tactical Tab Navigation -->
+      <nav class="tab-nav" aria-label="Operations Navigation">
+        <button class="tab-btn active" data-tab="war-room">
+          <span>🌐</span> WAR ROOM // THREAT RADAR
+        </button>
+        <button class="tab-btn" data-tab="terminal">
+          <span>&gt;_</span> OPERATOR CONSOLE
+        </button>
+        <button class="tab-btn" data-tab="targets">
+          <span>🎯</span> TARGET RECON <span class="tab-badge">5</span>
+        </button>
+        <button class="tab-btn" data-tab="modules">
+          <span>⚡</span> EXPLOIT CATALOG <span class="tab-badge">5</span>
+        </button>
+        <button class="tab-btn" data-tab="payloads">
+          <span>🛠️</span> PAYLOAD BUILDER
+        </button>
+        <button class="tab-btn" data-tab="sessions">
+          <span>📡</span> ACTIVE BEACONS <span class="tab-badge" style="background:rgba(255,0,85,0.2); color:#ff3366; border-color:#ff3366">2</span>
+        </button>
+        <button class="tab-btn" data-tab="network">
+          <span>🗺️</span> ATTACK TOPOLOGY GRAPH
+        </button>
+        <button class="tab-btn" data-tab="loot">
+          <span>🗝️</span> CREDENTIALS & LOOT
+        </button>
+        <button class="tab-btn" data-tab="surveillance">
+          <span>📹</span> SURVEILLANCE & SCREENS
+        </button>
+      </nav>
+
+      <!-- =========================================================
+           TAB 0: WAR ROOM // GLOBAL CYBER THREAT OPERATIONS (PRIMARY)
+           ========================================================= -->
+      <section id="tab-war-room" class="tab-content active">
+        <div class="war-room-container">
+
+          <!-- 4 Strategic Defense Telemetry Metric Gauges -->
+          <div class="war-room-top-metrics">
+            <div class="threat-metric-card danger">
+              <div class="threat-metric-label">
+                <span>GLOBAL THREAT INDEX</span>
+                <span class="threat-metric-tag danger"><span class="pulse-dot danger"></span> APT CRIT</span>
+              </div>
+              <div class="threat-metric-value" style="color:var(--color-danger)">CRITICAL 8.9/10</div>
+              <div class="threat-metric-sub">Active State-Sponsored APT Probing Detected</div>
+            </div>
+
+            <div class="threat-metric-card info">
+              <div class="threat-metric-label">
+                <span>ATTACKS MITIGATED TODAY</span>
+                <span class="threat-metric-tag info"><span class="pulse-dot"></span> AUTO-DROP</span>
+              </div>
+              <div class="threat-metric-value" id="stat-siem-total" style="color:var(--accent-secondary)">1,842,912</div>
+              <div class="threat-metric-sub">+1,420 / min (99.98% Automated Drop Rate)</div>
+            </div>
+
+            <div class="threat-metric-card">
+              <div class="threat-metric-label">
+                <span>QUANTUM DEFENSE CIPHER</span>
+                <span class="threat-metric-tag success"><span class="pulse-dot"></span> QKD LOCKED</span>
+              </div>
+              <div class="threat-metric-value" style="color:var(--accent-primary)">AES-GCM-512</div>
+              <div class="threat-metric-sub">Post-Quantum Kyber-1024 Key Exchange Active</div>
+            </div>
+
+            <div class="threat-metric-card warning">
+              <div class="threat-metric-label">
+                <span>DEFENSE SATELLITE LINK</span>
+                <span class="threat-metric-tag warning"><span class="pulse-dot warning"></span> GSAT-7A</span>
+              </div>
+              <div class="threat-metric-value" style="color:var(--color-warning)">NAVIC 98% LOCK</div>
+              <div class="threat-metric-sub">Mil-Sat MilNet Uplink // BER &lt; 10⁻⁹</div>
+            </div>
+          </div>
+
+          <!-- Main War Room Split Grid: Threat Map (Left) + Threat Intel (Right) -->
+          <div class="war-room-main-grid">
+
+            <!-- LEFT: Geospatial Threat Map Card -->
+            <div class="threat-map-card">
+              <div class="threat-map-header">
+                <div class="threat-map-title-box">
+                  <span class="pulse-dot"></span>
+                  <span class="threat-map-title">🌐 GEOSPATIAL CYBER WARFARE RADAR // GLOBAL TELEMETRY</span>
+                </div>
+                <div class="threat-map-toolbar">
+                  <button id="btn-map-ddos" class="btn-tactical" title="Simulate multi-vector attack burst">
+                    ⚡ DDOS BURST
+                  </button>
+                  <button id="btn-map-shield" class="btn-tactical active" title="Deploy CERT-In defensive countermeasure shield">
+                    🛡️ CERT-IN SHIELD
+                  </button>
+                  <button id="btn-map-speed" class="btn-tactical" title="Toggle simulation speed">
+                    1x SPEED
+                  </button>
+                  <button id="btn-map-reset" class="btn-tactical" title="Reset standard baseline">
+                    🔄 RESET
+                  </button>
+                </div>
+              </div>
+
+              <!-- Interactive Threat Map Canvas -->
+              <div class="threat-map-canvas-wrapper">
+                <canvas id="threat-map-canvas" class="threat-map-canvas"></canvas>
+              </div>
+
+              <!-- Map Legend & Coordinate Telemetry -->
+              <div class="threat-map-footer">
+                <div class="map-legend-items">
+                  <span><span class="map-legend-dot" style="background:#ff0055"></span> APT EXPLOIT ARCS</span>
+                  <span><span class="map-legend-dot" style="background:#ffaa00"></span> ZERO-DAY PROBES</span>
+                  <span><span class="map-legend-dot" style="background:#00e5ff"></span> ALLIED MIL-NET</span>
+                  <span><span class="map-legend-dot" style="background:#00ff66"></span> CERT-IN DEFENSE SHIELD</span>
+                </div>
+                <div style="color:var(--accent-primary)">
+                  PRIMARY DEFENSE HQ: 19.0760° N, 72.8777° E [MUMBAI COMMAND]
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Active Threat Intel Dossier & Rapid Defense Actions -->
+            <div class="threat-intel-panel">
+              
+              <!-- APT Tracking Box -->
+              <div class="intel-card">
+                <div class="intel-card-header">
+                  <span>🎯 ACTIVE APT THREAT TRACKER</span>
+                  <span style="font-size:9px; color:var(--text-muted)">[ATT&CK MAPPED]</span>
+                </div>
+                <div class="apt-list">
+                  <div class="apt-item">
+                    <div class="apt-item-header">
+                      <span class="apt-name">APT28 / FANCY BEAR</span>
+                      <span class="apt-badge">CRITICAL</span>
+                    </div>
+                    <div class="apt-desc">Origin: St. Petersburg // Vector: MS17-010 EternalBlue // Targeted: Defense Subnets</div>
+                  </div>
+
+                  <div class="apt-item">
+                    <div class="apt-item-header">
+                      <span class="apt-name">VOLT TYPHOON</span>
+                      <span class="apt-badge" style="border-color:#ffaa00; color:#ffaa00;">HIGH RISK</span>
+                    </div>
+                    <div class="apt-desc">Origin: Shanghai // Vector: SCADA/Modbus Recon // Targeted: Power Grid SCADA</div>
+                  </div>
+
+                  <div class="apt-item">
+                    <div class="apt-item-header">
+                      <span class="apt-name">LAZARUS GROUP</span>
+                      <span class="apt-badge">CRITICAL</span>
+                    </div>
+                    <div class="apt-desc">Origin: Pyongyang // Vector: Log4j JNDI Exploit // Targeted: Financial Core Gateway</div>
+                  </div>
+
+                  <div class="apt-item">
+                    <div class="apt-item-header">
+                      <span class="apt-name">SANDWORM (GRU 74455)</span>
+                      <span class="apt-badge" style="border-color:#ffaa00; color:#ffaa00;">ACTIVE PROBE</span>
+                    </div>
+                    <div class="apt-desc">Origin: Moscow // Vector: Zerologon RPC Bypass // Targeted: Active Directory DC</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rapid Defense Actions Box -->
+              <div class="intel-card">
+                <div class="intel-card-header">
+                  <span>🛡️ RAPID DEFENSE COUNTERMEASURES</span>
+                  <span style="font-size:9px; color:var(--accent-primary)">AUTOMATED SOC</span>
+                </div>
+                <div class="defense-actions-grid">
+                  <button id="btn-act-shield" class="btn-defense-action">
+                    🛡️ HARDEN SHIELD
+                  </button>
+                  <button id="btn-act-bgp" class="btn-defense-action">
+                    ⚡ PURGE BGP
+                  </button>
+                  <button id="btn-act-flush" class="btn-defense-action">
+                    🔒 FLUSH KRBTGT
+                  </button>
+                  <button id="btn-act-sigint" class="btn-defense-action">
+                    📡 ALERT SIGINT
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- BOTTOM: Real-Time SOC / SIEM Intrusion Detection Feed -->
+          <div class="siem-card">
+            <div class="siem-header">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span class="pulse-dot danger"></span>
+                <span class="siem-title">🚨 REAL-TIME SOC / SIEM INTRUSION DETECTION STREAM [SURICATA / ZEEK / WAZUH]</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="siem-filters-bar">
+                  <button class="siem-filter-btn active" data-filter="ALL">ALL EVENTS</button>
+                  <button class="siem-filter-btn" data-filter="CRITICAL">🚨 CRITICAL (6)</button>
+                  <button class="siem-filter-btn" data-filter="HIGH">⚠️ HIGH SEV</button>
+                  <button class="siem-filter-btn" data-filter="APT">🎯 APT GROUPS</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button id="btn-siem-pause" class="siem-filter-btn">⏸ PAUSE</button>
+                  <button id="btn-siem-clear" class="siem-filter-btn">✕ CLEAR</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Container -->
+            <div class="siem-table-container">
+              <table class="siem-table">
+                <colgroup>
+                  <col style="width: 85px;">
+                  <col style="width: 80px;">
+                  <col style="width: 105px;">
+                  <col style="width: auto;">
+                  <col style="width: 210px;">
+                  <col style="width: 140px;">
+                  <col style="width: 160px;">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>TIME (UTC)</th>
+                    <th>SEV</th>
+                    <th>ENGINE</th>
+                    <th>DETECTION RULE & MITRE ATT&CK</th>
+                    <th>FLOW (SRC ➔ DST)</th>
+                    <th>THREAT ACTOR</th>
+                    <th style="text-align: center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="siem-stream-table-body">
+                  <!-- Dynamically populated by siem.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 1: OPERATOR CONSOLE (TERMINAL)
+           ========================================================= -->
+      <section id="tab-terminal" class="tab-content">
+        <div class="tmux-wrapper corner-accent">
+          
+          <!-- Tmux Top Multiplexer Toolbar -->
+          <div class="tmux-top-toolbar">
+            <div class="tmux-brand-tag">
+              <span class="tmux-brand-icon">TMUX</span>
+              <span>C2 MULTIPLEXER v3.4 [0:console* 1:sniffer 2:htop]</span>
+            </div>
+
+            <!-- Layout Preset Buttons -->
+            <div class="tmux-layout-controls">
+              <span style="font-size:10px; color:var(--text-muted); margin-right:4px;">SPLIT PRESETS:</span>
+              <button class="tmux-layout-btn" data-layout="single" title="Single Pane (Fullscreen Console)">
+                ⬚ Single
+              </button>
+              <button class="tmux-layout-btn" data-layout="split-v" title="Split Vertical (Console + Sniffer)">
+                ◫ Split Vert
+              </button>
+              <button class="tmux-layout-btn" data-layout="split-h" title="Split Horizontal">
+                ⬒ Split Horiz
+              </button>
+              <button class="tmux-layout-btn active" data-layout="trio" title="Trio Grid (Console + Sniffer + Htop)">
+                ⊞ Trio Grid
+              </button>
+            </div>
+          </div>
+
+          <!-- Tmux Grid Panes Container -->
+          <div id="tmux-grid-container" class="tmux-grid layout-trio">
+            
+            <!-- PANE 1: OPERATOR CONSOLE TERMINAL -->
+            <div id="pane-terminal" class="tmux-pane active">
+              <div class="tmux-pane-header">
+                <div class="pane-title">
+                  <span>[0] exploit-x console</span>
+                  <span class="pane-badge">TTY1 ACTIVE</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:10px; color:var(--accent-primary)">E2E AES-256</span>
+                  <div class="terminal-window-dots">
+                    <span class="win-dot close"></span>
+                    <span class="win-dot min"></span>
+                    <span class="win-dot max"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions Bar -->
+              <div class="terminal-quick-actions">
+                <span style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono); margin-right:4px;">QUICK:</span>
+                <button class="quick-cmd-btn" data-cmd="help">HELP</button>
+                <button class="quick-cmd-btn" data-cmd="targets">TARGETS</button>
+                <button class="quick-cmd-btn" data-cmd="scan 192.168.1.100">SCAN</button>
+                <button class="quick-cmd-btn" data-cmd="use exploit/windows/smb/ms17_010_eternalblue">USE ETERNALBLUE</button>
+                <button class="quick-cmd-btn" data-cmd="exploit">EXPLOIT</button>
+                <button class="quick-cmd-btn" data-cmd="sessions">SESSIONS</button>
+                <button class="quick-cmd-btn" data-cmd="interact 1">INTERACT (1)</button>
+                <button class="quick-cmd-btn" data-cmd="loot">LOOT</button>
+                <button class="quick-cmd-btn" data-cmd="crack">CRACK</button>
+                <button class="quick-cmd-btn" data-cmd="clear">CLEAR</button>
+              </div>
+
+              <!-- Output Stream Container -->
+              <div id="term-output-stream" class="terminal-body"></div>
+
+              <!-- Terminal Input Row -->
+              <div class="terminal-input-row">
+                <span id="term-prompt-prefix" class="terminal-prompt">exploit-x &gt;</span>
+                <div class="terminal-input-wrapper">
+                  <input 
+                    id="term-input-field" 
+                    class="terminal-input" 
+                    type="text" 
+                    autocomplete="off" 
+                    autocorrect="off" 
+                    autocapitalize="off" 
+                    spellcheck="false"
+                    placeholder="Type command (e.g. 'help', 'scan 192.168.1.100', 'use ms17_010_eternalblue')..."
+                    autofocus
+                  >
+                  <!-- Autocomplete Suggestion Popup -->
+                  <div id="term-autocomplete-popup" class="terminal-autocomplete-popup"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANE 2: LIVE PACKET SNIFFER & C2 PROTOCOL STREAM -->
+            <div id="pane-sniffer" class="tmux-pane">
+              <div class="tmux-pane-header">
+                <div class="pane-title">
+                  <span style="color:var(--accent-secondary)">[1] c2-packet-sniffer</span>
+                  <span class="pulse-dot" style="width:6px; height:6px;"></span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted)">
+                  IFACE: eth0 [PROMISC]
+                </div>
+              </div>
+
+              <div class="sniffer-body">
+                <div class="sniffer-toolbar">
+                  <div class="sniff-filters">
+                    <button class="sniff-filter-btn active" data-filter="ALL">ALL</button>
+                    <button class="sniff-filter-btn" data-filter="TLS">TLS</button>
+                    <button class="sniff-filter-btn" data-filter="SMB">SMB</button>
+                    <button class="sniff-filter-btn" data-filter="DNS">DNS</button>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button id="btn-sniff-pause" class="sniff-filter-btn active">⏸ PAUSE</button>
+                    <button id="btn-sniff-clear" class="sniff-filter-btn">CLEAR</button>
+                  </div>
+                </div>
+
+                <div id="tmux-sniffer-stream" class="sniffer-stream">
+                  <!-- Live packet rows dynamically injected by tmux.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- PANE 3: HTOP SYSTEM RESOURCE & TELEMETRY MONITOR -->
+            <div id="pane-htop" class="tmux-pane">
+              <div class="tmux-pane-header">
+                <div class="pane-title">
+                  <span style="color:var(--color-warning)">[2] htop-monitor</span>
+                  <span class="pane-badge" style="color:var(--color-warning); border-color:var(--color-warning)">LIVE</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted)">
+                  TASKS: 42, 3 thr; 1 running
+                </div>
+              </div>
+
+              <div class="htop-body">
+                <!-- CPU & Mem Meters -->
+                <div class="htop-meters">
+                  <div id="htop-cpu-bars">
+                    <!-- 4 core bars populated by tmux.js -->
+                  </div>
+                  <div id="htop-mem-bar">
+                    <!-- Memory bar populated by tmux.js -->
+                  </div>
+                </div>
+
+                <!-- Process Table -->
+                <div class="htop-proc-container">
+                  <table class="htop-table">
+                    <thead>
+                      <tr>
+                        <th>PID</th>
+                        <th>USER</th>
+                        <th>CPU%</th>
+                        <th>MEM</th>
+                        <th>Command</th>
+                      </tr>
+                    </thead>
+                    <tbody id="htop-proc-tbody">
+                      <!-- Live process rows populated by tmux.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- THE ICONIC TMUX GREEN BOTTOM STATUS BAR -->
+          <footer class="tmux-status-bar">
+            <div class="tmux-status-left">
+              <span class="tmux-session-name">[exploit-x:0]</span>
+              <span class="tmux-win-tab active" data-win="0">0:console*</span>
+              <span class="tmux-win-tab" data-win="1">1:sniffer-</span>
+              <span class="tmux-win-tab" data-win="2">2:htop</span>
+            </div>
+            <div class="tmux-status-right">
+              <span class="tmux-status-host">"kali-c2"</span>
+              <span>⚡ 0.0.0.0:4444</span>
+              <span>🖧 192.168.1.50</span>
+              <span id="tmux-bar-clock">12:00:00</span>
+            </div>
+          </footer>
+
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 2: TARGET RECONNAISSANCE MATRIX
+           ========================================================= -->
+      <section id="tab-targets" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">🎯</span> DISCOVERED NETWORK TARGETS & VULNERABILITIES
+            </div>
+            <button class="btn-tactical active" onclick="document.querySelector('[data-tab=\'terminal\']').click(); document.getElementById('term-input-field').value='scan 192.168.1.100'; document.getElementById('term-input-field').focus();">
+              + Launch Full Subnet SYN Scan
+            </button>
+          </div>
+          <div class="card-body">
+            <div id="targets-grid-container" class="targets-grid">
+              <!-- Dynamically populated by targets.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 3: EXPLOIT MODULES REPOSITORY
+           ========================================================= -->
+      <section id="tab-modules" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">⚡</span> EXPLOIT MODULES & CVE REPOSITORY
+            </div>
+          </div>
+          <div class="card-body">
+            
+            <!-- Filter Toolbar -->
+            <div class="catalog-toolbar">
+              <div class="search-box">
+                <span style="color:var(--text-muted)">🔍</span>
+                <input id="module-search-input" class="search-input" type="text" placeholder="Search exploits by CVE, name, or platform...">
+              </div>
+
+              <div class="category-filter">
+                <button class="filter-btn active" data-cat="all">ALL (5)</button>
+                <button class="filter-btn" data-cat="rce">RCE</button>
+                <button class="filter-btn" data-cat="web">WEB APPS</button>
+                <button class="filter-btn" data-cat="privesc">PRIVILEGE ESCALATION</button>
+                <button class="filter-btn" data-cat="lateral">LATERAL MOVEMENT</button>
+              </div>
+            </div>
+
+            <!-- Modules Table -->
+            <div class="modules-table-container">
+              <table class="cyber-table">
+                <thead>
+                  <tr>
+                    <th>CVE ID</th>
+                    <th>MODULE NAME / PATH</th>
+                    <th>CATEGORY</th>
+                    <th>TARGET OS</th>
+                    <th>CVSS</th>
+                    <th>RELIABILITY</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="modules-table-body">
+                  <!-- Dynamically populated by modules.js -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 4: PAYLOAD STAGER BUILDER
+           ========================================================= -->
+      <section id="tab-payloads" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">🛠️</span> PAYLOAD & STAGER GENERATOR
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button id="btn-toggle-listener" class="btn-tactical active">
+                LISTENER: ACTIVE (4444)
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="payload-builder-grid">
+              
+              <!-- Configuration Form -->
+              <div>
+                <h4 style="margin-bottom:14px; color:var(--accent-primary)">STAGER PARAMETERS</h4>
+                
+                <div class="form-group">
+                  <label class="form-label" for="payload-type-select">PAYLOAD FORMAT / TEMPLATE</label>
+                  <select id="payload-type-select" class="form-select">
+                    <option value="powershell_cradle">PowerShell Hidden In-Memory Download Cradle</option>
+                    <option value="powershell_reverse_tcp">PowerShell Pure TCP Reverse Shell</option>
+                    <option value="python_socket_pty">Python3 PTY Interactive Socket Shell</option>
+                    <option value="bash_tcp_inline">Bash Inline TCP Socket One-Liner</option>
+                    <option value="c_raw_shellcode_hex">C MSF-Compatible x64 Shellcode Hex Array</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="payload-encoder-select">OBFUSCATION / EVASION ENCODER</label>
+                  <select id="payload-encoder-select" class="form-select">
+                    <option value="none">None (Plain Code)</option>
+                    <option value="base64">Base64 Encoded Wrapper</option>
+                    <option value="xor_polycrypt">XOR Polycrypt Dynamic Memory Decompressor</option>
+                    <option value="amsi_bypass">AMSI Bypass Header + Stager</option>
+                  </select>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div class="form-group">
+                    <label class="form-label" for="payload-lhost-input">LHOST (C2 LISTENER IP)</label>
+                    <input id="payload-lhost-input" class="form-input" type="text" value="192.168.1.50">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="payload-lport-input">LPORT (LISTENER PORT)</label>
+                    <input id="payload-lport-input" class="form-input" type="text" value="4444">
+                  </div>
+                </div>
+
+                <div style="margin-top:10px; font-size:12px; color:var(--text-muted)">
+                  ⚡ Payloads generated are intended for simulation and defensive detection rule validation (SIEM / EDR).
+                </div>
+              </div>
+
+              <!-- Live Preview Box -->
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                  <h4 style="color:var(--accent-secondary)">GENERATED STAGER CODE</h4>
+                  <button id="btn-copy-payload" class="btn-tactical active">
+                    📋 COPY TO CLIPBOARD
+                  </button>
+                </div>
+
+                <pre id="payload-preview-code" class="code-preview-box"></pre>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 5: ACTIVE SESSIONS & C2 BEACON NETWORK
+           ========================================================= -->
+      <section id="tab-sessions" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">📡</span> ACTIVE COMPROMISED AGENTS & BEACONS
+            </div>
+            <button class="btn-tactical active" onclick="document.querySelector('[data-tab=\'terminal\']').click(); document.getElementById('term-input-field').value='sessions'; document.getElementById('term-input-field').focus();">
+              Terminal Sessions List
+            </button>
+          </div>
+          <div class="card-body">
+            <div id="sessions-grid-container" class="sessions-grid">
+              <!-- Dynamically populated by sessions.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 6: NETWORK ATTACK TOPOLOGY GRAPH
+           ========================================================= -->
+      <section id="tab-network" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">🗺️</span> LIVE NETWORK ATTACK & PIVOTING TOPOLOGY
+            </div>
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--accent-primary)">
+              INTERACTIVE CANVAS (DRAG NODES TO REPOSITION)
+            </div>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="canvas-wrapper">
+              <canvas id="attack-canvas"></canvas>
+
+              <!-- Canvas Legend -->
+              <div class="canvas-legend">
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:#00ff66"></span>
+                  <span>C2 MASTER</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:#ff0055"></span>
+                  <span>COMPROMISED / PIVOT NODE</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:#00e5ff"></span>
+                  <span>TARGET ACCESSIBLE</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:#ffaa00"></span>
+                  <span>RECONNAISSANCE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 7: CREDENTIALS & LOOT LOCKER
+           ========================================================= -->
+      <section id="tab-loot" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">🗝️</span> HARVESTED CREDENTIALS & LOOT VAULT
+            </div>
+          </div>
+          <div class="card-body">
+            
+            <!-- Loot Metrics -->
+            <div class="loot-metrics">
+              <div class="metric-card">
+                <span class="metric-title">TOTAL CAPTURED SECRETS</span>
+                <span class="metric-number" id="loot-total-count">5</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-title">CRACKED PASSWORDS</span>
+                <span class="metric-number" id="loot-cracked-count" style="color:var(--accent-primary)">2</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-title">ACTIVE KERBEROS TICKETS</span>
+                <span class="metric-number" style="color:var(--accent-secondary)">1</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-title">CLOUD API KEYS</span>
+                <span class="metric-number" style="color:var(--color-warning)">1</span>
+              </div>
+            </div>
+
+            <!-- Hashcat Cracker Simulation Panel -->
+            <div class="cracker-panel">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <h4 style="color:var(--text-bright)">HASHCAT GPU WORDLIST CRACKING ACCELERATOR</h4>
+                  <div id="crack-status-text" style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted); margin-top:3px;">
+                    Hardware: NVIDIA RTX 4090 OpenCL | Wordlist: rockyou.txt (Ready)
+                  </div>
+                </div>
+                <button id="btn-start-crack" class="btn-tactical active" style="padding:10px 18px;">
+                  🚀 START HASHCAT CRACKER
+                </button>
+              </div>
+
+              <div class="progress-bar-bg">
+                <div id="crack-progress-bar" class="progress-bar-fill"></div>
+              </div>
+            </div>
+
+            <!-- Loot Records Table -->
+            <div class="modules-table-container">
+              <table class="cyber-table">
+                <thead>
+                  <tr>
+                    <th>TARGET / ORIGIN</th>
+                    <th>ACCOUNT / USER</th>
+                    <th>CREDENTIAL TYPE</th>
+                    <th>ENCRYPTED HASH / SECRET</th>
+                    <th>STATUS</th>
+                    <th>PLAINTEXT PASSWORD</th>
+                  </tr>
+                </thead>
+                <tbody id="loot-table-body">
+                  <!-- Dynamically populated by loot.js -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 8: SURVEILLANCE & TARGET SCREEN VIEWER
+           ========================================================= -->
+      <section id="tab-surveillance" class="tab-content">
+        <div class="cyber-card corner-accent">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">📹</span> REAL-TIME SURVEILLANCE & TARGET SCREEN VIEWER
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono)">SELECT FEED:</span>
+              <select id="cctv-cam-select" class="theme-select" style="padding:4px 8px; font-size:11px;">
+                <option value="cam-dvr">CAM 01: SEC-CAM-DVR01 [Server Room Night-Vision]</option>
+                <option value="desktop-dc01">DESKTOP: CORP-DC01 [Windows Server 2022 Session]</option>
+                <option value="desktop-api">SHELL: PROD-API-GATEWAY [Ubuntu 22.04 Terminal]</option>
+              </select>
+              <button id="btn-mock-target-snap" class="btn-tactical active" style="padding:4px 10px; font-size:11px;">
+                📸 Grab Target Frame
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="cctv-grid">
+              
+              <!-- Video Monitor Screen Frame -->
+              <div class="cctv-screen-frame">
+                <canvas id="cctv-feed-canvas"></canvas>
+              </div>
+
+              <!-- Surveillance Telemetry & Info Sidebar -->
+              <div class="cctv-sidebar">
+                <div class="cctv-meta-card">
+                  <h4 style="color:var(--accent-primary); font-size:13px;">FEED TELEMETRY & STATUS</h4>
+                  
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">SOURCE PROTOCOL</span>
+                    <span class="cctv-meta-val">RTSP / H.264 (Over TLS)</span>
+                  </div>
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">RESOLUTION / FPS</span>
+                    <span class="cctv-meta-val">1920x1080 @ 30.0 FPS</span>
+                  </div>
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">BANDWIDTH CONSUMPTION</span>
+                    <span class="cctv-meta-val">2.8 Mbps (Low Latency)</span>
+                  </div>
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">OPTICAL SENSOR</span>
+                    <span class="cctv-meta-val">Sony STARVIS 4K Night-Vision</span>
+                  </div>
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">IR ILLUMINATION</span>
+                    <span class="cctv-meta-val">850nm Matrix Array [ACTIVE]</span>
+                  </div>
+                  <div class="cctv-meta-row">
+                    <span class="cctv-meta-label">INTEGRITY HASH</span>
+                    <span class="cctv-meta-val" style="font-size:9px">SHA256: 8f4b2...19e0</span>
+                  </div>
+                </div>
+
+                <div class="cctv-meta-card">
+                  <h4 style="color:var(--accent-secondary); font-size:13px;">OPERATOR SCREEN RECORDING</h4>
+                  <p style="font-size:11px; color:var(--text-main); line-height:1.5;">
+                    Use the <strong>📸 SNAPSHOT</strong> and <strong>⏺ REC VIDEO</strong> buttons on the top HUD to record your training session or export high-resolution mission debrief reports directly to your machine.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Cyber Boot Preface Fullscreen Diagnostic Modal -->
+  <div id="cyber-boot-modal" class="boot-modal-overlay">
+    <div class="boot-modal-box">
+      <div class="boot-modal-header">
+        <span>⚡ EXPLOIT-X // RING-0 KERNEL INITIALIZATION SEQUENCE</span>
+        <button id="btn-close-boot" class="btn-tactical" style="padding:2px 8px; font-size:10px;">✕ SKIP</button>
+      </div>
+      <div id="boot-terminal-log" class="boot-log-body"></div>
+      <div class="boot-modal-footer">
+        <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px;">
+          <span id="boot-status-text" style="color:var(--accent-primary)">INITIALIZING SYSTEM...</span>
+          <span style="color:var(--text-muted)">CLASSIFIED RED TEAM INFRASTRUCTURE</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="boot-progress-bar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forensic Threat Investigation Modal -->
+  <div id="siem-investigate-modal" class="siem-modal-overlay">
+    <div class="siem-modal-box">
+      <div class="siem-modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--color-danger)">🚨</span>
+          <span>SOC FORENSIC DEBRIEF & MITRE INVESTIGATION [<span id="modal-siem-id">SEC-8012</span>]</span>
+        </div>
+        <button id="btn-close-siem-modal" class="btn-tactical" style="padding:2px 8px; font-size:11px;">✕ CLOSE</button>
+      </div>
+      <div class="siem-modal-body">
+        <div class="dossier-grid">
+          <div class="dossier-item">
+            <span class="dossier-lbl">DETECTION RULE</span>
+            <span id="modal-siem-rule" class="dossier-val">ET EXPLOIT MS17-010</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-lbl">SEVERITY / PRIORITY</span>
+            <span id="modal-siem-level" class="dossier-val" style="color:var(--color-danger)">CRITICAL</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-lbl">TIME OF INTERCEPT</span>
+            <span id="modal-siem-time" class="dossier-val">12:12:04 UTC</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-lbl">MITRE ATT&CK TECHNIQUE</span>
+            <span id="modal-siem-mitre" class="dossier-val" style="color:var(--accent-secondary)">T1210: Exploitation of Remote Services</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-lbl">SOURCE ENDPOINT</span>
+            <span id="modal-siem-src" class="dossier-val">192.168.1.50</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-lbl">TARGET ASSET</span>
+            <span id="modal-siem-dst" class="dossier-val">192.168.1.100:445</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="dossier-lbl" style="margin-bottom:6px;">ATTRIBUTED THREAT ACTOR (INTEL CORRELATION):</span>
+          <span id="modal-siem-actor" style="font-weight:700; color:#ff4d6d; font-size:12px;">APT28 / Fancy Bear</span>
+        </div>
+
+        <div>
+          <span class="dossier-lbl" style="margin-bottom:6px;">RAW PACKET PAYLOAD / INTRUSION ARTIFACT:</span>
+          <div id="modal-siem-payload" class="payload-hex-box">
+            FE 53 4D 42 40 00 00 00 00 00 00 00 0E 00 01 00...
+          </div>
+        </div>
+
+        <div class="rec-box">
+          <strong style="color:#00ff66;">DEFENSIVE REMEDIATION GUIDELINE:</strong>
+          <div id="modal-siem-rec" style="margin-top:4px;">
+            Block TCP Port 445 on perimeter firewalls, isolate infected host IP, and apply latest security patch rollup.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Bundle -->
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>
