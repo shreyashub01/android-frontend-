@@ -1,5 +1,6 @@
 // =========================================================
 // TMUX TERMINAL MULTIPLEXER & LIVE TELEMETRY ENGINE
+// Advanced Google Stitch Architecture & Keybinding Engine
 // =========================================================
 
 import { cyberAudio } from './audio.js';
@@ -9,28 +10,42 @@ export class TmuxManager {
     this.currentLayout = 'trio'; // 'single' | 'split-v' | 'split-h' | 'trio'
     this.activePane = 'pane-terminal';
     this.activeWindow = 0;
+    this.isZoomed = false;
+    this.zoomedPane = null;
+
+    this.prefixActive = false;
+    this.prefixTimer = null;
+
     this.packetSnifferRunning = true;
     this.packetFilter = 'ALL';
     this.packets = [];
-    this.maxPackets = 40;
+    this.maxPackets = 50;
 
     this.initDOM();
     this.initEventListeners();
+    this.initKeyboardPrefix();
     this.startPacketSniffer();
     this.startHtopMonitor();
     this.startClock();
+
+    window.tmuxManager = this;
   }
 
   initDOM() {
     this.grid = document.getElementById('tmux-grid-container');
     this.windowTabs = document.querySelectorAll('.tmux-win-tab');
+    this.topTabs = document.querySelectorAll('.tmux-top-tab');
     this.layoutBtns = document.querySelectorAll('.tmux-layout-btn');
     this.panes = document.querySelectorAll('.tmux-pane');
     this.snifferStream = document.getElementById('tmux-sniffer-stream');
+    this.hexBytesEl = document.getElementById('hex-view-bytes');
+    this.hexAsciiEl = document.getElementById('hex-view-ascii');
     this.htopCpu = document.getElementById('htop-cpu-bars');
     this.htopMem = document.getElementById('htop-mem-bar');
     this.htopProcTable = document.getElementById('htop-proc-tbody');
     this.tmuxClock = document.getElementById('tmux-bar-clock');
+    this.prefixIndicator = document.getElementById('tmux-prefix-indicator');
+    this.shortcutsModal = document.getElementById('tmux-shortcuts-modal');
 
     this.setLayout(this.currentLayout);
   }
@@ -54,6 +69,15 @@ export class TmuxManager {
       });
     });
 
+    // Top window tabs
+    this.topTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const winIdx = parseInt(tab.getAttribute('data-win'), 10);
+        this.selectWindow(winIdx);
+        cyberAudio.playKeyClick();
+      });
+    });
+
     // Focus active pane on click
     this.panes.forEach(pane => {
       pane.addEventListener('click', () => {
@@ -61,19 +85,44 @@ export class TmuxManager {
       });
     });
 
+    // Zoom buttons per pane
+    const zoomConsole = document.getElementById('btn-zoom-console');
+    if (zoomConsole) {
+      zoomConsole.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleZoom('pane-terminal');
+      });
+    }
+
+    const zoomSniffer = document.getElementById('btn-zoom-sniffer');
+    if (zoomSniffer) {
+      zoomSniffer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleZoom('pane-sniffer');
+      });
+    }
+
+    const zoomHtop = document.getElementById('btn-zoom-htop');
+    if (zoomHtop) {
+      zoomHtop.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleZoom('pane-htop');
+      });
+    }
+
     // Sniffer pause/resume button
     const pauseBtn = document.getElementById('btn-sniff-pause');
     if (pauseBtn) {
       pauseBtn.addEventListener('click', () => {
         this.packetSnifferRunning = !this.packetSnifferRunning;
-        pauseBtn.textContent = this.packetSnifferRunning ? '⏸ PAUSE' : '▶ RESUME';
+        pauseBtn.textContent = this.packetSnifferRunning ? '⏸' : '▶';
         pauseBtn.classList.toggle('active', this.packetSnifferRunning);
         cyberAudio.playBeep(1100, 0.05);
       });
     }
 
     // Sniffer filter buttons
-    const filterBtns = document.querySelectorAll('.sniff-filter-btn');
+    const filterBtns = document.querySelectorAll('.sniff-filter-btn[data-filter]');
     filterBtns.forEach(b => {
       b.addEventListener('click', () => {
         filterBtns.forEach(x => x.classList.remove('active'));
@@ -93,9 +142,155 @@ export class TmuxManager {
         cyberAudio.playKeyClick();
       });
     }
+
+    // TMUX Shortcuts modal triggers
+    const btnShortcuts = document.getElementById('btn-tmux-shortcuts');
+    if (btnShortcuts) {
+      btnShortcuts.addEventListener('click', () => {
+        this.toggleShortcutsModal(true);
+      });
+    }
+
+    const btnCloseShortcuts = document.getElementById('btn-close-tmux-shortcuts');
+    if (btnCloseShortcuts) {
+      btnCloseShortcuts.addEventListener('click', () => {
+        this.toggleShortcutsModal(false);
+      });
+    }
+
+    if (this.shortcutsModal) {
+      this.shortcutsModal.addEventListener('click', (e) => {
+        if (e.target === this.shortcutsModal) {
+          this.toggleShortcutsModal(false);
+        }
+      });
+    }
+  }
+
+  // --- TMUX KEYBOARD PREFIX ENGINE (Ctrl+B) ---
+  initKeyboardPrefix() {
+    document.addEventListener('keydown', (e) => {
+      const termTab = document.getElementById('tab-terminal');
+      if (!termTab || !termTab.classList.contains('active')) return;
+
+      // Detect Ctrl+b prefix activation
+      if (e.ctrlKey && (e.key === 'b' || e.key === 'B')) {
+        e.preventDefault();
+        this.activatePrefix();
+        return;
+      }
+
+      // If prefix is currently active, process the follower command
+      if (this.prefixActive) {
+        const key = e.key;
+
+        // Escape cancels prefix
+        if (key === 'Escape') {
+          e.preventDefault();
+          this.deactivatePrefix();
+          return;
+        }
+
+        e.preventDefault();
+        this.handlePrefixCommand(key);
+      }
+    });
+  }
+
+  activatePrefix() {
+    this.prefixActive = true;
+    if (this.prefixIndicator) {
+      this.prefixIndicator.classList.remove('hidden');
+    }
+    cyberAudio.playBeep(1200, 0.06);
+
+    clearTimeout(this.prefixTimer);
+    this.prefixTimer = setTimeout(() => {
+      this.deactivatePrefix();
+    }, 3000);
+  }
+
+  deactivatePrefix() {
+    this.prefixActive = false;
+    if (this.prefixIndicator) {
+      this.prefixIndicator.classList.add('hidden');
+    }
+    clearTimeout(this.prefixTimer);
+  }
+
+  handlePrefixCommand(key) {
+    this.deactivatePrefix();
+
+    switch (key) {
+      case '%':
+        this.setLayout('split-v');
+        cyberAudio.playBeep(900, 0.08);
+        break;
+
+      case '"':
+        this.setLayout('split-h');
+        cyberAudio.playBeep(900, 0.08);
+        break;
+
+      case 'z':
+      case 'Z':
+        this.toggleZoom();
+        break;
+
+      case 'o':
+      case 'O':
+        this.cyclePane();
+        break;
+
+      case 't':
+      case 'T':
+        this.setLayout('trio');
+        cyberAudio.playBeep(850, 0.08);
+        break;
+
+      case '0':
+        this.selectWindow(0);
+        break;
+
+      case '1':
+        this.selectWindow(1);
+        break;
+
+      case '2':
+        this.selectWindow(2);
+        break;
+
+      case '?':
+        this.toggleShortcutsModal();
+        break;
+
+      case 'x':
+      case 'X':
+        this.notifyPaneAction('KILL PANE');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  toggleShortcutsModal(forceState) {
+    if (!this.shortcutsModal) return;
+    const isCurrentlyHidden = this.shortcutsModal.classList.contains('hidden');
+    const newState = forceState !== undefined ? forceState : isCurrentlyHidden;
+
+    this.shortcutsModal.classList.toggle('hidden', !newState);
+    if (newState) {
+      cyberAudio.playBeep(1000, 0.08);
+    }
   }
 
   setLayout(layout) {
+    // Reset zoom state when switching layout
+    if (this.isZoomed) {
+      this.resetZoom();
+    }
+
     this.currentLayout = layout;
     if (!this.grid) return;
 
@@ -105,7 +300,6 @@ export class TmuxManager {
       b.classList.toggle('active', b.getAttribute('data-layout') === layout);
     });
 
-    // Adjust visibility based on layout
     const paneTerm = document.getElementById('pane-terminal');
     const paneSniff = document.getElementById('pane-sniffer');
     const paneHtop = document.getElementById('pane-htop');
@@ -114,6 +308,7 @@ export class TmuxManager {
       if (paneTerm) paneTerm.style.display = 'flex';
       if (paneSniff) paneSniff.style.display = 'none';
       if (paneHtop) paneHtop.style.display = 'none';
+      this.setActivePane('pane-terminal');
     } else if (layout === 'split-v' || layout === 'split-h') {
       if (paneTerm) paneTerm.style.display = 'flex';
       if (paneSniff) paneSniff.style.display = 'flex';
@@ -125,6 +320,51 @@ export class TmuxManager {
     }
   }
 
+  toggleZoom(paneId) {
+    const targetId = paneId || this.activePane || 'pane-terminal';
+    const targetPane = document.getElementById(targetId);
+    if (!targetPane) return;
+
+    if (this.isZoomed && this.zoomedPane === targetId) {
+      this.resetZoom();
+      cyberAudio.playBeep(700, 0.06);
+    } else {
+      this.panes.forEach(p => {
+        p.classList.remove('zoomed');
+      });
+      targetPane.classList.add('zoomed');
+      this.grid.classList.add('zoomed');
+      this.isZoomed = true;
+      this.zoomedPane = targetId;
+      this.setActivePane(targetId);
+      cyberAudio.playBeep(1100, 0.08);
+    }
+  }
+
+  resetZoom() {
+    this.panes.forEach(p => p.classList.remove('zoomed'));
+    if (this.grid) this.grid.classList.remove('zoomed');
+    this.isZoomed = false;
+    this.zoomedPane = null;
+    this.setLayout(this.currentLayout);
+  }
+
+  cyclePane() {
+    const paneIds = ['pane-terminal', 'pane-sniffer', 'pane-htop'];
+    let nextIdx = (paneIds.indexOf(this.activePane) + 1) % paneIds.length;
+
+    // Check visibility in current layout
+    if (this.currentLayout === 'single') {
+      nextIdx = 0;
+    } else if (this.currentLayout === 'split-v' || this.currentLayout === 'split-h') {
+      if (nextIdx === 2) nextIdx = 0;
+    }
+
+    const nextPaneId = paneIds[nextIdx];
+    this.setActivePane(nextPaneId);
+    cyberAudio.playKeyClick();
+  }
+
   selectWindow(idx) {
     this.activeWindow = idx;
     this.windowTabs.forEach(t => {
@@ -132,10 +372,16 @@ export class TmuxManager {
       t.classList.toggle('active', w === idx);
     });
 
-    // Switch focus to corresponding pane
+    this.topTabs.forEach(t => {
+      const w = parseInt(t.getAttribute('data-win'), 10);
+      t.classList.toggle('active', w === idx);
+    });
+
     if (idx === 0) {
       this.setLayout('single');
       this.setActivePane('pane-terminal');
+      const input = document.getElementById('term-input-field');
+      if (input) input.focus();
     } else if (idx === 1) {
       this.setLayout('split-v');
       this.setActivePane('pane-sniffer');
@@ -150,18 +396,34 @@ export class TmuxManager {
     this.panes.forEach(p => {
       p.classList.toggle('active', p.id === paneId);
     });
+
+    if (paneId === 'pane-terminal') {
+      const input = document.getElementById('term-input-field');
+      if (input) input.focus();
+    }
+  }
+
+  notifyPaneAction(msg) {
+    cyberAudio.playBeep(600, 0.1);
+    const termBody = document.getElementById('term-output-stream');
+    if (termBody) {
+      const div = document.createElement('div');
+      div.className = 'term-line text-warning-amber';
+      div.innerHTML = `<span>[TMUX] ${msg} triggered on ${this.activePane}</span>`;
+      termBody.appendChild(div);
+      termBody.scrollTop = termBody.scrollHeight;
+    }
   }
 
   // --- PACKET SNIFFER SIMULATOR ---
   startPacketSniffer() {
-    const protocols = ['TLSv1.3', 'HTTP/2', 'SMB2', 'DNS', 'TCP', 'SSH'];
     const mockIPs = [
-      { src: '192.168.1.100:445', dst: '192.168.1.50:4444', proto: 'SMB2', info: 'Tree Connect Request, Path: \\\\CORP-DC01\\IPC$' },
-      { src: '10.0.4.15:52314', dst: '192.168.1.50:4444', proto: 'TLSv1.3', info: 'Application Data [Encrypted C2 Beacon Heartbeat - 128 bytes]' },
-      { src: '192.168.1.50:4444', dst: '10.0.4.15:52314', proto: 'TLSv1.3', info: 'Application Data [Task Response: Task ID 0x8F9A]' },
-      { src: '172.16.2.50:41200', dst: '192.168.1.50:53', proto: 'DNS', info: 'Standard query 0x7a2c TXT beacon-stg.corp.internal' },
-      { src: '10.0.8.22:1433', dst: '10.0.4.15:39120', proto: 'TCP', info: '1433 -> 39120 [ACK] Seq=1420 Ack=814 Win=65535' },
-      { src: '192.168.1.142:554', dst: '192.168.1.50:4022', proto: 'HTTP/2', info: 'POST /api/v1/stream HTTP/1.1 (200 OK)' }
+      { src: '192.168.1.100:445', dst: '192.168.1.50:4444', proto: 'SMB2', info: 'Tree Connect Request, Path: \\\\CORP-DC01\\IPC$', hex: 'fe 53 4d 42 40 00 00 00 00 00 00 00 03 00 01 00 01 00 00 00', dump: 'SMB@...........' },
+      { src: '10.0.4.15:52314', dst: '192.168.1.50:4444', proto: 'TLSv1.3', info: 'Application Data [Encrypted C2 Beacon Heartbeat - 128 bytes]', hex: '17 03 03 00 80 a1 b4 e9 4f 21 88 9c 50 12 fa 09 88 ee dd 12', dump: '........O!..P...' },
+      { src: '192.168.1.50:4444', dst: '10.0.4.15:52314', proto: 'TLSv1.3', info: 'Application Data [Task Response: Task ID 0x8F9A]', hex: '17 03 03 00 48 ee 10 9a 78 c2 19 04 fb a7 31 22 99 01 44 bc', dump: '....H...x....1".' },
+      { src: '172.16.2.50:41200', dst: '192.168.1.50:53', proto: 'DNS', info: 'Standard query 0x7a2c TXT beacon-stg.corp.internal', hex: '7a 2c 01 00 00 01 00 00 00 00 00 00 0a 62 65 61 63 6f 6e 2d', dump: 'z,...........beacon-' },
+      { src: '10.0.8.22:1433', dst: '10.0.4.15:39120', proto: 'TCP', info: '1433 -> 39120 [ACK] Seq=1420 Ack=814 Win=65535', hex: '05 99 98 d0 00 00 05 8c 00 00 03 2e 50 10 ff ff 71 89 00 00', dump: '............P...q...' },
+      { src: '192.168.1.142:554', dst: '192.168.1.50:4022', proto: 'HTTP/2', info: 'POST /api/v1/stream HTTP/1.1 (200 OK)', hex: '50 4f 53 54 20 2f 61 70 69 2f 76 31 2f 73 74 72 65 61 6d 20', dump: 'POST /api/v1/stream ' }
     ];
 
     setInterval(() => {
@@ -178,7 +440,9 @@ export class TmuxManager {
         dst: randomMock.dst,
         proto: randomMock.proto,
         len: Math.floor(Math.random() * 800) + 64,
-        info: randomMock.info
+        info: randomMock.info,
+        hex: randomMock.hex,
+        dump: randomMock.dump
       };
 
       this.packets.push(packet);
@@ -187,7 +451,7 @@ export class TmuxManager {
       }
 
       this.renderPackets();
-    }, 1200);
+    }, 1100);
   }
 
   renderPackets() {
@@ -202,9 +466,9 @@ export class TmuxManager {
     filtered.forEach(p => {
       const protoClass = p.proto.includes('TLS') ? 'proto-tls' : p.proto.includes('SMB') ? 'proto-smb' : 'proto-other';
       html += `
-        <div class="sniff-row">
+        <div class="sniff-row cursor-pointer hover:bg-surface-highlight" data-hex="${p.hex}" data-dump="${p.dump}">
           <span class="sniff-time">${p.time}</span>
-          <span class="sniff-ip">${p.src} &rarr; ${p.dst}</span>
+          <span class="sniff-ip">${p.src} ➔ ${p.dst}</span>
           <span class="sniff-proto ${protoClass}">${p.proto}</span>
           <span class="sniff-len">${p.len}B</span>
           <span class="sniff-info">${p.info}</span>
@@ -214,6 +478,18 @@ export class TmuxManager {
 
     this.snifferStream.innerHTML = html;
     this.snifferStream.scrollTop = this.snifferStream.scrollHeight;
+
+    // Attach click listener to each row for Hex Inspector
+    const rows = this.snifferStream.querySelectorAll('.sniff-row');
+    rows.forEach(row => {
+      row.addEventListener('click', () => {
+        const hex = row.getAttribute('data-hex');
+        const dump = row.getAttribute('data-dump');
+        if (this.hexBytesEl) this.hexBytesEl.textContent = `HEX: ${hex}`;
+        if (this.hexAsciiEl) this.hexAsciiEl.textContent = `DUMP: ${dump}`;
+        cyberAudio.playKeyClick();
+      });
+    });
   }
 
   // --- HTOP SYSTEM RESOURCE MONITOR ---
@@ -229,67 +505,74 @@ export class TmuxManager {
     setInterval(() => {
       if (!this.htopCpu || !this.htopMem) return;
 
-      // Random fluctuating CPU cores
       const cpu1 = Math.floor(Math.random() * 35) + 30;
       const cpu2 = Math.floor(Math.random() * 45) + 20;
       const cpu3 = Math.floor(Math.random() * 30) + 15;
       const cpu4 = Math.floor(Math.random() * 50) + 40;
 
       this.htopCpu.innerHTML = `
-        <div class="htop-bar-line">
-          <span class="htop-label">1 [${this.generateAsciiBar(cpu1)}]</span>
-          <span class="htop-val">${cpu1}%</span>
+        <div class="htop-core-bar">
+          <span class="htop-core-label">CPU[1]</span>
+          <div class="htop-bar-track">
+            <div class="htop-bar-fill-primary" style="width:${Math.min(cpu1, 60)}%;"></div>
+            <div class="htop-bar-fill-alert" style="width:${Math.max(0, cpu1 - 60)}%;"></div>
+          </div>
+          <span class="htop-core-val">${cpu1.toFixed(1)}%</span>
         </div>
-        <div class="htop-bar-line">
-          <span class="htop-label">2 [${this.generateAsciiBar(cpu2)}]</span>
-          <span class="htop-val">${cpu2}%</span>
+        <div class="htop-core-bar">
+          <span class="htop-core-label">CPU[2]</span>
+          <div class="htop-bar-track">
+            <div class="htop-bar-fill-primary" style="width:${Math.min(cpu2, 60)}%;"></div>
+            <div class="htop-bar-fill-secondary" style="width:${Math.max(0, cpu2 - 60)}%;"></div>
+          </div>
+          <span class="htop-core-val">${cpu2.toFixed(1)}%</span>
         </div>
-        <div class="htop-bar-line">
-          <span class="htop-label">3 [${this.generateAsciiBar(cpu3)}]</span>
-          <span class="htop-val">${cpu3}%</span>
+        <div class="htop-core-bar">
+          <span class="htop-core-label">CPU[3]</span>
+          <div class="htop-bar-track">
+            <div class="htop-bar-fill-primary" style="width:${Math.min(cpu3, 60)}%;"></div>
+          </div>
+          <span class="htop-core-val">${cpu3.toFixed(1)}%</span>
         </div>
-        <div class="htop-bar-line">
-          <span class="htop-label">4 [${this.generateAsciiBar(cpu4)}]</span>
-          <span class="htop-val">${cpu4}%</span>
+        <div class="htop-core-bar">
+          <span class="htop-core-label">CPU[4]</span>
+          <div class="htop-bar-track">
+            <div class="htop-bar-fill-primary" style="width:${Math.min(cpu4, 60)}%;"></div>
+            <div class="htop-bar-fill-alert" style="width:${Math.max(0, cpu4 - 60)}%;"></div>
+          </div>
+          <span class="htop-core-val" style="color:var(--crimson-alert)">${cpu4.toFixed(1)}%</span>
         </div>
       `;
 
-      // Memory bar
       const memUsed = (4.8 + Math.random() * 0.4).toFixed(1);
       const memPct = Math.round((memUsed / 16.0) * 100);
       this.htopMem.innerHTML = `
-        <div class="htop-bar-line">
-          <span class="htop-label">Mem [${this.generateAsciiBar(memPct)}]</span>
-          <span class="htop-val">${memUsed}G/16.0G</span>
+        <div class="htop-core-bar">
+          <span class="htop-core-label" style="color:var(--warning-amber)">MEM</span>
+          <div class="htop-bar-track">
+            <div class="htop-bar-fill-secondary" style="width:${memPct}%;"></div>
+          </div>
+          <span class="htop-core-val" style="font-size:9px;">${memUsed}G/16.0G</span>
         </div>
       `;
 
-      // Fluctuate process cpu
       if (this.htopProcTable) {
         let rows = '';
         processes.forEach(p => {
           const flCpu = (parseFloat(p.cpu) + (Math.random() * 2 - 1)).toFixed(1);
           rows += `
-            <tr>
+            <tr class="hover:bg-surface-highlight cursor-pointer" onclick="window.tmuxManager && window.tmuxManager.notifyPaneAction('SIGSTOP ${p.pid}')">
               <td>${p.pid}</td>
-              <td>${p.user}</td>
-              <td style="color:var(--accent-primary)">${flCpu}%</td>
+              <td style="color:var(--text-secondary)">${p.user}</td>
+              <td style="color:var(--accent-primary); font-weight:700;">${flCpu}%</td>
               <td>${p.mem}</td>
-              <td style="color:var(--text-bright)">${p.cmd}</td>
+              <td style="color:var(--text-primary)">${p.cmd}</td>
             </tr>
           `;
         });
         this.htopProcTable.innerHTML = rows;
       }
-    }, 1500);
-  }
-
-  generateAsciiBar(percentage) {
-    const totalBars = 20;
-    const filled = Math.round((percentage / 100) * totalBars);
-    const empty = totalBars - filled;
-    return '<span style="color:var(--accent-primary)">' + '|'.repeat(filled) + '</span>' +
-           '<span style="color:var(--text-muted)">' + ' '.repeat(empty) + '</span>';
+    }, 1400);
   }
 
   startClock() {

@@ -535,64 +535,84 @@
       </section>
 
       <!-- =========================================================
-           TAB 1: OPERATOR CONSOLE (TERMINAL)
+           TAB 1: PROPER TMUX C2 MULTIPLEXER TERMINAL (STITCH SUITE)
            ========================================================= -->
       <section id="tab-terminal" class="tab-content">
         <div class="tmux-wrapper corner-accent">
           
-          <!-- Tmux Top Multiplexer Toolbar -->
+          <!-- TMUX Orchestrator Top Bar -->
           <div class="tmux-top-toolbar">
-            <div class="tmux-brand-tag">
-              <span class="tmux-brand-icon">TMUX</span>
-              <span>C2 MULTIPLEXER v3.4 [0:console* 1:sniffer 2:htop]</span>
+            <div class="flex items-center gap-2">
+              <div class="tmux-brand-tag">
+                <span class="material-symbols-outlined text-[15px]">terminal</span>
+                <span>TMUX C2 MULTIPLEXER v3.4</span>
+              </div>
+              <div class="tmux-top-tabs hidden sm:flex">
+                <span class="tmux-top-tab active" data-win="0">[0:console*]</span>
+                <span class="tmux-top-tab" data-win="1">[1:sniffer]</span>
+                <span class="tmux-top-tab" data-win="2">[2:htop]</span>
+              </div>
             </div>
 
-            <!-- Layout Preset Buttons -->
+            <!-- Layout Presets Toolbar & TMUX Controls -->
             <div class="tmux-layout-controls">
-              <span style="font-size:10px; color:var(--text-muted); margin-right:4px;">SPLIT PRESETS:</span>
-              <button class="tmux-layout-btn" data-layout="single" title="Single Pane (Fullscreen Console)">
-                ⬚ Single
+              <span class="tmux-layout-label">LAYOUT:</span>
+              <button class="tmux-layout-btn" data-layout="single" title="Single Fullscreen Pane (Ctrl+B z)">
+                <span class="material-symbols-outlined text-[13px]">crop_square</span> SINGLE
               </button>
-              <button class="tmux-layout-btn" data-layout="split-v" title="Split Vertical (Console + Sniffer)">
-                ◫ Split Vert
+              <button class="tmux-layout-btn" data-layout="split-v" title="Split Vertical (Ctrl+B %)">
+                <span class="material-symbols-outlined text-[13px]">view_column</span> SPLIT VERT
               </button>
-              <button class="tmux-layout-btn" data-layout="split-h" title="Split Horizontal">
-                ⬒ Split Horiz
+              <button class="tmux-layout-btn" data-layout="split-h" title="Split Horizontal (Ctrl+B &quot;)">
+                <span class="material-symbols-outlined text-[13px]">table_rows</span> SPLIT HORIZ
               </button>
-              <button class="tmux-layout-btn active" data-layout="trio" title="Trio Grid (Console + Sniffer + Htop)">
-                ⊞ Trio Grid
+              <button class="tmux-layout-btn active" data-layout="trio" title="Trio Grid (Master 3-Pane View)">
+                <span class="material-symbols-outlined text-[13px]">splitscreen</span> TRIO GRID
               </button>
+
+              <button id="btn-tmux-shortcuts" class="tmux-help-btn" title="TMUX Keyboard Shortcuts Guide (Ctrl+B ?)">
+                <span>⌨️</span> <span>PREFIX [Ctrl+B]</span>
+              </button>
+
+              <div class="tmux-live-sync-badge">
+                <span class="inline-block w-1.5 h-1.5 bg-crimson-alert animate-ping" style="border-radius:50%;"></span>
+                <span>LIVE SYNC</span>
+              </div>
             </div>
           </div>
 
-          <!-- Tmux Grid Panes Container -->
+          <!-- TMUX Grid Panes Container -->
           <div id="tmux-grid-container" class="tmux-grid layout-trio">
             
-            <!-- PANE 1: OPERATOR CONSOLE TERMINAL -->
-            <div id="pane-terminal" class="tmux-pane active">
+            <!-- PANE 0: Exploit-X Console (Left / Primary) -->
+            <div id="pane-terminal" class="tmux-pane active" data-pane-idx="0">
               <div class="tmux-pane-header">
                 <div class="pane-title">
-                  <span>[0] exploit-x console</span>
-                  <span class="pane-badge">TTY1 ACTIVE</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span style="font-size:10px; color:var(--accent-primary)">E2E AES-256</span>
-                  <div class="terminal-window-dots">
-                    <span class="win-dot close"></span>
-                    <span class="win-dot min"></span>
-                    <span class="win-dot max"></span>
+                  <div class="flex items-center gap-1 text-[10px]">
+                    <span class="w-2.5 h-2.5 bg-crimson-alert inline-block" style="border-radius:50%;"></span>
+                    <span class="w-2.5 h-2.5 bg-warning-amber inline-block" style="border-radius:50%;"></span>
+                    <span class="w-2.5 h-2.5 bg-phosphor-green inline-block" style="border-radius:50%;"></span>
                   </div>
+                  <span class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] exploit-x console</span>
+                  <span class="pane-badge">TTY1 ACTIVE</span>
+                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">AES-GCM-256</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-text-muted text-[10px]">PANE-ATTACH: 0.0</span>
+                  <button class="pane-zoom-btn" id="btn-zoom-console" title="Zoom / Toggle Fullscreen (Ctrl+B z)">
+                    <span class="material-symbols-outlined text-[15px]">fullscreen</span>
+                  </button>
                 </div>
               </div>
 
-              <!-- Quick Actions Bar -->
+              <!-- Quick Tactical Macro Command Strip -->
               <div class="terminal-quick-actions">
-                <span style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono); margin-right:4px;">QUICK:</span>
+                <span class="macro-label">MACRO:</span>
                 <button class="quick-cmd-btn" data-cmd="help">HELP</button>
                 <button class="quick-cmd-btn" data-cmd="targets">TARGETS</button>
                 <button class="quick-cmd-btn" data-cmd="scan 192.168.1.100">SCAN</button>
                 <button class="quick-cmd-btn" data-cmd="use exploit/windows/smb/ms17_010_eternalblue">USE ETERNALBLUE</button>
-                <button class="quick-cmd-btn" data-cmd="exploit">EXPLOIT</button>
+                <button class="quick-cmd-btn danger" data-cmd="exploit">EXPLOIT</button>
                 <button class="quick-cmd-btn" data-cmd="sessions">SESSIONS</button>
                 <button class="quick-cmd-btn" data-cmd="interact 1">INTERACT (1)</button>
                 <button class="quick-cmd-btn" data-cmd="loot">LOOT</button>
@@ -614,68 +634,89 @@
                     autocomplete="off" 
                     autocorrect="off" 
                     autocapitalize="off" 
-                    spellcheck="false"
+                    spellcheck="false" 
                     placeholder="Type command (e.g. 'help', 'scan 192.168.1.100', 'use ms17_010_eternalblue')..."
                     autofocus
                   >
                   <!-- Autocomplete Suggestion Popup -->
                   <div id="term-autocomplete-popup" class="terminal-autocomplete-popup"></div>
                 </div>
+                <span class="inline-block w-2 h-4 bg-phosphor-green animate-pulse" style="margin-left:4px;"></span>
               </div>
             </div>
 
-            <!-- PANE 2: LIVE PACKET SNIFFER & C2 PROTOCOL STREAM -->
-            <div id="pane-sniffer" class="tmux-pane">
+            <!-- PANE 1: LIVE C2 PACKET SNIFFER (Top Right) -->
+            <div id="pane-sniffer" class="tmux-pane" data-pane-idx="1">
               <div class="tmux-pane-header">
                 <div class="pane-title">
-                  <span style="color:var(--accent-secondary)">[1] c2-packet-sniffer</span>
-                  <span class="pulse-dot" style="width:6px; height:6px;"></span>
+                  <span class="font-headline-sm font-bold" style="color:var(--cyan-telemetry, #00E5FF);">[1] c2-packet-sniffer</span>
+                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">ETH0: PROMISC</span>
+                  <span class="text-text-muted text-[10px] hidden sm:inline">CAP: 2.4k pkt/s</span>
                 </div>
-                <div style="font-size:10px; color:var(--text-muted)">
-                  IFACE: eth0 [PROMISC]
-                </div>
-              </div>
-
-              <div class="sniffer-body">
-                <div class="sniffer-toolbar">
+                <div class="flex items-center gap-2">
                   <div class="sniff-filters">
                     <button class="sniff-filter-btn active" data-filter="ALL">ALL</button>
                     <button class="sniff-filter-btn" data-filter="TLS">TLS</button>
                     <button class="sniff-filter-btn" data-filter="SMB">SMB</button>
                     <button class="sniff-filter-btn" data-filter="DNS">DNS</button>
                   </div>
-                  <div style="display:flex; gap:6px;">
-                    <button id="btn-sniff-pause" class="sniff-filter-btn active">⏸ PAUSE</button>
-                    <button id="btn-sniff-clear" class="sniff-filter-btn">CLEAR</button>
-                  </div>
+                  <button id="btn-sniff-pause" class="sniff-filter-btn active">⏸</button>
+                  <button id="btn-sniff-clear" class="sniff-filter-btn">✕</button>
+                  <button class="pane-zoom-btn" id="btn-zoom-sniffer" title="Zoom / Toggle Fullscreen (Ctrl+B z)">
+                    <span class="material-symbols-outlined text-[15px]">fullscreen</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="sniffer-body">
+                <!-- Sniffer Table Header -->
+                <div class="sniffer-table-header">
+                  <span style="width:75px;">TIME</span>
+                  <span style="width:190px;">FLOW (SRC ➔ DST)</span>
+                  <span style="width:65px;">PROTO</span>
+                  <span style="width:45px; text-align:right;">LEN</span>
+                  <span style="flex:1;">PAYLOAD PREVIEW</span>
                 </div>
 
+                <!-- Streaming Packet Feed -->
                 <div id="tmux-sniffer-stream" class="sniffer-stream">
                   <!-- Live packet rows dynamically injected by tmux.js -->
+                </div>
+
+                <!-- Hex Inspector Drawer -->
+                <div class="sniffer-hex-drawer" id="sniffer-hex-drawer">
+                  <span id="hex-view-bytes" class="text-phosphor-green">HEX: 4d 5a 90 00 03 00 00 00 04 00 00 00 ff ff 00 00 b8 00</span>
+                  <span id="hex-view-ascii" class="text-text-muted">DUMP: MZ..............</span>
                 </div>
               </div>
             </div>
 
-            <!-- PANE 3: HTOP SYSTEM RESOURCE & TELEMETRY MONITOR -->
-            <div id="pane-htop" class="tmux-pane">
+            <!-- PANE 2: HTOP SYSTEM RESOURCE & TELEMETRY MONITOR (Bottom Right) -->
+            <div id="pane-htop" class="tmux-pane" data-pane-idx="2">
               <div class="tmux-pane-header">
                 <div class="pane-title">
-                  <span style="color:var(--color-warning)">[2] htop-monitor</span>
-                  <span class="pane-badge" style="color:var(--color-warning); border-color:var(--color-warning)">LIVE</span>
+                  <span class="font-headline-sm font-bold" style="color:var(--warning-amber, #FFAA00);">[2] htop-monitor</span>
+                  <span class="pane-badge" style="color:var(--warning-amber); border-color:var(--warning-amber); background:rgba(255,170,0,0.08);">TASKS: 184 | 4 THR</span>
                 </div>
-                <div style="font-size:10px; color:var(--text-muted)">
-                  TASKS: 42, 3 thr; 1 running
+                <div class="flex items-center gap-2">
+                  <div class="text-text-secondary text-[10px] hidden sm:flex items-center gap-2">
+                    <span>UPTIME: 14d 06:12:44</span>
+                    <span style="color:var(--phosphor-green); font-weight:700;">LOAD: 0.74 0.82 0.91</span>
+                  </div>
+                  <button class="pane-zoom-btn" id="btn-zoom-htop" title="Zoom / Toggle Fullscreen (Ctrl+B z)">
+                    <span class="material-symbols-outlined text-[15px]">fullscreen</span>
+                  </button>
                 </div>
               </div>
 
               <div class="htop-body">
-                <!-- CPU & Mem Meters -->
+                <!-- Graphical Multi-Core Meters -->
                 <div class="htop-meters">
-                  <div id="htop-cpu-bars">
-                    <!-- 4 core bars populated by tmux.js -->
+                  <div id="htop-cpu-bars" class="space-y-1">
+                    <!-- Cores 1-4 with graphical progress bars dynamically rendered by tmux.js -->
                   </div>
-                  <div id="htop-mem-bar">
-                    <!-- Memory bar populated by tmux.js -->
+                  <div id="htop-mem-bar" class="htop-mem-wrapper">
+                    <!-- Memory graphical bar dynamically rendered by tmux.js -->
                   </div>
                 </div>
 
@@ -684,11 +725,11 @@
                   <table class="htop-table">
                     <thead>
                       <tr>
-                        <th>PID</th>
-                        <th>USER</th>
-                        <th>CPU%</th>
-                        <th>MEM</th>
-                        <th>Command</th>
+                        <th style="width:55px;">PID</th>
+                        <th style="width:70px;">USER</th>
+                        <th style="width:65px;">CPU%</th>
+                        <th style="width:65px;">MEM</th>
+                        <th>COMMAND</th>
                       </tr>
                     </thead>
                     <tbody id="htop-proc-tbody">
@@ -709,6 +750,12 @@
               <span class="tmux-win-tab" data-win="1">1:sniffer-</span>
               <span class="tmux-win-tab" data-win="2">2:htop</span>
             </div>
+
+            <!-- TMUX PREFIX KEY LISTENER BADGE -->
+            <div id="tmux-prefix-indicator" class="tmux-prefix-indicator hidden">
+              [PREFIX ACTIVE: Ctrl+B]
+            </div>
+
             <div class="tmux-status-right">
               <span class="tmux-status-host">"kali-c2"</span>
               <span>⚡ 0.0.0.0:4444</span>
@@ -717,6 +764,58 @@
             </div>
           </footer>
 
+        </div>
+
+        <!-- TMUX KEYBINDINGS & SHORTCUTS MODAL -->
+        <div id="tmux-shortcuts-modal" class="tmux-modal-backdrop hidden">
+          <div class="tmux-modal-dialog">
+            <div class="tmux-modal-header">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]" style="color:var(--phosphor-green)">keyboard</span>
+                <span class="font-bold uppercase tracking-wider" style="color:var(--text-primary)">TMUX KEYBOARD PREFIX & SHORTCUTS</span>
+              </div>
+              <button id="btn-close-tmux-shortcuts" class="tmux-modal-close">✕</button>
+            </div>
+            <div class="tmux-modal-body font-mono text-xs">
+              <div class="mb-3 p-2 bg-surface-subtle border border-border-dim text-text-secondary">
+                <strong class="text-phosphor-green">TMUX Prefix:</strong> Press <kbd class="tmux-kbd">Ctrl+B</kbd> once, release, then press any command key below:
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.setLayout('split-v')">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">%</kbd></div>
+                  <div class="text-text-secondary">Split Pane Vertically</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.setLayout('split-h')">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">"</kbd></div>
+                  <div class="text-text-secondary">Split Pane Horizontally</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.toggleZoom()">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">z</kbd></div>
+                  <div class="text-text-secondary">Zoom / Fullscreen Toggle</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.cyclePane()">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">o</kbd></div>
+                  <div class="text-text-secondary">Cycle Active Pane Focus</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.selectWindow(0)">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">0</kbd></div>
+                  <div class="text-text-secondary">Switch to Window 0 (Console)</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.selectWindow(1)">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">1</kbd></div>
+                  <div class="text-text-secondary">Switch to Window 1 (Sniffer)</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.selectWindow(2)">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">2</kbd></div>
+                  <div class="text-text-secondary">Switch to Window 2 (Htop)</div>
+                </div>
+                <div class="tmux-key-card" onclick="window.tmuxManager && window.tmuxManager.setLayout('trio')">
+                  <div class="flex items-center gap-2"><kbd class="tmux-kbd">Ctrl+B</kbd> + <kbd class="tmux-kbd">t</kbd></div>
+                  <div class="text-text-secondary">Reset to Master Trio Grid</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
