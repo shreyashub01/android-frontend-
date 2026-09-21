@@ -2489,6 +2489,561 @@
   }
 }
 
+/* =========================================================
+   PAGE 5: SOC & MITRE ATT&CK FRAMEWORK STYLES
+   ========================================================= */
+
+.soc-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 0 24px 0;
+}
+
+/* SOC Telemetry Stats Banner */
+.soc-telemetry-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.soc-stat-card {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.soc-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent-primary);
+}
+
+.soc-stat-card.alert::before {
+  background: var(--crimson-alert);
+}
+
+.soc-stat-card.warning::before {
+  background: var(--warning-amber);
+}
+
+.soc-stat-card.telemetry::before {
+  background: var(--cyan-telemetry);
+}
+
+.soc-stat-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.soc-stat-val {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+/* SOC Sub-Navigation */
+.soc-subnav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.soc-subnav-btn {
+  background: rgba(14, 22, 35, 0.8);
+  border: 1px solid var(--border-dim);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.soc-subnav-btn:hover {
+  background: var(--surface-highlight);
+  color: var(--text-primary);
+  border-color: var(--border-bright);
+}
+
+.soc-subnav-btn.active {
+  background: rgba(0, 255, 102, 0.12);
+  color: #00ff66;
+  border-color: #00ff66;
+  box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+/* Sub-Pane Visibility */
+.soc-subpane {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.soc-subpane.active {
+  display: flex;
+}
+
+/* MITRE Controls Filter Bar */
+.mitre-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 8px 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mitre-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 240px;
+  background: #070A0F;
+  border: 1px solid var(--border-bright);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.mitre-search-input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  width: 100%;
+  outline: none;
+}
+
+.mitre-tactic-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 2px;
+}
+
+.mitre-tactic-pill {
+  background: #070A0F;
+  border: 1px solid var(--border-dim);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.mitre-tactic-pill:hover {
+  color: var(--text-primary);
+  border-color: var(--border-bright);
+}
+
+.mitre-tactic-pill.active {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--cyan-telemetry);
+  border-color: var(--cyan-telemetry);
+}
+
+/* MITRE Horizontal Matrix Workspace */
+.mitre-matrix-scroll-wrapper {
+  background: #070A0F;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.mitre-matrix-grid {
+  display: flex;
+  gap: 10px;
+  min-width: max-content;
+}
+
+.mitre-column {
+  width: 210px;
+  min-width: 210px;
+  display: flex;
+  flex-direction: column;
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mitre-column-header {
+  background: rgba(18, 24, 36, 0.95);
+  border-bottom: 2px solid var(--border-bright);
+  padding: 8px 10px;
+  user-select: none;
+}
+
+.mitre-col-tactic-id {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--cyan-telemetry);
+  font-weight: 700;
+}
+
+.mitre-col-tactic-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2px 0;
+}
+
+.mitre-col-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.mitre-column-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.mitre-no-matches {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* Individual Technique Card */
+.mitre-card {
+  background: #0E141F;
+  border: 1px solid var(--border-dim);
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.mitre-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-primary);
+  background: #141C2B;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.mitre-card.sev-crit {
+  border-left: 3px solid #ff0055;
+  background: linear-gradient(90deg, rgba(255, 0, 85, 0.08), #0E141F 40%);
+}
+
+.mitre-card.sev-high {
+  border-left: 3px solid #ffaa00;
+  background: linear-gradient(90deg, rgba(255, 170, 0, 0.08), #0E141F 40%);
+}
+
+.mitre-card.sev-med {
+  border-left: 3px solid #00e5ff;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.08), #0E141F 40%);
+}
+
+.mitre-card.sev-low {
+  border-left: 3px solid #00ff66;
+  background: linear-gradient(90deg, rgba(0, 255, 102, 0.08), #0E141F 40%);
+}
+
+.mitre-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.mitre-card-id {
+  color: var(--cyan-telemetry);
+  font-weight: 700;
+}
+
+.mitre-card-sev {
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.sev-crit .mitre-card-sev {
+  background: rgba(255, 0, 85, 0.2);
+  color: #ff0055;
+}
+
+.sev-high .mitre-card-sev {
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffaa00;
+}
+
+.sev-med .mitre-card-sev {
+  background: rgba(0, 229, 255, 0.2);
+  color: #00e5ff;
+}
+
+.sev-low .mitre-card-sev {
+  background: rgba(0, 255, 102, 0.2);
+  color: #00ff66;
+}
+
+.mitre-card-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.mitre-card-desc {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mitre-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
+/* MITRE Detail Inspection Modal */
+.mitre-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 11, 0.88);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.mitre-modal-overlay.open {
+  display: flex;
+}
+
+.mitre-modal-box {
+  background: #0B0F17;
+  border: 1px solid var(--accent-primary);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 680px;
+  padding: 18px;
+  box-shadow: 0 0 30px rgba(0, 255, 102, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mitre-dossier-section {
+  background: #070A0F;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.mitre-dossier-label {
+  color: var(--accent-primary);
+  font-weight: 700;
+  font-size: 10px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* SIEM Live Table Styles */
+.siem-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.siem-table th {
+  background: #070A0F;
+  padding: 8px 10px;
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.siem-row {
+  border-bottom: 1px solid rgba(27, 42, 61, 0.4);
+  transition: background 0.15s ease;
+}
+
+.siem-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.siem-row td {
+  padding: 8px 10px;
+}
+
+.siem-cell-time {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.siem-cell-engine {
+  color: var(--cyan-telemetry);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.siem-cell-rule {
+  max-width: 320px;
+}
+
+.siem-rule-text {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: block;
+}
+
+.siem-mitre-tag {
+  color: var(--warning-amber);
+  font-size: 9px;
+  margin-top: 2px;
+}
+
+.siem-cell-src {
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.actor-tag {
+  background: rgba(255, 0, 85, 0.12);
+  border: 1px solid rgba(255, 0, 85, 0.4);
+  color: #ff4d6d;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.siem-badge {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+}
+
+.siem-badge.siem-crit {
+  background: rgba(255, 0, 85, 0.2);
+  border: 1px solid #ff0055;
+  color: #ff0055;
+}
+
+.siem-badge.siem-high {
+  background: rgba(255, 170, 0, 0.2);
+  border: 1px solid #ffaa00;
+  color: #ffaa00;
+}
+
+.siem-badge.siem-warn {
+  background: rgba(0, 229, 255, 0.2);
+  border: 1px solid #00e5ff;
+  color: #00e5ff;
+}
+
+.siem-badge.siem-info {
+  background: rgba(0, 255, 102, 0.2);
+  border: 1px solid #00ff66;
+  color: #00ff66;
+}
+
+.btn-table-action {
+  background: #0E1624;
+  border: 1px solid var(--border-bright);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-table-action:hover {
+  background: var(--surface-highlight);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.btn-table-action.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #00ff66;
+  color: #00ff66;
+}
+
 
 
 

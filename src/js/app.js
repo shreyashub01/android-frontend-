@@ -19,6 +19,7 @@ import { CyberThreatMap } from './threat-map.js';
 import { SiemStreamManager } from './siem.js';
 import { DefconController } from './defcon.js';
 import { frameworksManager } from './frameworks.js';
+import { mitreMatrixManager } from './mitre-matrix.js';
 
 class AppController {
   constructor() {
@@ -27,6 +28,7 @@ class AppController {
     this.threatMap = null;
     this.siem = null;
     this.defcon = null;
+    this.mitreMatrix = mitreMatrixManager;
     this.activeTab = 'sessions';
     this.matrixRunning = true;
     this.tmux = tmuxManager;
@@ -56,6 +58,7 @@ class AppController {
 
     // High-End Cyber Preface, Telemetry & Defense Operations
     this.initWarRoom();
+    this.initSocSubNav();
     this.defcon = new DefconController();
     this.preface = new CyberPreface();
     this.oscilloscope = new CyberOscilloscope('hud-oscilloscope-canvas');
@@ -168,7 +171,34 @@ class AppController {
       sessionManager.renderUI('sessions-grid-container', this);
     } else if (tabId === 'victim-data' || tabId === 'loot') {
       lootManager.renderUI();
+    } else if (tabId === 'soc-mitre') {
+      if (!this.siem) {
+        this.siem = new SiemStreamManager('siem-stream-table-body');
+      }
+      if (this.mitreMatrix) {
+        this.mitreMatrix.render();
+      }
     }
+  }
+
+  initSocSubNav() {
+    const subBtns = document.querySelectorAll('.soc-subnav-btn[data-soc-sub]');
+    subBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sub = btn.getAttribute('data-soc-sub');
+        subBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('.soc-subpane').forEach(p => {
+          p.classList.toggle('active', p.id === `soc-subpane-${sub}`);
+        });
+
+        if (sub === 'matrix' && this.mitreMatrix) {
+          this.mitreMatrix.render();
+        }
+        cyberAudio.playBeep(900, 0.04);
+      });
+    });
   }
 
   initTerminal() {

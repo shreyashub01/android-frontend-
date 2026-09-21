@@ -21,12 +21,13 @@ export class TmuxManager {
     this.packets = [];
     this.maxPackets = 50;
 
-    this.kaliHost = '192.168.1.100';
-    this.kaliPort = '8443';
+    this.termMode = 'live'; // 'live' | 'sim'
+    this.kaliHost = 'localhost';
+    this.kaliPort = '7681';
     this.kaliToken = 'kali_c2_token_alpha9';
     this.kaliSynced = true;
     this.kaliPackets = 5120;
-    this.kaliLatency = 0.8;
+    this.kaliLatency = 0.5;
 
     this.initDOM();
     this.initEventListeners();
@@ -56,7 +57,19 @@ export class TmuxManager {
     this.prefixIndicator = document.getElementById('tmux-prefix-indicator');
     this.shortcutsModal = document.getElementById('tmux-shortcuts-modal');
 
+    // Live Kali Terminal controls
+    this.btnModeLive = document.getElementById('btn-mode-live');
+    this.btnModeSim = document.getElementById('btn-mode-sim');
+    this.termLiveContainer = document.getElementById('term-live-container');
+    this.termSimContainer = document.getElementById('term-sim-container');
+    this.liveKaliFrame = document.getElementById('live-kali-frame');
+    this.btnReloadLiveTerm = document.getElementById('btn-reload-live-term');
+    this.btnOpenLiveExternal = document.getElementById('btn-open-live-external');
+    this.pane0Title = document.getElementById('pane-0-title-text');
+    this.pane0Badge = document.getElementById('pane-0-badge');
+
     this.setLayout(this.currentLayout);
+    this.setTermMode(this.termMode);
   }
 
   initEventListeners() {
@@ -174,6 +187,68 @@ export class TmuxManager {
         }
       });
     }
+
+    // Live Kali vs Simulator mode buttons
+    if (this.btnModeLive) {
+      this.btnModeLive.addEventListener('click', () => {
+        this.setTermMode('live');
+      });
+    }
+
+    if (this.btnModeSim) {
+      this.btnModeSim.addEventListener('click', () => {
+        this.setTermMode('sim');
+      });
+    }
+
+    if (this.btnReloadLiveTerm) {
+      this.btnReloadLiveTerm.addEventListener('click', () => {
+        this.reloadLiveTerminal();
+      });
+    }
+  }
+
+  setTermMode(mode) {
+    this.termMode = mode;
+    cyberAudio.playBeep(mode === 'live' ? 1200 : 900, 0.06);
+
+    if (this.btnModeLive) {
+      this.btnModeLive.classList.toggle('active', mode === 'live');
+    }
+    if (this.btnModeSim) {
+      this.btnModeSim.classList.toggle('active', mode === 'sim');
+    }
+
+    if (this.termLiveContainer) {
+      this.termLiveContainer.classList.toggle('hidden', mode !== 'live');
+    }
+    if (this.termSimContainer) {
+      this.termSimContainer.classList.toggle('hidden', mode !== 'sim');
+    }
+
+    if (this.pane0Title) {
+      this.pane0Title.textContent = mode === 'live' 
+        ? '[0] kali-linux wsl live pty' 
+        : '[0] kali-c2 operator console (sim)';
+    }
+
+    if (this.pane0Badge) {
+      this.pane0Badge.textContent = mode === 'live' ? 'LIVE PTY' : 'C2 SIMULATOR';
+    }
+
+    if (mode === 'sim') {
+      const input = document.getElementById('term-input-field');
+      if (input) input.focus();
+    }
+  }
+
+  reloadLiveTerminal() {
+    cyberAudio.playScan();
+    if (this.liveKaliFrame) {
+      const targetSrc = `http://${this.kaliHost}:${this.kaliPort}`;
+      this.liveKaliFrame.src = targetSrc;
+    }
+    this.notifyPaneAction(`RELOADED_WSL_PTY [http://${this.kaliHost}:${this.kaliPort}]`);
   }
 
   // --- TMUX KEYBOARD PREFIX ENGINE (Ctrl+B) ---
@@ -631,10 +706,17 @@ export class TmuxManager {
         if (hostInput && hostInput.value.trim()) this.kaliHost = hostInput.value.trim();
         if (portInput && portInput.value.trim()) this.kaliPort = portInput.value.trim();
 
+        if (this.liveKaliFrame) {
+          this.liveKaliFrame.src = `http://${this.kaliHost}:${this.kaliPort}`;
+        }
+        if (this.btnOpenLiveExternal) {
+          this.btnOpenLiveExternal.href = `http://${this.kaliHost}:${this.kaliPort}`;
+        }
+
         cyberAudio.playSuccess();
         modal.classList.remove('open');
         this.updateKaliPill(true);
-        this.notifyPaneAction(`KALI_SYNC_ESTABLISHED [${this.kaliHost}:${this.kaliPort}]`);
+        this.notifyPaneAction(`KALI_SYNC_ESTABLISHED [http://${this.kaliHost}:${this.kaliPort}]`);
       });
     }
 
@@ -642,6 +724,7 @@ export class TmuxManager {
       btnResync.addEventListener('click', () => {
         cyberAudio.playBeep(1200, 0.08);
         this.kaliSynced = true;
+        this.reloadLiveTerminal();
         this.updateKaliPill(true);
         this.notifyPaneAction(`RESYNC_KALI_DAEMON [PTS/1 -> TTY1 OK]`);
       });
@@ -651,13 +734,13 @@ export class TmuxManager {
   startKaliSyncLoop() {
     setInterval(() => {
       this.kaliPackets += Math.floor(Math.random() * 8) + 2;
-      this.kaliLatency = (0.7 + Math.random() * 0.4).toFixed(1);
+      this.kaliLatency = (0.3 + Math.random() * 0.2).toFixed(1);
 
       const latencyEl = document.getElementById('kali-sync-latency');
-      if (latencyEl) latencyEl.textContent = `${this.kaliLatency}ms`;
+      if (latencyEl) latencyEl.textContent = `< ${this.kaliLatency}ms (WSL2)`;
 
       const pktsEl = document.getElementById('kali-sync-pkts');
-      if (pktsEl) pktsEl.textContent = `${this.kaliPackets.toLocaleString()} pkts`;
+      if (pktsEl) pktsEl.textContent = `LIVE INTERACTIVE`;
     }, 2500);
   }
 
@@ -666,8 +749,8 @@ export class TmuxManager {
     const hostEl = document.getElementById('kali-sync-host');
     if (pill) {
       pill.innerHTML = isOnline 
-        ? `<span class="pulse-dot" style="background:#00ff66;"></span> KALI SYNC: ACTIVE`
-        : `<span class="pulse-dot danger"></span> KALI SYNC: DISCONNECTED`;
+        ? `<span class="pulse-dot" style="background:#00ff66;"></span> KALI WSL: ACTIVE`
+        : `<span class="pulse-dot danger"></span> KALI WSL: DISCONNECTED`;
       pill.style.borderColor = isOnline ? '#00ff66' : '#ff0055';
       pill.style.color = isOnline ? '#00ff66' : '#ff0055';
     }

@@ -204,7 +204,7 @@
         </div>
       </div>
 
-      <!-- Tactical Tab Navigation (4 Streamlined Pages) -->
+      <!-- Tactical Tab Navigation (5 Streamlined Pages) -->
       <nav class="tab-nav" aria-label="Operations Navigation">
         <button class="tab-btn active" data-tab="sessions">
           <span>📡</span> SESSIONS &amp; BEACONS <span class="tab-badge" id="nav-session-badge">4</span>
@@ -217,6 +217,9 @@
         </button>
         <button class="tab-btn" data-tab="victim-data">
           <span>💾</span> VICTIM DATA (EXFIL &amp; LOOT) <span class="tab-badge" id="nav-loot-badge">5</span>
+        </button>
+        <button class="tab-btn" data-tab="soc-mitre">
+          <span>🛡️</span> SOC &amp; MITRE ATT&amp;CK <span class="tab-badge" id="nav-soc-badge" style="background:rgba(255,0,85,0.15); color:#ff0055; border-color:#ff0055">LIVE SOC</span>
         </button>
       </nav>
 
@@ -303,20 +306,20 @@
             <div class="kali-sync-status">
               <div id="kali-sync-pill" class="kali-sync-pill">
                 <span class="pulse-dot" style="background:#00ff66;"></span>
-                <span>KALI SYNC: ACTIVE</span>
+                <span>KALI WSL: ACTIVE</span>
               </div>
               <div class="kali-sync-meta">
-                <span>HOST: <strong id="kali-sync-host" style="color:var(--text-primary);">kali@192.168.1.100:8443</strong></span>
-                <span>TUNNEL: <strong style="color:var(--accent-secondary);">WSS TLS 1.3 (ChaCha20-Poly1305)</strong></span>
-                <span>PING: <strong id="kali-sync-latency" style="color:#00ff66;">0.8ms</strong></span>
-                <span>SYNC: <strong id="kali-sync-pkts" style="color:#00e5ff;">5,120 pkts</strong></span>
+                <span>HOST: <strong id="kali-sync-host" style="color:var(--text-primary);">kali@localhost:7681</strong></span>
+                <span>TUNNEL: <strong style="color:var(--accent-secondary);">ttyd PTY (xterm-256color)</strong></span>
+                <span>PING: <strong id="kali-sync-latency" style="color:#00ff66;">&lt; 0.5ms (WSL2)</strong></span>
+                <span>STATE: <strong id="kali-sync-pkts" style="color:#00e5ff;">LIVE INTERACTIVE</strong></span>
               </div>
             </div>
             <div class="kali-sync-controls">
               <button id="btn-kali-bridge-config" class="btn-tactical" title="Configure Kali Linux Host IP &amp; WebSocket Port">
                 <span class="icon">⚙️</span> KALI BRIDGE CONFIG
               </button>
-              <button id="btn-kali-resync" class="btn-tactical" title="Re-sync PTS/1 WebSocket Handshake">
+              <button id="btn-kali-resync" class="btn-tactical active" title="Re-sync PTS/1 WebSocket Handshake">
                 <span class="icon">🔄</span> RESYNC
               </button>
               <button id="btn-tmux-shortcuts" class="btn-tactical active" title="View TMUX Keybindings (Ctrl+B ?)">
@@ -369,55 +372,91 @@
                     <span class="w-2.5 h-2.5 bg-warning-amber inline-block" style="border-radius:50%;"></span>
                     <span class="w-2.5 h-2.5 bg-phosphor-green inline-block" style="border-radius:50%;"></span>
                   </div>
-                  <span class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] kali-c2 operator console</span>
-                  <span class="pane-badge">TTY1 ACTIVE</span>
-                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">AES-GCM-256</span>
+                  <span id="pane-0-title-text" class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] kali-linux wsl live pty</span>
+                  <span class="pane-badge" id="pane-0-badge">LIVE PTY</span>
+                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">WSL2:7681</span>
                 </div>
                 <div class="flex items-center gap-2">
-                  <span class="text-text-muted text-[10px]">PANE-ATTACH: 0.0</span>
+                  <!-- Mode Switcher: LIVE KALI vs SIMULATOR -->
+                  <div class="terminal-mode-switch">
+                    <button id="btn-mode-live" class="term-mode-btn active" title="Real Live Kali Linux (WSL) Terminal">
+                      <span class="pulse-dot" style="background:#00ff66; width:6px; height:6px;"></span> LIVE KALI
+                    </button>
+                    <button id="btn-mode-sim" class="term-mode-btn" title="Simulated Red Team C2 Exploitation Console">
+                      <span>⚡</span> SIMULATOR
+                    </button>
+                  </div>
                   <button class="pane-zoom-btn" id="btn-zoom-console" title="Zoom / Toggle Fullscreen (Ctrl+B z)">
                     <span class="material-symbols-outlined text-[15px]">fullscreen</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Quick Tactical Macro Command Strip -->
-              <div class="terminal-quick-actions">
-                <span class="macro-label">MACRO:</span>
-                <button class="quick-cmd-btn" data-cmd="help">HELP</button>
-                <button class="quick-cmd-btn" data-cmd="targets">TARGETS</button>
-                <button class="quick-cmd-btn" data-cmd="scan 192.168.1.50">SCAN</button>
-                <button class="quick-cmd-btn" data-cmd="use exploit/windows/smb/ms17_010_eternalblue">USE ETERNALBLUE</button>
-                <button class="quick-cmd-btn danger" data-cmd="exploit">EXPLOIT</button>
-                <button class="quick-cmd-btn" data-cmd="sessions">SESSIONS</button>
-                <button class="quick-cmd-btn" data-cmd="interact 1">INTERACT (1)</button>
-                <button class="quick-cmd-btn" data-cmd="loot">LOOT</button>
-                <button class="quick-cmd-btn" data-cmd="crack">CRACK</button>
-                <button class="quick-cmd-btn" data-cmd="clear">CLEAR</button>
+              <!-- LIVE KALI CONTAINER (Real WSL Terminal via ttyd) -->
+              <div id="term-live-container" class="term-pane-content">
+                <div class="live-term-toolbar">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="pulse-dot" style="background:#00ff66;"></span>
+                    <span style="color:#00ff66; font-weight:700;">LIVE KALI BASH SHELL</span>
+                    <span style="color:var(--text-muted);">// http://localhost:7681</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <button id="btn-reload-live-term" class="btn-tactical" style="padding:1px 6px; font-size:10px;" title="Reload Terminal Stream">
+                      <span>🔄</span> RELOAD
+                    </button>
+                    <a id="btn-open-live-external" href="http://localhost:7681" target="_blank" class="btn-tactical" style="padding:1px 6px; font-size:10px; text-decoration:none;" title="Open in Dedicated Tab">
+                      <span>↗</span> POP OUT
+                    </a>
+                  </div>
+                </div>
+                <iframe 
+                  id="live-kali-frame" 
+                  src="http://localhost:7681" 
+                  class="live-kali-iframe" 
+                  title="Live Kali Linux WSL Terminal"
+                  allow="clipboard-read; clipboard-write"
+                ></iframe>
               </div>
 
-              <!-- Output Stream Container -->
-              <div id="term-output-stream" class="terminal-body"></div>
-
-              <!-- Terminal Input Row -->
-              <div class="terminal-input-row">
-                <span id="term-prompt-prefix" class="terminal-prompt">kali@c2-box:~#</span>
-                <div class="terminal-input-wrapper">
-                  <input 
-                    id="term-input-field" 
-                    class="terminal-input" 
-                    type="text" 
-                    autocomplete="off" 
-                    autocorrect="off" 
-                    autocapitalize="off" 
-                    spellcheck="false" 
-                    placeholder="Type command (e.g. 'help', 'scan 192.168.1.50', 'sessions', 'interact 1')..."
-                    autofocus
-                  >
-                  <!-- Autocomplete Suggestion Popup -->
-                  <div id="term-autocomplete-popup" class="terminal-autocomplete-popup"></div>
+              <!-- SIMULATOR CONTAINER (Existing Red Team Simulation Engine) -->
+              <div id="term-sim-container" class="term-pane-content hidden">
+                <!-- Quick Tactical Macro Command Strip -->
+                <div class="terminal-quick-actions">
+                  <span class="macro-label">MACRO:</span>
+                  <button class="quick-cmd-btn" data-cmd="help">HELP</button>
+                  <button class="quick-cmd-btn" data-cmd="targets">TARGETS</button>
+                  <button class="quick-cmd-btn" data-cmd="scan 192.168.1.50">SCAN</button>
+                  <button class="quick-cmd-btn" data-cmd="use exploit/windows/smb/ms17_010_eternalblue">USE ETERNALBLUE</button>
+                  <button class="quick-cmd-btn danger" data-cmd="exploit">EXPLOIT</button>
+                  <button class="quick-cmd-btn" data-cmd="sessions">SESSIONS</button>
+                  <button class="quick-cmd-btn" data-cmd="interact 1">INTERACT (1)</button>
+                  <button class="quick-cmd-btn" data-cmd="loot">LOOT</button>
+                  <button class="quick-cmd-btn" data-cmd="crack">CRACK</button>
+                  <button class="quick-cmd-btn" data-cmd="clear">CLEAR</button>
                 </div>
-                <span class="inline-block w-2 h-4 bg-phosphor-green animate-pulse" style="margin-left:4px;"></span>
+
+                <!-- Output Stream Container -->
+                <div id="term-output-stream" class="terminal-body"></div>
+
+                <!-- Terminal Input Row -->
+                <div class="terminal-input-row">
+                  <span id="term-prompt-prefix" class="terminal-prompt">kali@c2-box:~#</span>
+                  <div class="terminal-input-wrapper">
+                    <input 
+                      id="term-input-field" 
+                      class="terminal-input" 
+                      type="text" 
+                      autocomplete="off" 
+                      autocorrect="off" 
+                      autocapitalize="off" 
+                      spellcheck="false" 
+                      placeholder="Type command (e.g. 'help', 'scan 192.168.1.50', 'sessions', 'interact 1')..."
+                    >
+                    <!-- Autocomplete Suggestion Popup -->
+                    <div id="term-autocomplete-popup" class="terminal-autocomplete-popup"></div>
+                  </div>
+                  <span class="inline-block w-2 h-4 bg-phosphor-green animate-pulse" style="margin-left:4px;"></span>
+                </div>
               </div>
             </div>
 
@@ -791,6 +830,247 @@
         </div>
       </section>
 
+      <!-- =========================================================
+           PAGE 5: SOC INCIDENT RESPONSE & MITRE ATT&CK NAVIGATOR
+           ========================================================= -->
+      <section id="tab-soc-mitre" class="tab-content">
+        <div class="soc-container">
+
+          <!-- SOC Telemetry Stats Banner -->
+          <div class="soc-telemetry-banner">
+            <div class="soc-stat-card telemetry">
+              <div class="soc-stat-title">
+                <span class="pulse-dot" style="background:#00e5ff;"></span>
+                <span>TOTAL SIEM EVENTS</span>
+              </div>
+              <div class="soc-stat-val" id="stat-siem-total" style="color:#00e5ff;">1,842,912</div>
+              <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">Suricata + Zeek + Wazuh Logs</div>
+            </div>
+
+            <div class="soc-stat-card alert">
+              <div class="soc-stat-title">
+                <span class="pulse-dot danger"></span>
+                <span>CRITICAL DETECTIONS</span>
+              </div>
+              <div class="soc-stat-val" id="stat-soc-crit" style="color:#ff0055;">14 ACTIVE</div>
+              <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">Automated Triage Escalated</div>
+            </div>
+
+            <div class="soc-stat-card">
+              <div class="soc-stat-title">
+                <span style="color:#00ff66;">🛡️</span>
+                <span>QUARANTINED HOSTS</span>
+              </div>
+              <div class="soc-stat-val" id="stat-soc-isolated" style="color:#00ff66;">2 ISOLATED</div>
+              <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">Firewall Null-Route Active</div>
+            </div>
+
+            <div class="soc-stat-card warning">
+              <div class="soc-stat-title">
+                <span style="color:#ffaa00;">⚡</span>
+                <span>ATT&amp;CK TACTICS COVERED</span>
+              </div>
+              <div class="soc-stat-val" style="color:#ffaa00;">14 / 14 TACTICS</div>
+              <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">Enterprise Matrix v14.1</div>
+            </div>
+          </div>
+
+          <!-- SOC Sub-Navigation Bar -->
+          <div class="soc-subnav">
+            <button class="soc-subnav-btn active" data-soc-sub="matrix">
+              <span>🛡️</span> MITRE ATT&amp;CK ENTERPRISE MATRIX
+            </button>
+            <button class="soc-subnav-btn" data-soc-sub="siem">
+              <span>🚨</span> REAL-TIME SIEM ALERTS STREAM
+            </button>
+            <button class="soc-subnav-btn" data-soc-sub="sigma">
+              <span>📋</span> SIGMA DETECTION RULES &amp; PLAYBOOKS
+            </button>
+          </div>
+
+          <!-- SUB-PANE 1: MITRE ATT&CK MATRIX -->
+          <div id="soc-subpane-matrix" class="soc-subpane active">
+            <!-- Filter & Search Bar -->
+            <div class="mitre-controls-bar">
+              <div class="mitre-search-box">
+                <span class="material-symbols-outlined text-[15px] text-cyan-telemetry">search</span>
+                <input 
+                  id="mitre-search-input" 
+                  type="text" 
+                  class="mitre-search-input" 
+                  placeholder="Filter techniques by ID, name, or description (e.g. 'T1059', 'Pass-the-Hash', 'Scan')..."
+                >
+              </div>
+              <div class="mitre-tactic-pills">
+                <button class="mitre-tactic-pill active" data-tactic="ALL">ALL TACTICS</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0043">RECON</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0001">INITIAL ACCESS</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0002">EXECUTION</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0003">PERSISTENCE</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0004">PRIV-ESC</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0006">CREDENTIALS</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0008">LATERAL</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0011">C2</button>
+                <button class="mitre-tactic-pill" data-tactic="TA0040">IMPACT</button>
+              </div>
+            </div>
+
+            <!-- Horizontal Scrollable Matrix Heatmap -->
+            <div class="mitre-matrix-scroll-wrapper">
+              <div id="mitre-matrix-grid" class="mitre-matrix-grid">
+                <!-- Dynamically populated by mitreMatrixManager -->
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-PANE 2: SIEM LIVE ALERTS STREAM -->
+          <div id="soc-subpane-siem" class="soc-subpane">
+            <div class="cyber-card" style="padding:12px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="pulse-dot" style="background:#ff0055;"></span>
+                  <span style="font-family:var(--font-mono); font-weight:700; color:var(--text-primary); font-size:12px;">LIVE SOC INTRUSION STREAM [SURICATA // ZEEK // WAZUH]</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="btn-tactical siem-filter-btn active" data-filter="ALL">ALL</button>
+                  <button class="btn-tactical siem-filter-btn" data-filter="CRITICAL">CRITICAL</button>
+                  <button class="btn-tactical siem-filter-btn" data-filter="HIGH">HIGH</button>
+                  <button class="btn-tactical siem-filter-btn" data-filter="APT">APT THREATS</button>
+                  <button id="btn-siem-pause" class="btn-tactical">⏸ PAUSE</button>
+                  <button id="btn-siem-clear" class="btn-tactical">✕ CLEAR</button>
+                </div>
+              </div>
+
+              <div style="overflow-x:auto;">
+                <table class="siem-table">
+                  <thead>
+                    <tr>
+                      <th style="width:70px;">TIME</th>
+                      <th style="width:70px;">SEVERITY</th>
+                      <th style="width:85px;">ENGINE</th>
+                      <th>DETECTION RULE &amp; MITRE TTP</th>
+                      <th style="width:160px;">SRC ➔ DST</th>
+                      <th style="width:120px;">ATTRIBUTED ACTOR</th>
+                      <th style="width:130px; text-align:center;">SOC ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="siem-stream-table-body">
+                    <!-- Populated by SiemStreamManager -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-PANE 3: SIGMA DETECTION RULES & PLAYBOOKS -->
+          <div id="soc-subpane-sigma" class="soc-subpane">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:14px; font-family:var(--font-mono);">
+              
+              <!-- Rule 1: Encoded PowerShell -->
+              <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-weight:700; color:var(--crimson-alert); font-size:11px;">SIGMA: Suspicious Encoded PowerShell Execution</span>
+                  <span class="siem-badge siem-crit">CRITICAL</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                  ID: proc_creation_win_powershell_encoded_cmd | MITRE: T1059.001
+                </div>
+                <pre style="background:#04070B; padding:8px; border-radius:4px; font-size:9px; color:#00ff66; border:1px solid var(--border-dim); overflow-x:auto;">title: Encoded PowerShell Command Execution
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains:
+            - '-enc '
+            - '-encodedcommand '
+            - '-e '
+    condition: selection</pre>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-secondary);">
+                  <strong style="color:var(--accent-primary)">Incident Playbook:</strong> Terminate parent process PID, inspect decoded scriptblock logs (EventID 4104), quarantine host endpoint.
+                </div>
+              </div>
+
+              <!-- Rule 2: LSASS Memory Access -->
+              <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-weight:700; color:var(--warning-amber); font-size:11px;">SIGMA: LSASS Process Memory Dump (Mimikatz)</span>
+                  <span class="siem-badge siem-high">HIGH</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                  ID: sysmon_lsass_memdump | MITRE: T1003.001
+                </div>
+                <pre style="background:#04070B; padding:8px; border-radius:4px; font-size:9px; color:#00e5ff; border:1px solid var(--border-dim); overflow-x:auto;">title: LSASS Memory Access
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        TargetImage|endswith: '\lsass.exe'
+        GrantedAccess: '0x1010' # PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFO
+    filter:
+        SourceImage|endswith: '\csrss.exe'
+    condition: selection and not filter</pre>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-secondary);">
+                  <strong style="color:var(--accent-primary)">Incident Playbook:</strong> Reset active Domain Admin tickets (Golden Ticket revoke), force kerberos KDC purge, isolate source host.
+                </div>
+              </div>
+
+              <!-- Rule 3: Linux Dirty Pipe -->
+              <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-weight:700; color:var(--cyan-telemetry); font-size:11px;">SIGMA: Linux Kernel Dirty Pipe Privilege Escalation</span>
+                  <span class="siem-badge siem-crit">CRITICAL</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                  ID: cve_2022_0847_dirtypipe | MITRE: T1068
+                </div>
+                <pre style="background:#04070B; padding:8px; border-radius:4px; font-size:9px; color:#00ff66; border:1px solid var(--border-dim); overflow-x:auto;">title: Dirty Pipe Exploitation Attempt
+logsource:
+    product: linux
+    service: auditd
+detection:
+    syscall:
+        - splice
+    file:
+        - '/etc/passwd'
+        - '/etc/shadow'
+    condition: syscall and file</pre>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-secondary);">
+                  <strong style="color:var(--accent-primary)">Incident Playbook:</strong> Audit /etc/passwd for unauthorized root additions (UID 0), verify immutable file flags (chattr +i), roll out kernel security patch.
+                </div>
+              </div>
+
+              <!-- Rule 4: C2 TLS Beaconing -->
+              <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-weight:700; color:var(--phosphor-green); font-size:11px;">SIGMA: Anomalous HTTPS C2 Beaconing Periodic Pattern</span>
+                  <span class="siem-badge siem-high">HIGH</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                  ID: net_c2_periodic_beacon | MITRE: T1071.001
+                </div>
+                <pre style="background:#04070B; padding:8px; border-radius:4px; font-size:9px; color:#ffaa00; border:1px solid var(--border-dim); overflow-x:auto;">title: Low-Jitter C2 Beaconing
+logsource:
+    category: network_connection
+    service: zeek_ssl
+detection:
+    ssl:
+        ssl_subject|contains: 'Default Company'
+        periodic_interval: '60s +/- 2s'
+    condition: ssl</pre>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-secondary);">
+                  <strong style="color:var(--accent-primary)">Incident Playbook:</strong> Block destination IP on perimeter border routers, extract JA3 fingerprint hash, search enterprise for matching connections.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </main>
 
   </div>
@@ -871,6 +1151,50 @@
             Block TCP Port 445 on perimeter firewalls, isolate infected host IP, and apply latest security patch rollup.
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MITRE Technique Forensic Inspector Modal -->
+  <div id="mitre-detail-modal" class="mitre-modal-overlay">
+    <div class="mitre-modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-dim); padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--cyan-telemetry); font-size:18px;">🛡️</span>
+          <span id="mitre-modal-title" style="font-family:var(--font-mono); font-weight:800; font-size:13px; color:var(--text-primary);">T1059: Command &amp; Scripting Interpreter</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="mitre-modal-badge" class="siem-badge siem-crit">CRITICAL</span>
+          <button id="btn-close-mitre-modal" class="btn-tactical" style="padding:2px 8px; font-size:11px;">✕ CLOSE</button>
+        </div>
+      </div>
+
+      <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">
+        TACTIC: <strong id="mitre-modal-tactic" style="color:var(--accent-primary);">Execution [TA0002]</strong> | FRAMEWORK: <strong style="color:#00ff66;">MITRE ATT&amp;CK ENTERPRISE</strong>
+      </div>
+
+      <div class="mitre-dossier-section">
+        <div class="mitre-dossier-label">
+          <span class="material-symbols-outlined text-[14px]">info</span>
+          <span>TECHNIQUE ADVERSARY BEHAVIOR DESCRIPTION:</span>
+        </div>
+        <div id="mitre-modal-desc" style="color:var(--text-secondary); line-height:1.4;"></div>
+      </div>
+
+      <div class="mitre-dossier-section">
+        <div class="mitre-dossier-label" style="color:var(--cyan-telemetry);">
+          <span class="material-symbols-outlined text-[14px]">visibility</span>
+          <span>SOC DETECTION TELEMETRY STRATEGY:</span>
+        </div>
+        <div id="mitre-modal-detection" style="color:var(--text-secondary); line-height:1.4;"></div>
+      </div>
+
+      <div class="mitre-dossier-section">
+        <div class="mitre-dossier-label" style="color:#00ff66;">
+          <span class="material-symbols-outlined text-[14px]">shield</span>
+          <span>RECOMMENDED DEFENSIVE MITIGATIONS:</span>
+        </div>
+        <div id="mitre-modal-mitigation" style="color:#00ff66; line-height:1.4;"></div>
       </div>
     </div>
   </div>
@@ -970,16 +1294,16 @@ class MainActivity : AppCompatActivity() {
       <div style="display:flex; flex-direction:column; gap:10px; font-size:11px;">
         <div>
           <label style="color:var(--text-muted); display:block; margin-bottom:4px;">KALI LINUX HOST IP / FQDN:</label>
-          <input id="kali-input-host" type="text" value="192.168.1.100" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
+          <input id="kali-input-host" type="text" value="localhost" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
         </div>
 
         <div>
-          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">WEBSOCKET PTY PORT:</label>
-          <input id="kali-input-port" type="text" value="8443" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
+          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">TTYD / WEBSOCKET PTY PORT:</label>
+          <input id="kali-input-port" type="text" value="7681" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
         </div>
 
         <div>
-          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">BRIDGE AUTH TOKEN / API SECRET:</label>
+          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">BRIDGE AUTH TOKEN / API SECRET (OPTIONAL):</label>
           <input type="password" value="kali_c2_token_alpha9_secure" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
         </div>
 
