@@ -2002,6 +2002,494 @@
   }
 }
 
+/* =========================================================
+   STREAMLINED 4-PAGE ARCHITECTURE STYLES
+   ========================================================= */
+
+/* Tab navigation 4-page layout */
+.tab-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: rgba(7, 10, 15, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  background: rgba(11, 15, 23, 0.8);
+  border: 1px solid var(--border-dim);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-transform: uppercase;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-bright);
+  background: rgba(27, 36, 54, 0.6);
+}
+
+.tab-btn.active {
+  color: #00ff66;
+  background: rgba(0, 255, 102, 0.08);
+  border-color: #00ff66;
+  box-shadow: 0 0 16px rgba(0, 255, 102, 0.2), inset 0 0 12px rgba(0, 255, 102, 0.05);
+}
+
+.tab-badge {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 800;
+  border: 1px solid currentColor;
+}
+
+/* =========================================================
+   PAGE 1: SESSIONS & BEACONS
+   ========================================================= */
+.sessions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sessions-header-banner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.session-stat-card {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.session-stat-title {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.session-stat-val {
+  font-size: 20px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.session-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+}
+
+.session-card {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.session-card:hover {
+  border-color: #00ff66;
+  box-shadow: 0 4px 24px rgba(0, 255, 102, 0.12);
+}
+
+.session-card.elevated {
+  border-left: 3px solid #00ff66;
+}
+
+.session-card.user-priv {
+  border-left: 3px solid #00e5ff;
+}
+
+.session-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.session-host-title {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.session-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: rgba(7, 10, 15, 0.6);
+  border: 1px solid rgba(27, 42, 61, 0.6);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.session-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.session-meta-lbl {
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.session-meta-val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.session-actions-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btn-session-action {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(18, 24, 36, 0.9);
+  border: 1px solid var(--border-dim);
+  border-radius: 4px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-session-action:hover {
+  background: rgba(0, 255, 102, 0.15);
+  border-color: #00ff66;
+  color: #00ff66;
+}
+
+.btn-session-action.danger:hover {
+  background: rgba(255, 0, 85, 0.15);
+  border-color: #ff0055;
+  color: #ff0055;
+}
+
+/* Listener Bar */
+.listener-banner {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================================================
+   PAGE 2: TMUX KALI LINUX SYNCHRONIZATION BAR
+   ========================================================= */
+.kali-sync-bar {
+  background: #070A0F;
+  border: 1px solid #1B2A3D;
+  border-left: 3px solid #00ff66;
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+}
+
+.kali-sync-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kali-sync-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: rgba(0, 255, 102, 0.12);
+  border: 1px solid #00ff66;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #00ff66;
+  letter-spacing: 0.5px;
+}
+
+.kali-sync-meta {
+  font-size: 10px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kali-sync-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Kali Bridge Modal */
+.kali-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 11, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.kali-modal-overlay.open {
+  display: flex;
+}
+
+.kali-modal-box {
+  background: #0B0F17;
+  border: 1px solid #00ff66;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 520px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 255, 102, 0.15);
+  font-family: var(--font-mono);
+}
+
+/* =========================================================
+   PAGE 3: CONNECTIONS TOPOLOGY
+   ========================================================= */
+.topology-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: calc(100vh - 220px);
+  min-height: 600px;
+}
+
+.topology-header-bar {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+}
+
+.topology-workspace {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.topology-canvas-wrapper {
+  background: #04070B;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topology-inspector-panel {
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+/* =========================================================
+   PAGE 4: VICTIM DATA (EXFIL & LOOT)
+   ========================================================= */
+.victim-data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.victim-subnav {
+  display: flex;
+  gap: 8px;
+  background: #0B0F17;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 6px;
+  font-family: var(--font-mono);
+}
+
+.victim-subnav-btn {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.victim-subnav-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.victim-subnav-btn.active {
+  color: #00ff66;
+  background: rgba(0, 255, 102, 0.1);
+  border-color: #00ff66;
+}
+
+.victim-subpane {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.victim-subpane.active {
+  display: flex;
+}
+
+/* Keylogger stream */
+.keylogger-feed {
+  background: #04070B;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #00ff66;
+  height: 380px;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+.keylog-line {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.keylog-time {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.keylog-app {
+  color: #00e5ff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.keylog-text {
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+/* Exfiltrated Files Table */
+.files-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.files-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: #070A0F;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-dim);
+  text-transform: uppercase;
+}
+
+.files-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(27, 42, 61, 0.5);
+  color: var(--text-primary);
+}
+
+.files-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .tab-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sessions-header-banner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .topology-workspace {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .topology-canvas-wrapper {
+    height: 360px;
+  }
+}
+
+
 
 
 

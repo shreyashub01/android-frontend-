@@ -27,13 +27,14 @@ class AppController {
     this.threatMap = null;
     this.siem = null;
     this.defcon = null;
-    this.activeTab = 'war-room';
+    this.activeTab = 'sessions';
     this.matrixRunning = true;
     this.tmux = tmuxManager;
     this.media = mediaCaptureManager;
     this.preface = null;
     this.oscilloscope = null;
     this.killChain = null;
+    window.appController = this;
   }
 
   init() {
@@ -151,16 +152,22 @@ class AppController {
       b.classList.toggle('active', b.getAttribute('data-tab') === tabId);
     });
 
-    // Update tab content visibility
+    // Update tab content visibility (with fallbacks for aliases)
     document.querySelectorAll('.tab-content').forEach(c => {
-      c.classList.toggle('active', c.id === `tab-${tabId}`);
+      const match = c.id === `tab-${tabId}` || 
+        (tabId === 'tmux' && c.id === 'tab-terminal') ||
+        (tabId === 'topology' && c.id === 'tab-network') ||
+        (tabId === 'victim-data' && c.id === 'tab-loot');
+      c.classList.toggle('active', match);
     });
 
-    // Resize canvasing when tabs switch
-    if (tabId === 'war-room' && this.threatMap) {
-      setTimeout(() => this.threatMap.initSize(), 50);
-    } else if (tabId === 'network' && this.networkGraph) {
-      setTimeout(() => this.networkGraph.initCanvasSize(), 50);
+    // Trigger canvas and component updates
+    if (tabId === 'topology' || tabId === 'network') {
+      if (this.networkGraph) setTimeout(() => this.networkGraph.initCanvasSize(), 50);
+    } else if (tabId === 'sessions') {
+      sessionManager.renderUI('sessions-grid-container', this);
+    } else if (tabId === 'victim-data' || tabId === 'loot') {
+      lootManager.renderUI();
     }
   }
 
@@ -410,127 +417,31 @@ class AppController {
 
   // --- ACTIVE SESSIONS VIEW ---
   initSessionsView() {
-    const grid = document.getElementById('sessions-grid-container');
-    if (!grid) return;
-
-    const render = (sessions) => {
-      grid.innerHTML = '';
-      if (sessions.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; padding:30px; text-align:center; color:var(--text-muted)">
-          No active C2 beacon agents connected. Exploit a target or deploy a stager to establish sessions.
-        </div>`;
-        return;
-      }
-
-      sessions.forEach(s => {
-        const card = document.createElement('div');
-        const isSys = s.integrity === 'SYSTEM' || s.integrity === 'root';
-        card.className = `session-card ${isSys ? 'system' : ''}`;
-
-        card.innerHTML = `
-          <div class="session-header">
-            <span class="session-id">
-              <span class="pulse-dot ${isSys ? 'danger' : ''}"></span>
-              SESSION #${s.id}: ${s.hostname}
-            </span>
-            <span class="session-badge ${isSys ? 'system' : 'user'}">${s.integrity}</span>
-          </div>
-          <div class="session-info-rows">
-            <div class="session-info-item">
-              <span class="session-info-label">TARGET IP</span>
-              <span class="session-info-value">${s.targetIp}</span>
-            </div>
-            <div class="session-info-item">
-              <span class="session-info-label">USER IDENTITY</span>
-              <span class="session-info-value" style="color:${isSys ? 'var(--color-danger)' : 'var(--accent-primary)'}">${s.user}</span>
-            </div>
-            <div class="session-info-item">
-              <span class="session-info-label">OS / ARCH</span>
-              <span class="session-info-value">${s.os.slice(0, 20)} (${s.arch})</span>
-            </div>
-            <div class="session-info-item">
-              <span class="session-info-label">BEACON / LATENCY</span>
-              <span class="session-info-value">Interval ${s.beaconInterval}s • ${s.latency}</span>
-            </div>
-          </div>
-          <div style="display:flex; gap:8px; margin-top:8px">
-            <button class="btn-tactical active sess-shell-btn" data-id="${s.id}">💻 Open Shell</button>
-            <button class="btn-tactical sess-elevate-btn" data-id="${s.id}">🛡️ PrivEsc</button>
-            <button class="btn-tactical danger sess-kill-btn" data-id="${s.id}">✖ Terminate</button>
-          </div>
-        `;
-
-        card.querySelector('.sess-shell-btn').addEventListener('click', () => {
-          this.switchTab('terminal');
-          const input = document.getElementById('term-input-field');
-          input.value = `interact ${s.id}`;
-          this.terminal.handleEnter();
-        });
-
-        card.querySelector('.sess-elevate-btn').addEventListener('click', () => {
-          const res = sessionManager.elevateSession(s.id);
-          cyberAudio.playExploitSuccess();
-          alert(res.message);
-        });
-
-        card.querySelector('.sess-kill-btn').addEventListener('click', () => {
-          sessionManager.killSession(s.id);
-          cyberAudio.playAlarm();
-        });
-
-        grid.appendChild(card);
-      });
-    };
-
-    render(sessionManager.getAll());
-    sessionManager.subscribe(render);
+    sessionManager.renderUI('sessions-grid-container', this);
+    sessionManager.subscribe(() => sessionManager.renderUI('sessions-grid-container', this));
   }
 
-  // --- LOOT & CREDENTIALS VAULT VIEW ---
+  // --- LOOT & VICTIM DATA EXFILTRATION VIEW ---
   initLootView() {
-    const tableBody = document.getElementById('loot-table-body');
+    lootManager.renderUI();
+    lootManager.subscribe(() => lootManager.renderUI());
+
+    const subnavBtns = document.querySelectorAll('.victim-subnav-btn');
+    subnavBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        subnavBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const sub = btn.getAttribute('data-sub');
+        document.querySelectorAll('.victim-subpane').forEach(p => {
+          p.classList.toggle('active', p.id === `victim-subpane-${sub}`);
+        });
+        cyberAudio.playBeep(900, 0.04);
+      });
+    });
+
     const startCrackBtn = document.getElementById('btn-start-crack');
     const crackProgress = document.getElementById('crack-progress-bar');
     const crackStatus = document.getElementById('crack-status-text');
-    if (!tableBody) return;
-
-    const render = (loot) => {
-      tableBody.innerHTML = '';
-      let totalCracked = 0;
-
-      loot.forEach(l => {
-        if (l.cracked) totalCracked++;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${l.target}</strong></td>
-          <td style="color:var(--accent-primary)">${l.username}</td>
-          <td><span style="color:var(--accent-secondary)">${l.type}</span></td>
-          <td style="font-family:var(--font-mono); font-size:11px; word-break:break-all">${l.hash.slice(0, 36)}...</td>
-          <td>
-            ${l.cracked 
-              ? `<span style="color:var(--accent-primary); font-weight:700">✅ CRACKED</span>`
-              : `<span style="color:var(--color-warning); font-weight:700">⏳ ENCRYPTED</span>`
-            }
-          </td>
-          <td>
-            ${l.cracked
-              ? `<span style="background:rgba(0,255,102,0.15); border:1px solid var(--accent-primary); padding:2px 8px; border-radius:3px; color:var(--text-bright); font-weight:700">${l.plain}</span>`
-              : `<span style="color:var(--text-muted)">[Locked]</span>`
-            }
-          </td>
-        `;
-        tableBody.appendChild(tr);
-      });
-
-      // Update counters in HUD
-      const totalEl = document.getElementById('loot-total-count');
-      const crackedEl = document.getElementById('loot-cracked-count');
-      if (totalEl) totalEl.textContent = loot.length;
-      if (crackedEl) crackedEl.textContent = totalCracked;
-    };
-
-    render(lootManager.getAll());
-    lootManager.subscribe(render);
 
     if (startCrackBtn) {
       startCrackBtn.addEventListener('click', async () => {
@@ -544,9 +455,6 @@ class AppController {
           }
           if (crackStatus && ev.message) {
             crackStatus.textContent = ev.message;
-          }
-          if (ev.status === 'cracked') {
-            cyberAudio.playExploitSuccess();
           }
         });
 

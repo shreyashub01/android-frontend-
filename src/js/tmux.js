@@ -21,12 +21,21 @@ export class TmuxManager {
     this.packets = [];
     this.maxPackets = 50;
 
+    this.kaliHost = '192.168.1.100';
+    this.kaliPort = '8443';
+    this.kaliToken = 'kali_c2_token_alpha9';
+    this.kaliSynced = true;
+    this.kaliPackets = 5120;
+    this.kaliLatency = 0.8;
+
     this.initDOM();
     this.initEventListeners();
     this.initKeyboardPrefix();
+    this.initKaliBridge();
     this.startPacketSniffer();
     this.startHtopMonitor();
     this.startClock();
+    this.startKaliSyncLoop();
 
     window.tmuxManager = this;
   }
@@ -170,7 +179,7 @@ export class TmuxManager {
   // --- TMUX KEYBOARD PREFIX ENGINE (Ctrl+B) ---
   initKeyboardPrefix() {
     document.addEventListener('keydown', (e) => {
-      const termTab = document.getElementById('tab-terminal');
+      const termTab = document.getElementById('tab-tmux') || document.getElementById('tab-terminal');
       if (!termTab || !termTab.classList.contains('active')) return;
 
       // Detect Ctrl+b prefix activation
@@ -586,6 +595,85 @@ export class TmuxManager {
     };
     update();
     setInterval(update, 1000);
+  }
+
+  // --- KALI LINUX LIVE SYNCHRONIZATION BRIDGE ---
+  initKaliBridge() {
+    const btnConfig = document.getElementById('btn-kali-bridge-config');
+    const modal = document.getElementById('kali-bridge-modal');
+    const btnClose = document.getElementById('btn-close-kali-modal');
+    const btnSave = document.getElementById('btn-save-kali-config');
+    const btnResync = document.getElementById('btn-kali-resync');
+
+    if (btnConfig && modal) {
+      btnConfig.addEventListener('click', () => {
+        cyberAudio.playBeep(900, 0.05);
+        modal.classList.add('open');
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        modal.classList.remove('open');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('open');
+      });
+    }
+
+    if (btnSave && modal) {
+      btnSave.addEventListener('click', () => {
+        const hostInput = document.getElementById('kali-input-host');
+        const portInput = document.getElementById('kali-input-port');
+        if (hostInput && hostInput.value.trim()) this.kaliHost = hostInput.value.trim();
+        if (portInput && portInput.value.trim()) this.kaliPort = portInput.value.trim();
+
+        cyberAudio.playSuccess();
+        modal.classList.remove('open');
+        this.updateKaliPill(true);
+        this.notifyPaneAction(`KALI_SYNC_ESTABLISHED [${this.kaliHost}:${this.kaliPort}]`);
+      });
+    }
+
+    if (btnResync) {
+      btnResync.addEventListener('click', () => {
+        cyberAudio.playBeep(1200, 0.08);
+        this.kaliSynced = true;
+        this.updateKaliPill(true);
+        this.notifyPaneAction(`RESYNC_KALI_DAEMON [PTS/1 -> TTY1 OK]`);
+      });
+    }
+  }
+
+  startKaliSyncLoop() {
+    setInterval(() => {
+      this.kaliPackets += Math.floor(Math.random() * 8) + 2;
+      this.kaliLatency = (0.7 + Math.random() * 0.4).toFixed(1);
+
+      const latencyEl = document.getElementById('kali-sync-latency');
+      if (latencyEl) latencyEl.textContent = `${this.kaliLatency}ms`;
+
+      const pktsEl = document.getElementById('kali-sync-pkts');
+      if (pktsEl) pktsEl.textContent = `${this.kaliPackets.toLocaleString()} pkts`;
+    }, 2500);
+  }
+
+  updateKaliPill(isOnline) {
+    const pill = document.getElementById('kali-sync-pill');
+    const hostEl = document.getElementById('kali-sync-host');
+    if (pill) {
+      pill.innerHTML = isOnline 
+        ? `<span class="pulse-dot" style="background:#00ff66;"></span> KALI SYNC: ACTIVE`
+        : `<span class="pulse-dot danger"></span> KALI SYNC: DISCONNECTED`;
+      pill.style.borderColor = isOnline ? '#00ff66' : '#ff0055';
+      pill.style.color = isOnline ? '#00ff66' : '#ff0055';
+    }
+    if (hostEl) {
+      hostEl.textContent = `kali@${this.kaliHost}:${this.kaliPort}`;
+    }
   }
 }
 

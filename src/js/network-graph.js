@@ -2,6 +2,8 @@
 // INTERACTIVE NETWORK ATTACK TOPOLOGY & PIVOT GRAPH
 // =========================================================
 
+import { cyberAudio } from './audio.js';
+
 export class NetworkAttackGraph {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -9,45 +11,46 @@ export class NetworkAttackGraph {
     this.ctx = this.canvas.getContext('2d');
 
     this.nodes = [
-      { id: 'c2', label: 'EXPLOIT-X C2 (Operator)', ip: '192.168.1.50', type: 'c2', x: 120, y: 280, radius: 26, color: '#00ff66', status: 'Active Master' },
-      { id: 'gw', label: 'Edge Firewall / NAT', ip: '192.168.1.1', type: 'gateway', x: 300, y: 280, radius: 20, color: '#00e5ff', status: 'Bypassed' },
-      { id: 'api', label: 'PROD-API (Pivot Node)', ip: '10.0.4.15', type: 'pivot', x: 500, y: 200, radius: 24, color: '#ff0055', status: 'Compromised (Root)' },
-      { id: 'k8s', label: 'K8S-WORKER-03', ip: '172.16.2.50', type: 'target', x: 500, y: 380, radius: 22, color: '#ffaa00', status: 'Reconnaissance' },
-      { id: 'dc', label: 'CORP-DC01 (AD Domain)', ip: '192.168.1.100', type: 'dc', x: 740, y: 150, radius: 28, color: '#ff0055', status: 'Compromised (SYSTEM)' },
-      { id: 'sql', label: 'FINANCE-SQL-SRV', ip: '10.0.8.22', type: 'target', x: 740, y: 320, radius: 22, color: '#00e5ff', status: 'Accessible via Pivot' },
-      { id: 'cam', label: 'SEC-CAM-DVR01', ip: '192.168.1.142', type: 'iot', x: 300, y: 440, radius: 18, color: '#a855f7', status: 'Vulnerable' }
+      { id: 'c2', label: 'KALI LINUX C2 (Master)', ip: '192.168.1.100', type: 'c2', x: 120, y: 280, radius: 26, color: '#00ff66', status: 'Master C2 Controller', os: 'Kali Rolling (Linux 6.8.11)', ports: '8443 (WSS), 443 (HTTPS), 4444 (Listener)', vulns: 'N/A (Defended Node)' },
+      { id: 'gw', label: 'Edge Gateway / Firewall', ip: '192.168.1.1', type: 'gateway', x: 300, y: 280, radius: 20, color: '#00e5ff', status: 'Infiltrated Gateway', os: 'PfSense BSD 2.7', ports: '80, 443, 22, 53', vulns: 'CVE-2023-27163 (Bypassed)' },
+      { id: 'dc', label: 'CORP-DC01 (Active Directory)', ip: '192.168.1.50', type: 'dc', x: 500, y: 180, radius: 28, color: '#ff0055', status: 'Compromised (SYSTEM)', os: 'Windows Server 2022 x64', ports: '445 (SMB), 88 (Kerberos), 389 (LDAP), 3389', vulns: 'MS17-010 EternalBlue / ZeroLogon' },
+      { id: 'api', label: 'PROD-API-GATEWAY (Pivot Host)', ip: '10.0.4.15', type: 'pivot', x: 500, y: 380, radius: 24, color: '#ffaa00', status: 'Pivot Active (www-data)', os: 'Ubuntu Linux 22.04 LTS', ports: '80 (HTTP), 443 (TLS), 22 (SSH)', vulns: 'CVE-2021-41773 (Apache Path Traversal)' },
+      { id: 'sql', label: 'FINANCE-SQL-SRV (Target DB)', ip: '10.0.8.22', type: 'target', x: 740, y: 380, radius: 22, color: '#00e5ff', status: 'Accessible via Pivot', os: 'Windows Server 2019', ports: '1433 (MSSQL), 445 (SMB)', vulns: 'Default sa weak password' },
+      { id: 'k8s', label: 'K8S-WORKER-03 (Cluster)', ip: '172.16.2.50', type: 'target', x: 740, y: 180, radius: 22, color: '#ff0055', status: 'Compromised (root)', os: 'Alpine Linux 3.18', ports: '6443 (KubeAPI), 2379 (etcd)', vulns: 'CVE-2022-3172 (Ingress Controller RCE)' }
     ];
 
     this.links = [
       { from: 'c2', to: 'gw', compromised: true },
+      { from: 'gw', to: 'dc', compromised: true },
       { from: 'gw', to: 'api', compromised: true },
-      { from: 'gw', to: 'k8s', compromised: false },
-      { from: 'gw', to: 'cam', compromised: false },
-      { from: 'api', to: 'dc', compromised: true },
-      { from: 'api', to: 'sql', compromised: true }
+      { from: 'api', to: 'sql', compromised: true },
+      { from: 'api', to: 'k8s', compromised: true },
+      { from: 'dc', to: 'k8s', compromised: false }
     ];
 
     // Animated data flow particles
     this.particles = [];
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 26; i++) {
       this.particles.push({
         linkIdx: i % this.links.length,
         progress: Math.random(),
-        speed: 0.006 + Math.random() * 0.008
+        speed: 0.005 + Math.random() * 0.008
       });
     }
 
     this.draggedNode = null;
     this.hoveredNode = null;
-    this.selectedNode = null;
+    this.selectedNode = this.nodes[0];
     this.animationFrameId = null;
 
     this.initCanvasSize();
     this.setupEventListeners();
     this.startAnimationLoop();
+    this.updateInspectorPanel(this.selectedNode);
   }
 
   initCanvasSize() {
+    if (!this.canvas || !this.canvas.parentElement) return;
     const rect = this.canvas.parentElement.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     this.canvas.width = rect.width * dpr;
@@ -78,14 +81,16 @@ export class NetworkAttackGraph {
       if (clicked) {
         this.draggedNode = clicked;
         this.selectedNode = clicked;
+        cyberAudio.playBeep(1100, 0.05);
+        this.updateInspectorPanel(clicked);
       }
     });
 
     this.canvas.addEventListener('mousemove', (e) => {
       const pos = getPos(e);
       if (this.draggedNode) {
-        this.draggedNode.x = Math.max(30, Math.min(this.width - 30, pos.x));
-        this.draggedNode.y = Math.max(30, Math.min(this.height - 30, pos.y));
+        this.draggedNode.x = Math.max(40, Math.min(this.width - 40, pos.x));
+        this.draggedNode.y = Math.max(40, Math.min(this.height - 40, pos.y));
         this.canvas.style.cursor = 'grabbing';
       } else {
         this.hoveredNode = this.nodes.find(n => {
@@ -102,6 +107,40 @@ export class NetworkAttackGraph {
     });
   }
 
+  updateInspectorPanel(node) {
+    const title = document.getElementById('topo-host-title');
+    const ip = document.getElementById('topo-host-ip');
+    const status = document.getElementById('topo-host-status');
+    const os = document.getElementById('topo-host-os');
+    const ports = document.getElementById('topo-host-ports');
+    const vulns = document.getElementById('topo-host-vulns');
+    const btnConnect = document.getElementById('btn-topo-connect');
+
+    if (title) title.textContent = node.label;
+    if (ip) ip.textContent = node.ip;
+    if (status) {
+      status.textContent = node.status;
+      status.style.color = node.color;
+    }
+    if (os) os.textContent = node.os;
+    if (ports) ports.textContent = node.ports;
+    if (vulns) vulns.textContent = node.vulns;
+
+    if (btnConnect) {
+      btnConnect.onclick = () => {
+        cyberAudio.playBeep(1200, 0.08);
+        if (window.appController) {
+          window.appController.switchTab('tmux');
+          const termInput = document.getElementById('term-input-field');
+          if (termInput) {
+            termInput.value = `scan ${node.ip}`;
+            window.appController.terminal?.handleEnter();
+          }
+        }
+      };
+    }
+  }
+
   startAnimationLoop() {
     const render = () => {
       this.draw();
@@ -114,7 +153,7 @@ export class NetworkAttackGraph {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     // 1. Draw connecting links
-    this.links.forEach((link, idx) => {
+    this.links.forEach((link) => {
       const n1 = this.nodes.find(n => n.id === link.from);
       const n2 = this.nodes.find(n => n.id === link.to);
       if (!n1 || !n2) return;
@@ -123,7 +162,7 @@ export class NetworkAttackGraph {
       this.ctx.moveTo(n1.x, n1.y);
       this.ctx.lineTo(n2.x, n2.y);
       this.ctx.lineWidth = link.compromised ? 2.5 : 1.5;
-      this.ctx.strokeStyle = link.compromised ? 'rgba(255, 0, 85, 0.55)' : 'rgba(0, 229, 255, 0.25)';
+      this.ctx.strokeStyle = link.compromised ? 'rgba(255, 0, 85, 0.6)' : 'rgba(0, 229, 255, 0.25)';
       if (link.compromised) {
         this.ctx.setLineDash([4, 4]);
       } else {
@@ -141,13 +180,13 @@ export class NetworkAttackGraph {
       if (!n1 || !n2) return;
 
       p.progress += p.speed;
-      if (p.progress >= 1) p.progress = 0;
+      if (p.progress > 1) p.progress = 0;
 
       const px = n1.x + (n2.x - n1.x) * p.progress;
       const py = n1.y + (n2.y - n1.y) * p.progress;
 
       this.ctx.beginPath();
-      this.ctx.arc(px, py, 3, 0, Math.PI * 2);
+      this.ctx.arc(px, py, 3.5, 0, Math.PI * 2);
       this.ctx.fillStyle = link.compromised ? '#ff0055' : '#00ff66';
       this.ctx.shadowColor = link.compromised ? '#ff0055' : '#00ff66';
       this.ctx.shadowBlur = 8;
