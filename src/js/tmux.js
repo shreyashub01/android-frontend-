@@ -22,12 +22,18 @@ export class TmuxManager {
     this.maxPackets = 50;
 
     this.termMode = 'live'; // 'live' | 'sim'
-    this.kaliHost = 'localhost';
-    this.kaliPort = '7681';
+    this.remoteVmUrl = 'https://wedding-immigrants-baseball-machines.trycloudflare.com';
+    this.localWslUrl = 'http://localhost:7681';
+    this.vmIp = '172.198.77.33';
+    this.vmUser = 'user1';
+    this.terminalSource = localStorage.getItem('exploitx_terminal_source') || 'remote-vm';
+    this.customTerminalUrl = localStorage.getItem('exploitx_terminal_custom_url') || '';
+    this.kaliHost = localStorage.getItem('exploitx_kali_host') || '172.198.77.33';
+    this.kaliPort = localStorage.getItem('exploitx_kali_port') || '7681';
     this.kaliToken = 'kali_c2_token_alpha9';
     this.kaliSynced = true;
     this.kaliPackets = 5120;
-    this.kaliLatency = 0.5;
+    this.kaliLatency = 16.5;
 
     this.initDOM();
     this.initEventListeners();
@@ -57,7 +63,7 @@ export class TmuxManager {
     this.prefixIndicator = document.getElementById('tmux-prefix-indicator');
     this.shortcutsModal = document.getElementById('tmux-shortcuts-modal');
 
-    // Live Kali Terminal controls
+    // Live Terminal controls
     this.btnModeLive = document.getElementById('btn-mode-live');
     this.btnModeSim = document.getElementById('btn-mode-sim');
     this.termLiveContainer = document.getElementById('term-live-container');
@@ -65,11 +71,16 @@ export class TmuxManager {
     this.liveKaliFrame = document.getElementById('live-kali-frame');
     this.btnReloadLiveTerm = document.getElementById('btn-reload-live-term');
     this.btnOpenLiveExternal = document.getElementById('btn-open-live-external');
+    this.btnSwitchVm = document.getElementById('btn-switch-server-vm');
+    this.btnSwitchLocal = document.getElementById('btn-switch-server-local');
+    this.bannerTitle = document.getElementById('live-term-banner-title');
+    this.bannerUrl = document.getElementById('live-term-banner-url');
     this.pane0Title = document.getElementById('pane-0-title-text');
     this.pane0Badge = document.getElementById('pane-0-badge');
 
     this.setLayout(this.currentLayout);
     this.setTermMode(this.termMode);
+    this.applyTerminalUrl();
   }
 
   initEventListeners() {
@@ -206,6 +217,87 @@ export class TmuxManager {
         this.reloadLiveTerminal();
       });
     }
+
+    if (this.btnSwitchVm) {
+      this.btnSwitchVm.addEventListener('click', () => {
+        this.setTerminalSource('remote-vm');
+      });
+    }
+
+    if (this.btnSwitchLocal) {
+      this.btnSwitchLocal.addEventListener('click', () => {
+        this.setTerminalSource('local-wsl');
+      });
+    }
+  }
+
+  getTerminalUrl() {
+    if (this.terminalSource === 'local-wsl') {
+      return this.localWslUrl;
+    }
+    if (this.terminalSource === 'custom' && this.customTerminalUrl) {
+      let url = this.customTerminalUrl.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      return url;
+    }
+    return this.remoteVmUrl;
+  }
+
+  setTerminalSource(source, customUrl = null) {
+    this.terminalSource = source;
+    localStorage.setItem('exploitx_terminal_source', source);
+    if (customUrl !== null) {
+      this.customTerminalUrl = customUrl;
+      localStorage.setItem('exploitx_terminal_custom_url', customUrl);
+    }
+    this.applyTerminalUrl();
+    cyberAudio.playSuccess();
+  }
+
+  applyTerminalUrl() {
+    const url = this.getTerminalUrl();
+    if (this.liveKaliFrame && this.liveKaliFrame.src !== url) {
+      this.liveKaliFrame.src = url;
+    }
+    if (this.btnOpenLiveExternal) {
+      this.btnOpenLiveExternal.href = url;
+    }
+    if (this.bannerUrl) {
+      this.bannerUrl.textContent = `// ${url}`;
+    }
+    if (this.bannerTitle) {
+      if (this.terminalSource === 'remote-vm') {
+        this.bannerTitle.textContent = `REMOTE VM1 BASH SHELL (${this.vmIp})`;
+        this.bannerTitle.style.color = '#00ff66';
+      } else if (this.terminalSource === 'local-wsl') {
+        this.bannerTitle.textContent = `LOCAL KALI BASH SHELL (WSL2)`;
+        this.bannerTitle.style.color = '#00e5ff';
+      } else {
+        this.bannerTitle.textContent = `CUSTOM REMOTE PTY BRIDGE`;
+        this.bannerTitle.style.color = '#ffaa00';
+      }
+    }
+
+    if (this.btnSwitchVm) {
+      this.btnSwitchVm.classList.toggle('active', this.terminalSource === 'remote-vm');
+    }
+    if (this.btnSwitchLocal) {
+      this.btnSwitchLocal.classList.toggle('active', this.terminalSource === 'local-wsl');
+    }
+
+    if (this.pane0Title && this.termMode === 'live') {
+      this.pane0Title.textContent = this.terminalSource === 'remote-vm'
+        ? `[0] remote-vm1 (${this.vmIp}) live pty`
+        : `[0] kali-linux wsl live pty`;
+    }
+    if (this.pane0Badge && this.termMode === 'live') {
+      this.pane0Badge.textContent = this.terminalSource === 'remote-vm' ? 'VM1 CLOUD PTY' : 'WSL2 LOCAL PTY';
+    }
+
+    this.updateKaliPill(true);
+    this.notifyPaneAction(`ENDPOINT [${url}]`);
   }
 
   setTermMode(mode) {
@@ -228,12 +320,14 @@ export class TmuxManager {
 
     if (this.pane0Title) {
       this.pane0Title.textContent = mode === 'live' 
-        ? '[0] kali-linux wsl live pty' 
+        ? (this.terminalSource === 'remote-vm' ? `[0] remote-vm1 (${this.vmIp}) live pty` : `[0] kali-linux wsl live pty`)
         : '[0] kali-c2 operator console (sim)';
     }
 
     if (this.pane0Badge) {
-      this.pane0Badge.textContent = mode === 'live' ? 'LIVE PTY' : 'C2 SIMULATOR';
+      this.pane0Badge.textContent = mode === 'live' 
+        ? (this.terminalSource === 'remote-vm' ? 'VM1 CLOUD PTY' : 'LIVE PTY')
+        : 'C2 SIMULATOR';
     }
 
     if (mode === 'sim') {
@@ -244,11 +338,11 @@ export class TmuxManager {
 
   reloadLiveTerminal() {
     cyberAudio.playScan();
+    const url = this.getTerminalUrl();
     if (this.liveKaliFrame) {
-      const targetSrc = `http://${this.kaliHost}:${this.kaliPort}`;
-      this.liveKaliFrame.src = targetSrc;
+      this.liveKaliFrame.src = url;
     }
-    this.notifyPaneAction(`RELOADED_WSL_PTY [http://${this.kaliHost}:${this.kaliPort}]`);
+    this.notifyPaneAction(`RELOADED_PTY [${url}]`);
   }
 
   // --- TMUX KEYBOARD PREFIX ENGINE (Ctrl+B) ---
@@ -672,17 +766,23 @@ export class TmuxManager {
     setInterval(update, 1000);
   }
 
-  // --- KALI LINUX LIVE SYNCHRONIZATION BRIDGE ---
+  // --- LINUX TERMINAL SYNCHRONIZATION BRIDGE ---
   initKaliBridge() {
     const btnConfig = document.getElementById('btn-kali-bridge-config');
     const modal = document.getElementById('kali-bridge-modal');
     const btnClose = document.getElementById('btn-close-kali-modal');
     const btnSave = document.getElementById('btn-save-kali-config');
     const btnResync = document.getElementById('btn-kali-resync');
+    const btnPresetVm = document.getElementById('btn-preset-remote-vm');
+    const btnPresetLocal = document.getElementById('btn-preset-local-wsl');
+    const customUrlInput = document.getElementById('kali-input-custom-url');
 
     if (btnConfig && modal) {
       btnConfig.addEventListener('click', () => {
         cyberAudio.playBeep(900, 0.05);
+        if (customUrlInput) {
+          customUrlInput.value = this.customTerminalUrl || this.remoteVmUrl;
+        }
         modal.classList.add('open');
       });
     }
@@ -699,24 +799,31 @@ export class TmuxManager {
       });
     }
 
+    if (btnPresetVm) {
+      btnPresetVm.addEventListener('click', () => {
+        this.setTerminalSource('remote-vm');
+        modal.classList.remove('open');
+        this.notifyPaneAction(`CONNECTED_TO_VM1 [${this.remoteVmUrl}]`);
+      });
+    }
+
+    if (btnPresetLocal) {
+      btnPresetLocal.addEventListener('click', () => {
+        this.setTerminalSource('local-wsl');
+        modal.classList.remove('open');
+        this.notifyPaneAction(`CONNECTED_TO_LOCAL_WSL [${this.localWslUrl}]`);
+      });
+    }
+
     if (btnSave && modal) {
       btnSave.addEventListener('click', () => {
-        const hostInput = document.getElementById('kali-input-host');
-        const portInput = document.getElementById('kali-input-port');
-        if (hostInput && hostInput.value.trim()) this.kaliHost = hostInput.value.trim();
-        if (portInput && portInput.value.trim()) this.kaliPort = portInput.value.trim();
-
-        if (this.liveKaliFrame) {
-          this.liveKaliFrame.src = `http://${this.kaliHost}:${this.kaliPort}`;
+        if (customUrlInput && customUrlInput.value.trim()) {
+          const val = customUrlInput.value.trim();
+          this.setTerminalSource('custom', val);
+        } else {
+          this.setTerminalSource('remote-vm');
         }
-        if (this.btnOpenLiveExternal) {
-          this.btnOpenLiveExternal.href = `http://${this.kaliHost}:${this.kaliPort}`;
-        }
-
-        cyberAudio.playSuccess();
         modal.classList.remove('open');
-        this.updateKaliPill(true);
-        this.notifyPaneAction(`KALI_SYNC_ESTABLISHED [http://${this.kaliHost}:${this.kaliPort}]`);
       });
     }
 
@@ -726,7 +833,7 @@ export class TmuxManager {
         this.kaliSynced = true;
         this.reloadLiveTerminal();
         this.updateKaliPill(true);
-        this.notifyPaneAction(`RESYNC_KALI_DAEMON [PTS/1 -> TTY1 OK]`);
+        this.notifyPaneAction(`RESYNC_TERMINAL_DAEMON [PTS/1 -> TTY1 OK]`);
       });
     }
   }
@@ -734,10 +841,16 @@ export class TmuxManager {
   startKaliSyncLoop() {
     setInterval(() => {
       this.kaliPackets += Math.floor(Math.random() * 8) + 2;
-      this.kaliLatency = (0.3 + Math.random() * 0.2).toFixed(1);
+      this.kaliLatency = this.terminalSource === 'remote-vm'
+        ? (14 + Math.random() * 5).toFixed(1)
+        : (0.3 + Math.random() * 0.2).toFixed(1);
 
       const latencyEl = document.getElementById('kali-sync-latency');
-      if (latencyEl) latencyEl.textContent = `< ${this.kaliLatency}ms (WSL2)`;
+      if (latencyEl) {
+        latencyEl.textContent = this.terminalSource === 'remote-vm'
+          ? `~${this.kaliLatency}ms (Azure VM1)`
+          : `< ${this.kaliLatency}ms (WSL2)`;
+      }
 
       const pktsEl = document.getElementById('kali-sync-pkts');
       if (pktsEl) pktsEl.textContent = `LIVE INTERACTIVE`;
@@ -747,15 +860,49 @@ export class TmuxManager {
   updateKaliPill(isOnline) {
     const pill = document.getElementById('kali-sync-pill');
     const hostEl = document.getElementById('kali-sync-host');
+    const tunnelEl = document.getElementById('kali-sync-tunnel');
+    const latencyEl = document.getElementById('kali-sync-latency');
+
     if (pill) {
-      pill.innerHTML = isOnline 
-        ? `<span class="pulse-dot" style="background:#00ff66;"></span> KALI WSL: ACTIVE`
-        : `<span class="pulse-dot danger"></span> KALI WSL: DISCONNECTED`;
-      pill.style.borderColor = isOnline ? '#00ff66' : '#ff0055';
-      pill.style.color = isOnline ? '#00ff66' : '#ff0055';
+      if (!isOnline) {
+        pill.innerHTML = `<span class="pulse-dot danger"></span> TERMINAL: OFFLINE`;
+        pill.style.borderColor = '#ff0055';
+        pill.style.color = '#ff0055';
+      } else if (this.terminalSource === 'remote-vm') {
+        pill.innerHTML = `<span class="pulse-dot" style="background:#00ff66;"></span> REMOTE VM1: ONLINE`;
+        pill.style.borderColor = '#00ff66';
+        pill.style.color = '#00ff66';
+      } else if (this.terminalSource === 'local-wsl') {
+        pill.innerHTML = `<span class="pulse-dot" style="background:#00e5ff;"></span> LOCAL WSL: ACTIVE`;
+        pill.style.borderColor = '#00e5ff';
+        pill.style.color = '#00e5ff';
+      } else {
+        pill.innerHTML = `<span class="pulse-dot" style="background:#ffaa00;"></span> CUSTOM PTY: ACTIVE`;
+        pill.style.borderColor = '#ffaa00';
+        pill.style.color = '#ffaa00';
+      }
     }
+
     if (hostEl) {
-      hostEl.textContent = `kali@${this.kaliHost}:${this.kaliPort}`;
+      if (this.terminalSource === 'remote-vm') {
+        hostEl.textContent = `user1@${this.vmIp} (Azure VM1)`;
+      } else if (this.terminalSource === 'local-wsl') {
+        hostEl.textContent = `kali@localhost:7681`;
+      } else {
+        hostEl.textContent = this.customTerminalUrl || 'custom';
+      }
+    }
+
+    if (tunnelEl) {
+      tunnelEl.textContent = this.terminalSource === 'remote-vm'
+        ? 'Cloudflare TLS (HTTPS/WSS)'
+        : 'ttyd Direct PTY (xterm-256color)';
+    }
+
+    if (latencyEl) {
+      latencyEl.textContent = this.terminalSource === 'remote-vm'
+        ? `< 18ms (Azure Cloud)`
+        : `< 0.5ms (WSL2)`;
     }
   }
 }

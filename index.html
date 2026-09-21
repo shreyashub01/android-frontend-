@@ -301,25 +301,25 @@
       <section id="tab-tmux" class="tab-content">
         <div class="tmux-wrapper corner-accent">
           
-          <!-- Kali Linux Live Synchronization Bar -->
+          <!-- Kali Linux / Remote Server Live Synchronization Bar -->
           <div class="kali-sync-bar">
             <div class="kali-sync-status">
               <div id="kali-sync-pill" class="kali-sync-pill">
                 <span class="pulse-dot" style="background:#00ff66;"></span>
-                <span>KALI WSL: ACTIVE</span>
+                <span>REMOTE VM1: ONLINE</span>
               </div>
               <div class="kali-sync-meta">
-                <span>HOST: <strong id="kali-sync-host" style="color:var(--text-primary);">kali@localhost:7681</strong></span>
-                <span>TUNNEL: <strong style="color:var(--accent-secondary);">ttyd PTY (xterm-256color)</strong></span>
-                <span>PING: <strong id="kali-sync-latency" style="color:#00ff66;">&lt; 0.5ms (WSL2)</strong></span>
+                <span>SERVER: <strong id="kali-sync-host" style="color:var(--text-primary);">user1@172.198.77.33 (Azure VM1)</strong></span>
+                <span>TUNNEL: <strong id="kali-sync-tunnel" style="color:var(--accent-secondary);">Cloudflare TLS (HTTPS/WSS)</strong></span>
+                <span>PING: <strong id="kali-sync-latency" style="color:#00ff66;">&lt; 18ms (Azure Cloud)</strong></span>
                 <span>STATE: <strong id="kali-sync-pkts" style="color:#00e5ff;">LIVE INTERACTIVE</strong></span>
               </div>
             </div>
             <div class="kali-sync-controls">
-              <button id="btn-kali-bridge-config" class="btn-tactical" title="Configure Kali Linux Host IP &amp; WebSocket Port">
-                <span class="icon">⚙️</span> KALI BRIDGE CONFIG
+              <button id="btn-kali-bridge-config" class="btn-tactical" title="Configure Server Endpoint &amp; Credentials">
+                <span class="icon">⚙️</span> SERVER CONFIG
               </button>
-              <button id="btn-kali-resync" class="btn-tactical active" title="Re-sync PTS/1 WebSocket Handshake">
+              <button id="btn-kali-resync" class="btn-tactical active" title="Re-sync PTY WebSocket Handshake">
                 <span class="icon">🔄</span> RESYNC
               </button>
               <button id="btn-tmux-shortcuts" class="btn-tactical active" title="View TMUX Keybindings (Ctrl+B ?)">
@@ -372,15 +372,15 @@
                     <span class="w-2.5 h-2.5 bg-warning-amber inline-block" style="border-radius:50%;"></span>
                     <span class="w-2.5 h-2.5 bg-phosphor-green inline-block" style="border-radius:50%;"></span>
                   </div>
-                  <span id="pane-0-title-text" class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] kali-linux wsl live pty</span>
-                  <span class="pane-badge" id="pane-0-badge">LIVE PTY</span>
-                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">WSL2:7681</span>
+                  <span id="pane-0-title-text" class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] remote-vm1 (172.198.77.33) live pty</span>
+                  <span class="pane-badge" id="pane-0-badge">VM1 CLOUD PTY</span>
+                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">172.198.77.33</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <!-- Mode Switcher: LIVE KALI vs SIMULATOR -->
                   <div class="terminal-mode-switch">
-                    <button id="btn-mode-live" class="term-mode-btn active" title="Real Live Kali Linux (WSL) Terminal">
-                      <span class="pulse-dot" style="background:#00ff66; width:6px; height:6px;"></span> LIVE KALI
+                    <button id="btn-mode-live" class="term-mode-btn active" title="Real Live Linux Terminal">
+                      <span class="pulse-dot" style="background:#00ff66; width:6px; height:6px;"></span> LIVE LINUX
                     </button>
                     <button id="btn-mode-sim" class="term-mode-btn" title="Simulated Red Team C2 Exploitation Console">
                       <span>⚡</span> SIMULATOR
@@ -392,28 +392,34 @@
                 </div>
               </div>
 
-              <!-- LIVE KALI CONTAINER (Real WSL Terminal via ttyd) -->
+              <!-- LIVE TERMINAL CONTAINER (Remote Azure VM1 or Localhost WSL2) -->
               <div id="term-live-container" class="term-pane-content">
                 <div class="live-term-toolbar">
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="pulse-dot" style="background:#00ff66;"></span>
-                    <span style="color:#00ff66; font-weight:700;">LIVE KALI BASH SHELL</span>
-                    <span style="color:var(--text-muted);">// http://localhost:7681</span>
+                    <span id="live-term-banner-title" style="color:#00ff66; font-weight:700;">REMOTE VM1 BASH SHELL (172.198.77.33)</span>
+                    <span id="live-term-banner-url" style="color:var(--text-muted); font-size:10px;">// https://wedding-immigrants-baseball-machines.trycloudflare.com</span>
                   </div>
                   <div style="display:flex; align-items:center; gap:6px;">
+                    <button id="btn-switch-server-vm" class="btn-tactical active" style="padding:1px 6px; font-size:10px;" title="Switch to Cloud Remote VM1 (172.198.77.33)">
+                      <span>☁️</span> VM1 CLOUD
+                    </button>
+                    <button id="btn-switch-server-local" class="btn-tactical" style="padding:1px 6px; font-size:10px;" title="Switch to Localhost Kali WSL2 (port 7681)">
+                      <span>🐧</span> LOCAL WSL
+                    </button>
                     <button id="btn-reload-live-term" class="btn-tactical" style="padding:1px 6px; font-size:10px;" title="Reload Terminal Stream">
                       <span>🔄</span> RELOAD
                     </button>
-                    <a id="btn-open-live-external" href="http://localhost:7681" target="_blank" class="btn-tactical" style="padding:1px 6px; font-size:10px; text-decoration:none;" title="Open in Dedicated Tab">
+                    <a id="btn-open-live-external" href="https://wedding-immigrants-baseball-machines.trycloudflare.com" target="_blank" class="btn-tactical" style="padding:1px 6px; font-size:10px; text-decoration:none;" title="Open in Dedicated Tab">
                       <span>↗</span> POP OUT
                     </a>
                   </div>
                 </div>
                 <iframe 
                   id="live-kali-frame" 
-                  src="http://localhost:7681" 
+                  src="https://wedding-immigrants-baseball-machines.trycloudflare.com" 
                   class="live-kali-iframe" 
-                  title="Live Kali Linux WSL Terminal"
+                  title="Live Linux Terminal Stream"
                   allow="clipboard-read; clipboard-write"
                 ></iframe>
               </div>
@@ -1283,32 +1289,66 @@ class MainActivity : AppCompatActivity() {
   <!-- Main JavaScript Bundle -->
   <script type="module" src="/src/js/app.js"></script>
 
-  <!-- Kali Linux Bridge Config Modal -->
+  <!-- Linux Server & Terminal Synchronization Bridge Config Modal -->
   <div id="kali-bridge-modal" class="kali-modal-overlay">
-    <div class="kali-modal-box">
+    <div class="kali-modal-box" style="max-width:560px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
-        <span style="color:#00ff66; font-weight:800; font-size:12px;">⚙️ KALI LINUX SYNCHRONIZATION BRIDGE CONFIG</span>
+        <span style="color:#00ff66; font-weight:800; font-size:12px;">⚙️ LINUX TERMINAL ENDPOINT &amp; SERVER CONFIG</span>
         <button id="btn-close-kali-modal" class="btn-tactical" style="padding:2px 8px; font-size:10px;">✕ CLOSE</button>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:10px; font-size:11px;">
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:11px;">
+        
+        <!-- Preset Server Buttons -->
         <div>
-          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">KALI LINUX HOST IP / FQDN:</label>
-          <input id="kali-input-host" type="text" value="localhost" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
+          <label style="color:var(--text-muted); display:block; margin-bottom:6px; font-size:10px; font-weight:700;">PRESET ENDPOINTS (ONE-CLICK SWITCH):</label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <button id="btn-preset-remote-vm" class="btn-tactical active" style="padding:8px 10px; text-align:left; border-color:#00ff66; cursor:pointer;" title="Connect to remote VM1 (Works on GitHub Pages)">
+              <div style="color:#00ff66; font-weight:700; font-size:11px;">☁️ Remote Azure VM1</div>
+              <div style="color:var(--text-muted); font-size:9px;">172.198.77.33 (HTTPS Tunnel)</div>
+              <div style="color:#00e5ff; font-size:8px; margin-top:2px;">★ Shared Link Compatible</div>
+            </button>
+            <button id="btn-preset-local-wsl" class="btn-tactical" style="padding:8px 10px; text-align:left; cursor:pointer;" title="Connect to local WSL2 Kali (localhost:7681)">
+              <div style="color:var(--text-primary); font-weight:700; font-size:11px;">🐧 Local Kali WSL2</div>
+              <div style="color:var(--text-muted); font-size:9px;">localhost:7681 (Local Only)</div>
+              <div style="color:var(--warning-amber); font-size:8px; margin-top:2px;">Requires local ttyd</div>
+            </button>
+          </div>
         </div>
 
-        <div>
-          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">TTYD / WEBSOCKET PTY PORT:</label>
-          <input id="kali-input-port" type="text" value="7681" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
+        <!-- Server Details Card -->
+        <div style="background:rgba(0, 255, 102, 0.04); border:1px solid rgba(0, 255, 102, 0.2); border-radius:6px; padding:10px;">
+          <div style="color:#00ff66; font-weight:700; font-size:11px; margin-bottom:6px; display:flex; justify-content:space-between;">
+            <span>ACTIVE VM CREDENTIALS &amp; SSH DETAILS</span>
+            <span style="font-size:9px; color:var(--text-muted);">Ubuntu 22.04 LTS</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:6px; font-size:10px;">
+            <div><span style="color:var(--text-muted);">HOST IP:</span> <code style="color:#00e5ff;">172.198.77.33</code></div>
+            <div><span style="color:var(--text-muted);">USERNAME:</span> <code style="color:#00ff66;">user1</code></div>
+            <div><span style="color:var(--text-muted);">PASSWORD:</span> <code style="color:var(--warning-amber);">useruser@123</code></div>
+            <div><span style="color:var(--text-muted);">SUDO ACCESS:</span> <strong style="color:#00ff66;">FULL</strong></div>
+          </div>
+          <div style="margin-top:8px; padding-top:6px; border-top:1px dashed rgba(255,255,255,0.1); font-size:10px;">
+            <span style="color:var(--text-muted);">DIRECT SSH:</span> 
+            <code style="color:#00ff66; background:#000; padding:2px 6px; border-radius:3px;">ssh user1@172.198.77.33</code>
+          </div>
         </div>
 
+        <!-- Custom URL Input -->
         <div>
-          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">BRIDGE AUTH TOKEN / API SECRET (OPTIONAL):</label>
-          <input type="password" value="kali_c2_token_alpha9_secure" class="terminal-input" style="width:100%; padding:6px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66;">
+          <label style="color:var(--text-muted); display:block; margin-bottom:4px;">CUSTOM HTTPS / WEBSOCKET PTY URL:</label>
+          <input 
+            id="kali-input-custom-url" 
+            type="text" 
+            value="https://wedding-immigrants-baseball-machines.trycloudflare.com" 
+            class="terminal-input" 
+            style="width:100%; padding:8px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66; font-size:11px;"
+            placeholder="https://your-tunnel-url.trycloudflare.com or http://localhost:7681"
+          >
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid var(--border-dim); margin-top:6px;">
-          <span style="color:var(--text-muted); font-size:10px;">STATUS: <strong style="color:#00ff66;">SYNC READY (TLS 1.3)</strong></span>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid var(--border-dim); margin-top:4px;">
+          <span style="color:var(--text-muted); font-size:10px;">TLS TUNNEL: <strong style="color:#00ff66;">HTTPS ACTIVE</strong></span>
           <button id="btn-save-kali-config" class="btn-tactical active" style="padding:8px 16px; font-weight:700;">
             💾 SAVE &amp; CONNECT
           </button>
