@@ -166,52 +166,71 @@ class LootManager {
 
     const uncracked = this.loot.filter(l => !l.cracked);
     if (uncracked.length === 0) {
-      onProgress({ status: 'done', message: 'All hashes in vault already cracked!' });
+      if (onProgress) onProgress({ status: 'done', progress: 100, message: '[+] All hashes in vault already cracked!' });
       this.isCracking = false;
       return;
     }
 
     const target = uncracked[0];
-    onProgress({
-      status: 'init',
-      message: `[+] Initializing Hashcat v6.2.6 (Mode 1000 - NTLM / OpenCL: NVIDIA RTX 4090)...`,
-      progress: 5
-    });
-    cyberAudio.playBeep(800, 0.05);
-    await new Promise(r => setTimeout(r, 500));
+    const modeDesc = target.type === 'NTLM' ? 'Mode 1000 - NTLM' : (target.type === 'MSSQL Hash' ? 'Mode 1731 - MSSQL 2014' : 'Mode 18200 - Kerberos AS-REP');
 
-    onProgress({
-      status: 'wordlist',
-      message: `[*] Loading wordlist /usr/share/wordlists/rockyou.txt (14,344,392 entries)...`,
-      progress: 25
-    });
+    if (onProgress) {
+      onProgress({
+        status: 'init',
+        message: `[+] Initializing Hashcat v6.2.6 (${modeDesc} / OpenCL: NVIDIA RTX 4090)...`,
+        progress: 10
+      });
+    }
+    cyberAudio.playBeep(800, 0.05);
+    await new Promise(r => setTimeout(r, 400));
+
+    if (onProgress) {
+      onProgress({
+        status: 'wordlist',
+        message: `[*] Loading wordlist /usr/share/wordlists/rockyou.txt (14,344,392 entries)...`,
+        progress: 25
+      });
+    }
     cyberAudio.playBeep(950, 0.05);
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 450));
 
     const candidateWords = ['admin', 'password', 'summer2023', 'welcome1', 'qwerty123', target.plain];
     for (let i = 0; i < candidateWords.length; i++) {
-      onProgress({
-        status: 'running',
-        speed: `${(21.4 + Math.random() * 4).toFixed(1)} MH/s`,
-        currentCandidate: candidateWords[i],
-        progress: 30 + (i / candidateWords.length) * 60,
-        message: `[*] Testing candidate: ${candidateWords[i]} (Speed: 23.4 MH/s)`
-      });
+      const currentPct = Math.round(30 + (i / candidateWords.length) * 65);
+      if (onProgress) {
+        onProgress({
+          status: 'running',
+          speed: `${(21.4 + Math.random() * 4).toFixed(1)} MH/s`,
+          currentCandidate: candidateWords[i],
+          progress: currentPct,
+          message: `[*] Testing candidate: ${candidateWords[i]} (Speed: ${(22 + Math.random() * 3).toFixed(1)} MH/s)`
+        });
+      }
       cyberAudio.playKeyClick();
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 350));
     }
 
     target.cracked = true;
     this.isCracking = false;
+    this.renderUI();
     this.notify();
 
-    cyberAudio.playSuccess();
-    onProgress({
-      status: 'cracked',
-      progress: 100,
-      target,
-      message: `[+] STATUS: CRACKED! ${target.hash} : ${target.plain}`
-    });
+    if (cyberAudio.playSuccess) cyberAudio.playSuccess();
+    else if (cyberAudio.playExploitSuccess) cyberAudio.playExploitSuccess();
+
+    const remaining = this.loot.filter(l => !l.cracked).length;
+    const completionMsg = remaining > 0
+      ? `[+] STATUS: CRACKED! [${target.type}] ${target.username} ➔ "${target.plain}" (${remaining} remaining in vault)`
+      : `[+] ALL VAULT HASHES CRACKED! Latest: [${target.type}] ${target.username} ➔ "${target.plain}"`;
+
+    if (onProgress) {
+      onProgress({
+        status: 'cracked',
+        progress: 100,
+        target,
+        message: completionMsg
+      });
+    }
   }
 
   renderUI() {

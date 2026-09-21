@@ -478,22 +478,42 @@ class AppController {
     const crackStatus = document.getElementById('crack-status-text');
 
     if (startCrackBtn) {
+      const updateCrackBtnState = () => {
+        const uncracked = lootManager.getAll().filter(l => !l.cracked).length;
+        if (uncracked > 0) {
+          startCrackBtn.disabled = false;
+          startCrackBtn.textContent = `⚡ CRACK NEXT HASH (${uncracked} REMAINING)`;
+        } else {
+          startCrackBtn.disabled = true;
+          startCrackBtn.textContent = '✓ ALL HASHES CRACKED';
+        }
+      };
+
+      updateCrackBtnState();
+      lootManager.subscribe(updateCrackBtnState);
+
       startCrackBtn.addEventListener('click', async () => {
         cyberAudio.playScan();
         startCrackBtn.disabled = true;
         startCrackBtn.textContent = '⚡ CRACKING IN PROGRESS...';
 
-        await lootManager.startHashcat((ev) => {
-          if (crackProgress && ev.progress !== undefined) {
-            crackProgress.style.width = `${ev.progress}%`;
+        try {
+          await lootManager.startHashcat((ev) => {
+            if (crackProgress && ev.progress !== undefined) {
+              crackProgress.style.width = `${ev.progress}%`;
+            }
+            if (crackStatus && ev.message) {
+              crackStatus.textContent = ev.message;
+            }
+          });
+        } catch (err) {
+          console.error('[Hashcat] Cracking error:', err);
+          if (crackStatus) {
+            crackStatus.textContent = `[!] Error during cracking: ${err.message || 'Aborted'}`;
           }
-          if (crackStatus && ev.message) {
-            crackStatus.textContent = ev.message;
-          }
-        });
-
-        startCrackBtn.disabled = false;
-        startCrackBtn.textContent = '🚀 START HASHCAT CRACKER';
+        } finally {
+          updateCrackBtnState();
+        }
       });
     }
   }

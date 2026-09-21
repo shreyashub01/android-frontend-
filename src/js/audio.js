@@ -162,6 +162,10 @@ class CyberAudio {
   playAlert() {
     this.playAlarm();
   }
+
+  playSuccess() {
+    this.playExploitSuccess();
+  }
 }
 
 export const cyberAudio = new CyberAudio();
