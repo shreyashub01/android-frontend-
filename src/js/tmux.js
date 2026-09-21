@@ -22,7 +22,7 @@ export class TmuxManager {
     this.maxPackets = 50;
 
     this.termMode = (typeof localStorage !== 'undefined' && localStorage.getItem('exploit_term_mode')) || 'sim'; // Default to 'sim' so exploit-x operator console is immediately visible
-    this.remoteVmUrl = 'https://wedding-immigrants-baseball-machines.trycloudflare.com';
+    this.remoteVmUrl = 'https://dimensional-promotion-concept-phrases.trycloudflare.com';
     this.localWslUrl = 'http://localhost:7681';
     this.vmIp = '172.198.77.33';
     this.vmUser = 'user1';
@@ -297,7 +297,7 @@ export class TmuxManager {
     }
     if (this.bannerTitle) {
       if (this.terminalSource === 'remote-vm') {
-        this.bannerTitle.textContent = `REMOTE VM1 BASH SHELL (${this.vmIp})`;
+        this.bannerTitle.textContent = `ORIGINAL KALI LINUX [LIVE CLOUDFLARE HTTPS]`;
         this.bannerTitle.style.color = '#00ff66';
       } else if (this.terminalSource === 'local-wsl') {
         this.bannerTitle.textContent = `LOCAL KALI BASH SHELL (WSL2)`;
@@ -317,11 +317,11 @@ export class TmuxManager {
 
     if (this.pane0Title && this.termMode === 'live') {
       this.pane0Title.textContent = this.terminalSource === 'remote-vm'
-        ? `[0] remote-vm1 (${this.vmIp}) live pty`
+        ? `[0] kali-linux live pty (https)`
         : `[0] kali-linux wsl live pty`;
     }
     if (this.pane0Badge && this.termMode === 'live') {
-      this.pane0Badge.textContent = this.terminalSource === 'remote-vm' ? 'VM1 CLOUD PTY' : 'WSL2 LOCAL PTY';
+      this.pane0Badge.textContent = this.terminalSource === 'remote-vm' ? 'KALI LIVE HTTPS' : 'WSL2 LOCAL PTY';
     }
 
     this.updateKaliPill(true);
@@ -900,7 +900,7 @@ export class TmuxManager {
         pill.style.borderColor = '#ff0055';
         pill.style.color = '#ff0055';
       } else if (this.terminalSource === 'remote-vm') {
-        pill.innerHTML = `<span class="pulse-dot" style="background:#00ff66;"></span> REMOTE VM1: ONLINE`;
+        pill.innerHTML = `<span class="pulse-dot" style="background:#00ff66;"></span> KALI LIVE: ONLINE`;
         pill.style.borderColor = '#00ff66';
         pill.style.color = '#00ff66';
       } else if (this.terminalSource === 'local-wsl') {
@@ -916,7 +916,7 @@ export class TmuxManager {
 
     if (hostEl) {
       if (this.terminalSource === 'remote-vm') {
-        hostEl.textContent = `user1@${this.vmIp} (Azure VM1)`;
+        hostEl.textContent = `kali@live-cloud (Cloudflare HTTPS)`;
       } else if (this.terminalSource === 'local-wsl') {
         hostEl.textContent = `kali@localhost:7681`;
       } else {
