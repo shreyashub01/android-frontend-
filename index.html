@@ -153,27 +153,6 @@
             </select>
           </div>
 
-          <button id="btn-system-reboot" class="btn-tactical active" title="Run Ring-0 System Diagnostic Bootloader">
-            <span class="icon">⚡</span> BOOT
-          </button>
-
-          <button id="btn-toggle-audio" class="btn-tactical active" title="Toggle Tactical Audio">
-            <span class="icon">🔊</span> AUDIO
-          </button>
-
-          <!-- Media & Recording Controls -->
-          <div id="hud-rec-indicator" class="hud-rec-indicator">
-            <span class="pulse-dot danger"></span> REC <span id="hud-rec-timer">00:00</span>
-          </div>
-
-          <button id="btn-hud-snapshot" class="btn-tactical" title="Capture Mission Debrief PNG Snapshot">
-            <span class="icon">📸</span> SNAP
-          </button>
-
-          <button id="btn-hud-record" class="btn-tactical active" title="Record Dashboard Screen Video">
-            <span class="icon">⏺</span> REC
-          </button>
-
           <!-- Dual Military Clock -->
           <div id="hud-live-clock" class="hud-military-clock" title="ZULU / Military Time">
             <div><span style="color:var(--accent-secondary)">ZULU:</span> <span id="clock-zulu">06:50:00Z</span></div>
@@ -185,15 +164,6 @@
 
     <!-- Main Content Body -->
     <main class="main-content">
-
-      <!-- Educational Safety Disclaimer Banner -->
-      <div class="edu-disclaimer">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span class="edu-badge">GOVERNMENT DEFENSE LAB</span>
-          <span>National Cyber Warfare Command Simulation Environment. Built strictly for defensive readiness, red-team emulation, and security research.</span>
-        </div>
-        <div style="color:var(--accent-primary); font-weight:600;">DEFENSE SIMULATION SANDBOX ACTIVE</div>
-      </div>
 
       <!-- Cyber Kill Chain Interactive Progression Bar -->
       <div class="killchain-hud-bar">
@@ -349,12 +319,6 @@
               <span class="tmux-layout-label">LAYOUT:</span>
               <button class="tmux-layout-btn" data-layout="single" title="Single Fullscreen Pane (Ctrl+B z)">
                 <span class="material-symbols-outlined text-[13px]">crop_square</span> SINGLE
-              </button>
-              <button class="tmux-layout-btn" data-layout="split-v" title="Split Vertical (Ctrl+B %)">
-                <span class="material-symbols-outlined text-[13px]">view_column</span> SPLIT VERT
-              </button>
-              <button class="tmux-layout-btn" data-layout="split-h" title="Split Horizontal (Ctrl+B &quot;)">
-                <span class="material-symbols-outlined text-[13px]">table_rows</span> SPLIT HORIZ
               </button>
               <button class="tmux-layout-btn active" data-layout="trio" title="Trio Grid (Master 3-Pane View)">
                 <span class="material-symbols-outlined text-[13px]">splitscreen</span> TRIO GRID
