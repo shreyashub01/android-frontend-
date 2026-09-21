@@ -26,10 +26,27 @@ export class TmuxManager {
     this.localWslUrl = 'http://localhost:7681';
     this.vmIp = '172.198.77.33';
     this.vmUser = 'user1';
-    this.terminalSource = localStorage.getItem('exploitx_terminal_source') || 'remote-vm';
-    this.customTerminalUrl = localStorage.getItem('exploitx_terminal_custom_url') || '';
-    this.kaliHost = localStorage.getItem('exploitx_kali_host') || '172.198.77.33';
-    this.kaliPort = localStorage.getItem('exploitx_kali_port') || '7681';
+
+    // On HTTPS or public domains (e.g. GitHub Pages), http://localhost:7681 is blocked by browsers as Mixed Content.
+    // Always enforce remote-vm by default on public domains.
+    const isPublicHost = typeof window !== 'undefined' && (
+      window.location.protocol === 'https:' || 
+      (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
+    );
+
+    const storedSource = typeof localStorage !== 'undefined' ? localStorage.getItem('exploitx_terminal_source') : null;
+    if (isPublicHost || !storedSource || storedSource === 'local-wsl') {
+      this.terminalSource = 'remote-vm';
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('exploitx_terminal_source', 'remote-vm');
+      }
+    } else {
+      this.terminalSource = storedSource;
+    }
+
+    this.customTerminalUrl = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_terminal_custom_url') || '') : '';
+    this.kaliHost = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_kali_host') || '172.198.77.33') : '172.198.77.33';
+    this.kaliPort = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_kali_port') || '7681') : '7681';
     this.kaliToken = 'kali_c2_token_alpha9';
     this.kaliSynced = true;
     this.kaliPackets = 5120;
@@ -226,6 +243,15 @@ export class TmuxManager {
 
     if (this.btnSwitchLocal) {
       this.btnSwitchLocal.addEventListener('click', () => {
+        const isPublic = typeof window !== 'undefined' && (
+          window.location.protocol === 'https:' || 
+          (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
+        );
+        if (isPublic) {
+          alert("⚠️ LOCAL WSL NOT AVAILABLE ON PUBLIC HTTPS:\n\nYou are viewing this dashboard on a public HTTPS domain. Browsers strictly block unencrypted http://localhost in HTTPS pages (Mixed Content).\n\nThe terminal is connected live to Remote Azure VM1 (172.198.77.33).");
+          this.setTerminalSource('remote-vm');
+          return;
+        }
         this.setTerminalSource('local-wsl');
       });
     }
@@ -247,10 +273,12 @@ export class TmuxManager {
 
   setTerminalSource(source, customUrl = null) {
     this.terminalSource = source;
-    localStorage.setItem('exploitx_terminal_source', source);
-    if (customUrl !== null) {
-      this.customTerminalUrl = customUrl;
-      localStorage.setItem('exploitx_terminal_custom_url', customUrl);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('exploitx_terminal_source', source);
+      if (customUrl !== null) {
+        this.customTerminalUrl = customUrl;
+        localStorage.setItem('exploitx_terminal_custom_url', customUrl);
+      }
     }
     this.applyTerminalUrl();
     cyberAudio.playSuccess();
@@ -258,7 +286,7 @@ export class TmuxManager {
 
   applyTerminalUrl() {
     const url = this.getTerminalUrl();
-    if (this.liveKaliFrame && this.liveKaliFrame.src !== url) {
+    if (this.liveKaliFrame) {
       this.liveKaliFrame.src = url;
     }
     if (this.btnOpenLiveExternal) {
