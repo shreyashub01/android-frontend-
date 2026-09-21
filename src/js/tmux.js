@@ -35,13 +35,13 @@ export class TmuxManager {
     );
 
     const storedSource = typeof localStorage !== 'undefined' ? localStorage.getItem('exploitx_terminal_source') : null;
-    if (isPublicHost || !storedSource || storedSource === 'local-wsl') {
+    if (isPublicHost) {
       this.terminalSource = 'remote-vm';
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem('exploitx_terminal_source', 'remote-vm');
       }
     } else {
-      this.terminalSource = storedSource;
+      this.terminalSource = storedSource || 'local-wsl';
     }
 
     this.customTerminalUrl = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_terminal_custom_url') || '') : '';
