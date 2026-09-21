@@ -21,7 +21,7 @@ export class TmuxManager {
     this.packets = [];
     this.maxPackets = 50;
 
-    this.termMode = 'live'; // 'live' | 'sim'
+    this.termMode = (typeof localStorage !== 'undefined' && localStorage.getItem('exploit_term_mode')) || 'sim'; // Default to 'sim' so exploit-x operator console is immediately visible
     this.remoteVmUrl = 'https://wedding-immigrants-baseball-machines.trycloudflare.com';
     this.localWslUrl = 'http://localhost:7681';
     this.vmIp = '172.198.77.33';
@@ -330,6 +330,9 @@ export class TmuxManager {
 
   setTermMode(mode) {
     this.termMode = mode;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('exploit_term_mode', mode);
+    }
     cyberAudio.playBeep(mode === 'live' ? 1200 : 900, 0.06);
 
     if (this.btnModeLive) {

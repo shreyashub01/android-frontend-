@@ -338,18 +338,17 @@
                     <span class="w-2.5 h-2.5 bg-warning-amber inline-block" style="border-radius:50%;"></span>
                     <span class="w-2.5 h-2.5 bg-phosphor-green inline-block" style="border-radius:50%;"></span>
                   </div>
-                  <span id="pane-0-title-text" class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] remote-vm1 (172.198.77.33) live pty</span>
-                  <span class="pane-badge" id="pane-0-badge">VM1 CLOUD PTY</span>
-                  <span class="pane-badge" style="color:var(--cyan-telemetry); border-color:var(--cyan-telemetry); background:rgba(0,229,255,0.08);">172.198.77.33</span>
+                  <span id="pane-0-title-text" class="font-headline-sm text-phosphor-green font-bold tracking-wide">[0] kali-c2 operator console (sim)</span>
+                  <span class="pane-badge" id="pane-0-badge">C2 SIMULATOR</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <!-- Mode Switcher: LIVE KALI vs SIMULATOR -->
                   <div class="terminal-mode-switch">
-                    <button id="btn-mode-live" class="term-mode-btn active" title="Real Live Linux Terminal">
-                      <span class="pulse-dot" style="background:#00ff66; width:6px; height:6px;"></span> LIVE LINUX
+                    <button id="btn-mode-sim" class="term-mode-btn active" title="Simulated Red Team C2 Exploitation Console">
+                      <span style="color:#00ff66;">⚡</span> SIMULATOR (EXPLOIT-X)
                     </button>
-                    <button id="btn-mode-sim" class="term-mode-btn" title="Simulated Red Team C2 Exploitation Console">
-                      <span>⚡</span> SIMULATOR
+                    <button id="btn-mode-live" class="term-mode-btn" title="Real Live Linux Terminal">
+                      <span class="pulse-dot" style="background:#00ff66; width:6px; height:6px;"></span> LIVE LINUX
                     </button>
                   </div>
                   <button class="pane-zoom-btn" id="btn-zoom-console" title="Zoom / Toggle Fullscreen (Ctrl+B z)">
@@ -359,7 +358,7 @@
               </div>
 
               <!-- LIVE TERMINAL CONTAINER (Remote Azure VM1 or Localhost WSL2) -->
-              <div id="term-live-container" class="term-pane-content">
+              <div id="term-live-container" class="term-pane-content hidden">
                 <div class="live-term-toolbar">
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="pulse-dot" style="background:#00ff66;"></span>
@@ -391,7 +390,7 @@
               </div>
 
               <!-- SIMULATOR CONTAINER (Existing Red Team Simulation Engine) -->
-              <div id="term-sim-container" class="term-pane-content hidden">
+              <div id="term-sim-container" class="term-pane-content">
                 <!-- Quick Tactical Macro Command Strip -->
                 <div class="terminal-quick-actions">
                   <span class="macro-label">MACRO:</span>
@@ -412,7 +411,7 @@
 
                 <!-- Terminal Input Row -->
                 <div class="terminal-input-row">
-                  <span id="term-prompt-prefix" class="terminal-prompt">kali@c2-box:~#</span>
+                  <span id="term-prompt-prefix" class="terminal-prompt" style="color:var(--accent-primary); font-weight:700;">exploit-x &gt;</span>
                   <div class="terminal-input-wrapper">
                     <input 
                       id="term-input-field" 

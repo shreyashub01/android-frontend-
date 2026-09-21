@@ -42,6 +42,7 @@ export class CyberTerminal {
     ];
 
     this.setupEventListeners();
+    this.updatePrompt();
     this.printBanner();
   }
 
