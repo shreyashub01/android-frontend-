@@ -2343,6 +2343,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 520px;
+  height: 100%;
 }
 
 .topology-inspector-panel {

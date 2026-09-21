@@ -10,9 +10,9 @@ import { cyberAudio } from './audio.js';
 
 export class CyberTerminal {
   constructor(containerId, inputId, outputId) {
-    this.container = document.getElementById(containerId);
-    this.input = document.getElementById(inputId);
-    this.output = document.getElementById(outputId);
+    this.container = document.getElementById(containerId) || document.getElementById('term-sim-container') || document.querySelector('.terminal-container');
+    this.input = document.getElementById(inputId) || document.getElementById('term-input-field');
+    this.output = document.getElementById(outputId) || document.getElementById('term-output-stream');
     this.promptEl = document.getElementById('term-prompt-prefix');
     this.autocompletePopup = document.getElementById('term-autocomplete-popup');
 
@@ -46,31 +46,35 @@ export class CyberTerminal {
   }
 
   setupEventListeners() {
-    this.input.addEventListener('keydown', (e) => {
-      cyberAudio.playKeyClick();
+    if (this.input) {
+      this.input.addEventListener('keydown', (e) => {
+        cyberAudio.playKeyClick();
 
-      if (e.key === 'Enter') {
-        this.handleEnter();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        this.navigateHistory(-1);
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        this.navigateHistory(1);
-      } else if (e.key === 'Tab') {
-        e.preventDefault();
-        this.handleTabCompletion();
-      }
-    });
+        if (e.key === 'Enter') {
+          this.handleEnter();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.navigateHistory(-1);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.navigateHistory(1);
+        } else if (e.key === 'Tab') {
+          e.preventDefault();
+          this.handleTabCompletion();
+        }
+      });
 
-    this.input.addEventListener('input', () => {
-      this.updateAutocompletePopup();
-    });
+      this.input.addEventListener('input', () => {
+        this.updateAutocompletePopup();
+      });
+    }
 
     // Clicking anywhere in the terminal body focuses input
-    this.container.addEventListener('click', () => {
-      this.input.focus();
-    });
+    if (this.container && this.input) {
+      this.container.addEventListener('click', () => {
+        this.input.focus();
+      });
+    }
   }
 
   printBanner() {

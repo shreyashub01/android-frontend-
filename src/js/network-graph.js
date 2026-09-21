@@ -94,14 +94,19 @@ export class NetworkAttackGraph {
   }
 
   initCanvasSize() {
-    if (!this.canvas || !this.canvas.parentElement) return;
-    const rect = this.canvas.parentElement.getBoundingClientRect();
+    if (!this.canvas) return;
+    const parent = this.canvas.parentElement;
+    const rect = parent ? parent.getBoundingClientRect() : null;
     const dpr = window.devicePixelRatio || 1;
-    this.canvas.width = rect.width * dpr;
-    this.canvas.height = (rect.height || 520) * dpr;
+    const w = Math.max(rect?.width || 0, parent?.clientWidth || 0, 780);
+    const h = Math.max(rect?.height || 0, parent?.clientHeight || 0, 520);
+
+    this.canvas.width = Math.floor(w * dpr);
+    this.canvas.height = Math.floor(h * dpr);
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.ctx.scale(dpr, dpr);
-    this.width = rect.width;
-    this.height = rect.height || 520;
+    this.width = w;
+    this.height = h;
   }
 
   setupEventListeners() {
@@ -109,18 +114,20 @@ export class NetworkAttackGraph {
 
     const getPos = (e) => {
       const rect = this.canvas.getBoundingClientRect();
+      const scaleX = rect.width > 0 ? (this.width / rect.width) : 1;
+      const scaleY = rect.height > 0 ? (this.height / rect.height) : 1;
       return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
       };
     };
 
-    this.canvas.addEventListener('mousedown', (e) => {
+    const handlePointerDown = (e) => {
       const pos = getPos(e);
       const clicked = this.nodes.find(n => {
         const dx = n.x - pos.x;
         const dy = n.y - pos.y;
-        return Math.sqrt(dx * dx + dy * dy) <= n.radius;
+        return Math.sqrt(dx * dx + dy * dy) <= (n.radius + 8);
       });
       if (clicked) {
         this.draggedNode = clicked;
@@ -128,9 +135,9 @@ export class NetworkAttackGraph {
         cyberAudio.playBeep(1100, 0.05);
         this.updateInspectorPanel(clicked);
       }
-    });
+    };
 
-    this.canvas.addEventListener('mousemove', (e) => {
+    const handlePointerMove = (e) => {
       const pos = getPos(e);
       if (this.draggedNode) {
         this.draggedNode.x = Math.max(40, Math.min(this.width - 40, pos.x));
@@ -140,15 +147,22 @@ export class NetworkAttackGraph {
         this.hoveredNode = this.nodes.find(n => {
           const dx = n.x - pos.x;
           const dy = n.y - pos.y;
-          return Math.sqrt(dx * dx + dy * dy) <= n.radius;
+          return Math.sqrt(dx * dx + dy * dy) <= (n.radius + 8);
         });
         this.canvas.style.cursor = this.hoveredNode ? 'pointer' : 'default';
       }
-    });
+    };
 
-    window.addEventListener('mouseup', () => {
+    const handlePointerUp = () => {
       this.draggedNode = null;
-    });
+    };
+
+    this.canvas.addEventListener('pointerdown', handlePointerDown);
+    this.canvas.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('mouseup', handlePointerUp);
   }
 
   // Bind tabs, direction toggle, harden button and reset button
@@ -338,7 +352,7 @@ export class NetworkAttackGraph {
   }
 
   hardenFirewall() {
-    cyberAudio.playAlert();
+    if (cyberAudio.playAlarm) cyberAudio.playAlarm();
     this.firewallHardened = true;
 
     const gw = this.getGatewayNode();

@@ -158,6 +158,10 @@ class CyberAudio {
       osc.stop(now + offset + 0.09);
     });
   }
+
+  playAlert() {
+    this.playAlarm();
+  }
 }
 
 export const cyberAudio = new CyberAudio();

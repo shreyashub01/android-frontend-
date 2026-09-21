@@ -40,30 +40,34 @@ class AppController {
   }
 
   init() {
-    this.initTheme();
-    this.initMatrixRain();
-    this.initClock();
-    this.initAudioControls();
-    this.initCrtControls();
-    this.initTabs();
-    this.initTerminal();
-    this.initTargetsView();
-    this.initModulesView();
-    this.initPayloadBuilder();
-    this.initSessionsView();
-    this.initLootView();
-    this.initTelemetryBars();
-    this.initNetworkGraph();
-    this.initQuickActionButtons();
+    const safeRun = (fn, name) => {
+      try { fn.call(this); } catch (e) { console.error(`[AppController] Error in ${name}:`, e); }
+    };
+
+    safeRun(this.initTheme, 'initTheme');
+    safeRun(this.initMatrixRain, 'initMatrixRain');
+    safeRun(this.initClock, 'initClock');
+    safeRun(this.initAudioControls, 'initAudioControls');
+    safeRun(this.initCrtControls, 'initCrtControls');
+    safeRun(this.initTabs, 'initTabs');
+    safeRun(this.initTerminal, 'initTerminal');
+    safeRun(this.initTargetsView, 'initTargetsView');
+    safeRun(this.initModulesView, 'initModulesView');
+    safeRun(this.initPayloadBuilder, 'initPayloadBuilder');
+    safeRun(this.initSessionsView, 'initSessionsView');
+    safeRun(this.initLootView, 'initLootView');
+    safeRun(this.initTelemetryBars, 'initTelemetryBars');
+    safeRun(this.initNetworkGraph, 'initNetworkGraph');
+    safeRun(this.initQuickActionButtons, 'initQuickActionButtons');
 
     // High-End Cyber Preface, Telemetry & Defense Operations
-    this.initWarRoom();
-    this.initSocSubNav();
-    this.defcon = new DefconController();
-    this.preface = new CyberPreface();
-    this.oscilloscope = new CyberOscilloscope('hud-oscilloscope-canvas');
-    this.killChain = new CyberKillChain(this);
-    frameworksManager.init();
+    safeRun(this.initWarRoom, 'initWarRoom');
+    safeRun(this.initSocSubNav, 'initSocSubNav');
+    try { this.defcon = new DefconController(); } catch (e) { console.error(e); }
+    try { this.preface = new CyberPreface(); } catch (e) { console.error(e); }
+    try { this.oscilloscope = new CyberOscilloscope('hud-oscilloscope-canvas'); } catch (e) { console.error(e); }
+    try { this.killChain = new CyberKillChain(this); } catch (e) { console.error(e); }
+    try { frameworksManager.init(); } catch (e) { console.error(e); }
   }
 
   initTheme() {
@@ -203,7 +207,7 @@ class AppController {
 
   initTerminal() {
     this.terminal = new CyberTerminal(
-      'terminal-window',
+      'term-sim-container',
       'term-input-field',
       'term-output-stream'
     );
