@@ -193,6 +193,9 @@
         <button class="tab-btn" data-tab="soc-mitre">
           <span>🛡️</span> SOC &amp; MITRE ATT&amp;CK <span class="tab-badge" id="nav-soc-badge" style="background:rgba(255,0,85,0.15); color:#ff0055; border-color:#ff0055">LIVE SOC</span>
         </button>
+        <button class="tab-btn" data-tab="bootrom-lab">
+          <span>🔓</span> UNISOC BOOTROM LAB <span class="tab-badge" style="background:rgba(0,229,255,0.15); color:#00e5ff; border-color:#00e5ff">CVE-2022-38694</span>
+        </button>
       </nav>
 
       <!-- =========================================================
@@ -1105,6 +1108,107 @@ detection:
                 </div>
               </div>
 
+              <!-- Rule 5: UNISOC BootROM Download Mode (CVE-2022-38694) -->
+              <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-weight:700; color:var(--crimson-alert); font-size:11px;">SIGMA: UNISOC BootROM Download-Mode Exploitation (CVE-2022-38694)</span>
+                  <span class="siem-badge siem-high">HIGH</span>
+                </div>
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                  ID: usb_unisoc_brom_spd_dump | MITRE: T1542.001
+                </div>
+                <pre style="background:#04070B; padding:8px; border-radius:4px; font-size:9px; color:#ff5577; border:1px solid var(--border-dim); overflow-x:auto;">title: UNISOC BootROM Download-Mode Activity
+logsource:
+    product: linux
+    service: udev
+detection:
+    brom_usb:
+        idVendor: '1782'
+        idProduct: '4d00'
+    tool_exec:
+        Image|endswith:
+            - '/spd_dump'
+            - '/gen_spl-unlock'
+    condition: brom_usb or tool_exec</pre>
+                <div style="margin-top:8px; font-size:10px; color:var(--text-secondary);">
+                  <strong style="color:var(--accent-primary)">Incident Playbook:</strong> Confirm operator authorization (physical access required), snapshot splloader and scan for 0xD503201F NOP patch sites, check verified-boot/unlock state via MDM, secure USB ports with usbguard policy.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 6: UNISOC BOOTROM LAB (CVE-2022-38694)
+           ========================================================= -->
+      <section id="tab-bootrom-lab" class="tab-content">
+        <div style="padding:14px; font-family:var(--font-mono);">
+
+          <!-- Authorization + risk banner -->
+          <div class="cyber-card" style="padding:12px 14px; margin-bottom:14px; background:rgba(255,0,85,0.06); border:1px solid var(--crimson-alert); border-radius:6px;">
+            <div style="font-size:11px; font-weight:700; color:var(--crimson-alert); margin-bottom:4px;">⚠ LAB AUTHORIZATION REQUIRED // PHYSICAL-ACCESS VULNERABILITY</div>
+            <div style="font-size:10px; color:var(--text-secondary); line-height:1.5;">
+              CVE-2022-38694 is a mask-ROM flaw in UNISOC SC9863A / T310 / T610 / T618 (CVSS 3.1: 7.8) exploitable only via
+              physical USB access in download mode (<span style="color:var(--cyan-telemetry);">idVendor 1782, idProduct 4d00</span>).
+              Writing a patched splloader <strong style="color:var(--crimson-alert);">permanently unlocks the bootloader, trips verified-boot state and can wipe userdata</strong>.
+              Run only against authorized lab devices. The BootROM itself is unpatchable silicon — detection &amp; physical control are the mitigations.
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:14px;">
+            <!-- Wizard: parameters -->
+            <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+              <div style="font-size:11px; font-weight:700; color:var(--accent-primary); margin-bottom:10px;">🔧 UNLOCK WIZARD — TARGET PARAMETERS</div>
+              <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:3px;">UNISOC SoC</label>
+              <select id="bootrom-soc-select" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px; margin-bottom:10px;"></select>
+              <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:3px;">ANDROID VERSION (selects patcher)</label>
+              <select id="bootrom-android-select" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px; margin-bottom:12px;">
+                <option value="11" selected>Android 11+ → gen_spl-unlock</option>
+                <option value="8-10">Android 8–10 → gen_spl-unlock-legacy</option>
+              </select>
+              <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:3px;">CVE REPO / TOOLS PATH (local to you — stored in browser only)</label>
+              <input id="bootrom-tools-dir" type="text" placeholder="~/CVE-2022-38694_unlock_bootloader" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px; margin-bottom:12px; box-sizing:border-box;">
+              <div style="display:flex; gap:8px;">
+                <button id="btn-bootrom-generate" class="btn-tactical active" style="flex:1; font-size:10px;">⟳ GENERATE SEQUENCE</button>
+                <button id="btn-bootrom-open-pty" class="btn-tactical" style="flex:1; font-size:10px; border-color:var(--cyan-telemetry); color:var(--cyan-telemetry);">▶ OPEN KALI PTY</button>
+              </div>
+              <div style="font-size:9px; color:var(--text-muted); margin-top:8px; line-height:1.5;">
+                ttyd iframe has no JS-injection bridge: commands are COPY-verified, then pasted into the
+                LIVE KALI pane. Build the toolchain yourself from the CVE repo (binaries:
+                <span style="color:var(--cyan-telemetry);">{spd_dump, chsize, gen_spl-unlock, gen_spl-unlock-legacy, gen_fdl1-dl}</span>),
+                then set its path in the field above.
+              </div>
+            </div>
+
+            <!-- SoC payload matrix -->
+            <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+              <div style="font-size:11px; font-weight:700; color:var(--accent-primary); margin-bottom:10px;">🧬 SUPPORTED SoC PAYLOAD MATRIX (soc/*/stack-info)</div>
+              <table style="width:100%; border-collapse:collapse; font-size:9px;">
+                <thead>
+                  <tr style="color:var(--text-muted); text-align:left; border-bottom:1px solid var(--border-dim);">
+                    <th style="padding:5px 8px;">CHIP</th><th style="padding:5px 8px;">DIR</th><th style="padding:5px 8px;">BROM PAYLOAD</th><th style="padding:5px 8px;">STACK ADDR / x30</th><th style="padding:5px 8px;">PATCHER</th>
+                  </tr>
+                </thead>
+                <tbody id="bootrom-soc-table-body" style="color:var(--text-secondary);"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Generated command sequence -->
+          <div class="cyber-card" style="padding:14px; margin-top:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+            <div style="font-size:11px; font-weight:700; color:var(--accent-primary); margin-bottom:10px;">📟 EXECUTION PLAN — LIVE KALI PTY (paste in order; step 3 needs model-specific files from upstream Releases)</div>
+            <div id="bootrom-cmd-container"></div>
+          </div>
+
+          <!-- Simulated terminal cross-reference -->
+          <div class="cyber-card" style="padding:12px 14px; margin-top:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px;">
+            <div style="font-size:10px; color:var(--text-secondary); line-height:1.6;">
+              <strong style="color:var(--accent-primary);">SIMULATOR CROSS-REF:</strong> the same CVE is armed end-to-end in the SIM terminal:
+              <span style="color:var(--phosphor-green);">targets → scan USB:1782:4d00 → use exploit/mobile/bootrom/cve_2022_38694_spl_unlock → set SOC sc9863a → exploit</span>
+              (MITRE T1542.001 / T1542.003 dossiers and the Sigma rule ship in the SOC tab).
             </div>
           </div>
 

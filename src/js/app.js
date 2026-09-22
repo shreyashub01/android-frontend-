@@ -20,6 +20,7 @@ import { SiemStreamManager } from './siem.js';
 import { DefconController } from './defcon.js';
 import { frameworksManager } from './frameworks.js';
 import { mitreMatrixManager } from './mitre-matrix.js';
+import { bootromLab } from './bootrom.js';
 
 class AppController {
   constructor() {
@@ -68,6 +69,7 @@ class AppController {
     try { this.oscilloscope = new CyberOscilloscope('hud-oscilloscope-canvas'); } catch (e) { console.error(e); }
     try { this.killChain = new CyberKillChain(this); } catch (e) { console.error(e); }
     try { frameworksManager.init(); } catch (e) { console.error(e); }
+    this.bootrom = bootromLab;
   }
 
   initTheme() {

@@ -105,6 +105,19 @@ export class SiemStreamManager {
         actor: 'Automated Defensive Interceptor',
         payload: 'Diverted 84 malicious probes to Cowrie SSH & Conpot SCADA honeypots.',
         recommendation: 'Telemetry logged for attribution and threat actor signature extraction.'
+      },
+      {
+        id: 'SEC-8019',
+        time: '12:13:47',
+        level: 'HIGH',
+        engine: 'WAZUH-HIDS',
+        rule: 'UNISOC BootROM Download-Mode Activity (CVE-2022-38694) - brom 1782:4d00 enumerated + spd_dump executed',
+        src: 'LAB-BENCH-01 [172.28.14.92]',
+        dst: 'MOB-UNISOC-DEV01 [USB 1782:4d00]',
+        mitre: 'T1542.001: Pre-OS Boot: System Firmware',
+        actor: 'Authorized Research Operator (CyberShield Lab)',
+        payload: 'spd_dump --wait 300 loadexec custom_exec_no_verify_4ee8.bin exec ... w splloader spl-unlock.bin reset',
+        recommendation: 'Enforce usbguard/BIOS USB port policy for asset desks, alert on udev events for idVendor=1782, monitor auditd execve of spd_dump/gen_spl-unlock, verify splloader integrity (DHTB header + 0xD503201F NOP scan).'
       }
     ];
 

@@ -165,6 +165,41 @@ export const exploitModules = [
       hash: 'deployer:$6$sp4sh$0c4a4...8172',
       type: 'SHA-512'
     }
+  },
+  {
+    id: 'exploit/mobile/bootrom/cve_2022_38694_spl_unlock',
+    name: 'UNISOC/Spreadtrum BootROM SPL Signature Bypass (CVE-2022-38694) Bootloader Unlock',
+    category: 'Mobile',
+    cve: 'CVE-2022-38694',
+    cvss: 7.8,
+    cvssRating: 'high',
+    targetOS: 'Android (UNISOC)',
+    reliability: 'Excellent',
+    defaultPort: 0,
+    rank: 'Great',
+    options: {
+      TARGET: { value: 'USB:1782:4d00', required: true, desc: 'Physical device via USB download mode (no network)' },
+      SOC: { value: 'sc9863a', required: true, desc: 'UNISOC SoC: sc9863a, ums512, ums9620, ums9230, ums312, ud710, udx710, sc9820e_sc9832e' },
+      ANDROID_VERSION: { value: '11', required: true, desc: 'Android 11+ -> gen_spl-unlock; Android 8-10 -> gen_spl-unlock-legacy' },
+      BROM_EXEC_ADDR: { value: '0x4ee8', required: true, desc: 'Per-SoC BootROM stack overwrite address (soc/<chip>/stack-info-*.csv)' },
+      SPLLOADER_PATH: { value: 'splloader.bin', required: false, desc: 'Dumped splloader partition (DHTB header 0x42544844)' }
+    },
+    description: 'Unchecked write address in UNISOC BootROM (SC9863A/T310/T610/T618) lets an attacker with physical USB access overwrite a saved return address and run custom_exec_no_verify payloads with BootROM privileges, bypassing splloader signature verification. The dumped splloader is then patched (check sites NOPed to 0xD503201F) and written back, unlocking the bootloader.',
+    steps: [
+      'Waiting for SPRD/UNISOC brom device on USB (idVendor 0x1782, idProduct 0x4d00)...',
+      'brom stage reached - sending custom_exec_no_verify_4ee8.bin via exec_addr 0x4ee8...',
+      'CVE-2022-38694: saved x30 in verify_usb chain overwritten - signature check bypassed!',
+      'Loading patched FDL1 into RAM (fdl fdl1-dl.bin; exec) - FDL2> prompt acquired...',
+      'Dumping splloader partition -> splloader.bin (256 KB, DHTB magic 0x42544844)...',
+      'Recalculating embedded image size (chsize splloader.bin)...',
+      'gen_spl-unlock splloader.bin -> spl-unlock.bin (NOPing 0x34000060 check sequences)...',
+      'FDL2> w splloader spl-unlock.bin; verity 0; reset - bootloader unlock complete.'
+    ],
+    lootGenerated: {
+      user: 'bootloader:UNLOCKED',
+      hash: 'spl-unlock.bin sha256:4d485442...D503201F',
+      type: 'Firmware Artifact'
+    }
   }
 ];
 

@@ -101,6 +101,23 @@ export const initialTargets = [
       { cve: 'CVE-2021-36260', name: 'Hikvision Web Server Command Injection', cvss: 9.8, module: 'exploit/multi/http/hikvision_cmd_injection' }
     ],
     info: 'Perimeter physical security camera DVR. Default creds and unauthenticated command injection.'
+  },
+  {
+    id: 'target-6',
+    name: 'MOB-UNISOC-DEV01',
+    ip: 'USB:1782:4d00',
+    os: 'Android 11 (UNISOC SC9863A)',
+    type: 'Unisoc Handset (USB Download Mode)',
+    status: 'online',
+    isCompromised: false,
+    cvssMax: 7.8,
+    ports: [
+      { port: 0, service: 'SPRD USB Download Protocol (brom stage, no IP stack)', status: 'open', vuln: true }
+    ],
+    vulns: [
+      { cve: 'CVE-2022-38694', name: 'UNISOC BootROM SPL Signature Bypass (Bootloader Unlock)', cvss: 7.8, module: 'exploit/mobile/bootrom/cve_2022_38694_spl_unlock' }
+    ],
+    info: 'CyberShield research-lab handset with UNISOC SC9863A SoC. BootROM stack-overwrite (CVE-2022-38694) reachable via physical USB access in download mode; silicon is unpatchable.'
   }
 ];
 
