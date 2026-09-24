@@ -281,10 +281,10 @@
             <div class="kali-sync-status">
               <div id="kali-sync-pill" class="kali-sync-pill">
                 <span class="pulse-dot" style="background:#00ff66;"></span>
-                <span>REMOTE VM1: ONLINE</span>
+                <span>AZURE VM: ONLINE</span>
               </div>
               <div class="kali-sync-meta">
-                <span>SERVER: <strong id="kali-sync-host" style="color:var(--text-primary);">user1@172.198.77.33 (Azure VM1)</strong></span>
+                <span>SERVER: <strong id="kali-sync-host" style="color:var(--text-primary);">azureuser@20.89.42.47 (Azure VM)</strong></span>
                 <span>TUNNEL: <strong id="kali-sync-tunnel" style="color:var(--accent-secondary);">Cloudflare TLS (HTTPS/WSS)</strong></span>
                 <span>PING: <strong id="kali-sync-latency" style="color:#00ff66;">&lt; 18ms (Azure Cloud)</strong></span>
                 <span>STATE: <strong id="kali-sync-pkts" style="color:#00e5ff;">LIVE INTERACTIVE</strong></span>
@@ -366,7 +366,7 @@
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="pulse-dot" style="background:#00ff66;"></span>
                     <span id="live-term-banner-title" style="color:#00ff66; font-weight:700;">ORIGINAL KALI LINUX [LIVE CLOUDFLARE HTTPS]</span>
-                    <span id="live-term-banner-url" style="color:var(--text-muted); font-size:10px;">// https://std-blonde-besides-dice.trycloudflare.com</span>
+                    <span id="live-term-banner-url" style="color:var(--text-muted); font-size:10px;">// https://shipped-cleveland-matches-fall.trycloudflare.com</span>
                   </div>
                   <div style="display:flex; align-items:center; gap:6px;">
                     <button id="btn-switch-server-vm" class="btn-tactical active" style="padding:1px 6px; font-size:10px;" title="Switch to Live Kali Linux (Cloudflare HTTPS)">
@@ -378,14 +378,14 @@
                     <button id="btn-reload-live-term" class="btn-tactical" style="padding:1px 6px; font-size:10px;" title="Reload Terminal Stream">
                       <span>🔄</span> RELOAD
                     </button>
-                    <a id="btn-open-live-external" href="https://std-blonde-besides-dice.trycloudflare.com" target="_blank" class="btn-tactical" style="padding:1px 6px; font-size:10px; text-decoration:none;" title="Open in Dedicated Tab">
+                    <a id="btn-open-live-external" href="https://shipped-cleveland-matches-fall.trycloudflare.com" target="_blank" class="btn-tactical" style="padding:1px 6px; font-size:10px; text-decoration:none;" title="Open in Dedicated Tab">
                       <span>↗</span> POP OUT
                     </a>
                   </div>
                 </div>
                 <iframe 
                   id="live-kali-frame" 
-                  src="https://std-blonde-besides-dice.trycloudflare.com" 
+                  src="https://shipped-cleveland-matches-fall.trycloudflare.com" 
                   class="live-kali-iframe" 
                   title="Live Linux Terminal Stream"
                   allow="clipboard-read; clipboard-write"
@@ -707,6 +707,7 @@
             <button class="victim-subnav-btn" data-sub="files">📁 EXFILTRATED FILES</button>
             <button class="victim-subnav-btn" data-sub="surveillance">🖥️ SURVEILLANCE &amp; SCREENS</button>
             <button class="victim-subnav-btn" data-sub="telemetry">📋 SYSTEM TELEMETRY</button>
+            <button class="victim-subnav-btn" data-sub="mobile-forensics">📱 MOBILE FORENSICS</button>
           </div>
 
           <!-- SUB-PANE 1: PASSWORDS & HASHES -->
@@ -837,6 +838,30 @@
                 </div>
               </div>
 
+              <!-- Screen 3: MOB-UNISOC-DEV01 -->
+              <div class="session-card">
+                <div class="session-card-header">
+                  <div class="session-host-title">
+                    <span>📱</span> MOB-UNISOC-DEV01 [USB:1782:4d00]
+                  </div>
+                  <span class="session-badge" style="font-size:9px; padding:2px 6px; border-radius:10px; background:rgba(255,170,0,0.12); color:var(--warning-amber); border:1px solid var(--warning-amber);">UNISOC VSP / VoLTE</span>
+                </div>
+                <div style="background:#04070B; border:1px solid var(--border-dim); border-radius:4px; height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+                  <div style="position:absolute; top:8px; left:8px; font-family:var(--font-mono); font-size:9px; color:var(--warning-amber); background:rgba(0,0,0,0.7); padding:2px 6px; border-radius:2px;">
+                    SPRD_VSP HW DECODE // 1080p @ 30FPS [SC9863A]
+                  </div>
+                  <div style="text-align:center; font-family:var(--font-mono); color:var(--text-muted);">
+                    <div style="font-size:36px; margin-bottom:8px;">📹</div>
+                    <div style="font-size:11px; color:var(--text-primary); font-weight:700;">UNISOC Hardware Video Signal Pipeline</div>
+                    <div style="font-size:9px;">Device Node: /dev/sprd_vsp | VoLTE Video Codec Stream</div>
+                  </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted);">CODEC: H.264 / ION DMA</span>
+                  <button id="btn-surveillance-unisoc-video" class="btn-tactical active" onclick="window.appController?.unisocVideo?.openModal()" style="border-color:var(--warning-amber); color:var(--warning-amber); font-size:10px;">📹 UNISOC VIDEO ACCESS</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -868,6 +893,90 @@
               </div>
 
             </div>
+          </div>
+
+          <!-- SUB-PANE 6: MOBILE FORENSICS & SECURITY AUDIT LAB -->
+          <div id="victim-subpane-mobile-forensics" class="victim-subpane">
+            
+            <!-- Control Header & Profile Selector -->
+            <div class="cyber-card" style="padding:14px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+                <div>
+                  <div style="font-weight:700; color:var(--text-primary); font-size:12px;">📱 ANDROID MOBILE FORENSICS &amp; SECURITY POSTURE LAB</div>
+                  <div style="font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">EDUCATIONAL SIMULATOR // LOGICAL ACQUISITION, APP SANDBOX INSPECTION &amp; FBE POSTURE</div>
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button id="btn-start-mobile-audit" class="btn-tactical active" style="padding:6px 14px; font-weight:700;">
+                    ⚡ RUN FORENSIC AUDIT
+                  </button>
+                  <button id="btn-download-forensic-report" class="btn-tactical" style="padding:6px 12px; font-size:10px;">
+                    📥 EXPORT REPORT (JSON)
+                  </button>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; margin-bottom:10px;">
+                <div>
+                  <label style="font-size:9.5px; color:var(--text-muted); display:block; margin-bottom:3px; font-family:var(--font-mono);">TARGET MOBILE NODE</label>
+                  <select id="mobile-target-select" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px;">
+                    <option value="MOB-UNISOC-DEV01">MOB-UNISOC-DEV01 (Android 11 - UNISOC SC9863A)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:9.5px; color:var(--text-muted); display:block; margin-bottom:3px; font-family:var(--font-mono);">ACQUISITION PROFILE</label>
+                  <select id="mobile-extract-method-select" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px;">
+                    <option value="logical">Logical Acquisition (ADB Backup &amp; ContentProviders)</option>
+                    <option value="sandbox">App Sandbox Inspection (/data/data/ SQLite &amp; XML)</option>
+                    <option value="fbe">Storage Encryption Audit (File-Based Encryption FBE)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-bottom:6px;" id="mobile-audit-status">
+                Ready. Select acquisition profile and click 'Run Forensic Audit' to begin simulated artifact indexing.
+              </div>
+              <div class="progress-bar-bg" style="height:6px; background:#070A0F; border:1px solid var(--border-dim); border-radius:3px; overflow:hidden;">
+                <div id="mobile-audit-progress" class="progress-bar-fill" style="width:0%; height:100%; background:var(--cyan-telemetry); transition:width 0.3s ease;"></div>
+              </div>
+            </div>
+
+            <!-- Sub-Tabs for Mobile Artifacts -->
+            <div style="display:flex; gap:8px; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
+              <button class="btn-tactical mobile-tab-btn active" data-tab="db" style="font-size:10px;">📊 SQLITE DATABASES (SANDBOX)</button>
+              <button class="btn-tactical mobile-tab-btn" data-tab="prefs" style="font-size:10px;">📄 SHARED PREFERENCES (XML)</button>
+              <button class="btn-tactical mobile-tab-btn" data-tab="security" style="font-size:10px;">🛡️ FBE &amp; TEE POSTURE</button>
+            </div>
+
+            <!-- TAB 1: SQLite Databases -->
+            <div id="mobile-pane-db" style="background:#0B0F17; border:1px solid var(--border-dim); border-radius:6px; overflow-x:auto;">
+              <table class="files-table" style="font-size:10px;">
+                <thead>
+                  <tr>
+                    <th>Record ID</th>
+                    <th>Timestamp</th>
+                    <th>App Package</th>
+                    <th>Category</th>
+                    <th>Forensic Payload</th>
+                    <th>Encryption Level</th>
+                  </tr>
+                </thead>
+                <tbody id="mobile-db-tbody"></tbody>
+              </table>
+            </div>
+
+            <!-- TAB 2: Shared Preferences XML -->
+            <div id="mobile-pane-prefs" style="display:none; background:#04070B; border:1px solid var(--border-dim); border-radius:6px; padding:12px;">
+              <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px; font-family:var(--font-mono);">
+                AUDIT LOG: /data/data/com.corp.internal.chat/shared_prefs/auth_session.xml
+              </div>
+              <pre id="mobile-prefs-code" style="margin:0; font-family:var(--font-mono); font-size:10px; color:var(--phosphor-green); white-space:pre-wrap;"></pre>
+            </div>
+
+            <!-- TAB 3: Security & FBE Posture -->
+            <div id="mobile-pane-security" style="display:none;">
+              <div id="mobile-security-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-family:var(--font-mono);"></div>
+            </div>
+
           </div>
 
         </div>
@@ -1171,9 +1280,10 @@ detection:
               </select>
               <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:3px;">CVE REPO / TOOLS PATH (local to you — stored in browser only)</label>
               <input id="bootrom-tools-dir" type="text" placeholder="~/CVE-2022-38694_unlock_bootloader" style="width:100%; background:#04070B; color:var(--phosphor-green); border:1px solid var(--border-dim); border-radius:4px; padding:6px; font-family:var(--font-mono); font-size:10px; margin-bottom:12px; box-sizing:border-box;">
-              <div style="display:flex; gap:8px;">
-                <button id="btn-bootrom-generate" class="btn-tactical active" style="flex:1; font-size:10px;">⟳ GENERATE SEQUENCE</button>
-                <button id="btn-bootrom-open-pty" class="btn-tactical" style="flex:1; font-size:10px; border-color:var(--cyan-telemetry); color:var(--cyan-telemetry);">▶ OPEN KALI PTY</button>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button id="btn-bootrom-generate" class="btn-tactical active" style="flex:1; min-width:130px; font-size:10px;">⟳ GENERATE SEQUENCE</button>
+                <button id="btn-bootrom-open-pty" class="btn-tactical" style="flex:1; min-width:130px; font-size:10px; border-color:var(--cyan-telemetry); color:var(--cyan-telemetry);">▶ OPEN KALI PTY</button>
+                <button id="btn-unisoc-video-access" class="btn-tactical" onclick="window.appController?.unisocVideo?.openModal()" style="flex:1; min-width:150px; font-size:10px; border-color:var(--warning-amber); color:var(--warning-amber); background:rgba(255,170,0,0.08);">📹 UNISOC VIDEO ACCESS</button>
               </div>
               <div style="font-size:9px; color:var(--text-muted); margin-top:8px; line-height:1.5;">
                 ttyd iframe has no JS-injection bridge: commands are COPY-verified, then pasted into the
@@ -1441,9 +1551,9 @@ class MainActivity : AppCompatActivity() {
         <div>
           <label style="color:var(--text-muted); display:block; margin-bottom:6px; font-size:10px; font-weight:700;">PRESET ENDPOINTS (ONE-CLICK SWITCH):</label>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <button id="btn-preset-remote-vm" class="btn-tactical active" style="padding:8px 10px; text-align:left; border-color:#00ff66; cursor:pointer;" title="Connect to remote VM1 (Works on GitHub Pages)">
-              <div style="color:#00ff66; font-weight:700; font-size:11px;">☁️ Remote Azure VM1</div>
-              <div style="color:var(--text-muted); font-size:9px;">172.198.77.33 (HTTPS Tunnel)</div>
+            <button id="btn-preset-remote-vm" class="btn-tactical active" style="padding:8px 10px; text-align:left; border-color:#00ff66; cursor:pointer;" title="Connect to remote VM (Works on GitHub Pages)">
+              <div style="color:#00ff66; font-weight:700; font-size:11px;">☁️ Remote Azure VM</div>
+              <div style="color:var(--text-muted); font-size:9px;">20.89.42.47 (HTTPS Tunnel)</div>
               <div style="color:#00e5ff; font-size:8px; margin-top:2px;">★ Shared Link Compatible</div>
             </button>
             <button id="btn-preset-local-wsl" class="btn-tactical" style="padding:8px 10px; text-align:left; cursor:pointer;" title="Connect to local WSL2 Kali (localhost:7681)">
@@ -1458,17 +1568,17 @@ class MainActivity : AppCompatActivity() {
         <div style="background:rgba(0, 255, 102, 0.04); border:1px solid rgba(0, 255, 102, 0.2); border-radius:6px; padding:10px;">
           <div style="color:#00ff66; font-weight:700; font-size:11px; margin-bottom:6px; display:flex; justify-content:space-between;">
             <span>ACTIVE VM CREDENTIALS &amp; SSH DETAILS</span>
-            <span style="font-size:9px; color:var(--text-muted);">Ubuntu 22.04 LTS</span>
+            <span style="font-size:9px; color:var(--text-muted);">Ubuntu 22.04 LTS (Azure)</span>
           </div>
           <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:6px; font-size:10px;">
-            <div><span style="color:var(--text-muted);">HOST IP:</span> <code style="color:#00e5ff;">172.198.77.33</code></div>
-            <div><span style="color:var(--text-muted);">USERNAME:</span> <code style="color:#00ff66;">user1</code></div>
-            <div><span style="color:var(--text-muted);">PASSWORD:</span> <code style="color:var(--warning-amber);">useruser@123</code></div>
-            <div><span style="color:var(--text-muted);">SUDO ACCESS:</span> <strong style="color:#00ff66;">FULL</strong></div>
+            <div><span style="color:var(--text-muted);">HOST IP:</span> <code style="color:#00e5ff;">20.89.42.47</code></div>
+            <div><span style="color:var(--text-muted);">USERNAME:</span> <code style="color:#00ff66;">azureuser</code></div>
+            <div><span style="color:var(--text-muted);">SSH PORT:</span> <code style="color:#00e5ff;">22</code></div>
+            <div><span style="color:var(--text-muted);">AUTH KEY:</span> <code style="color:var(--warning-amber);">shubh.pem</code></div>
           </div>
           <div style="margin-top:8px; padding-top:6px; border-top:1px dashed rgba(255,255,255,0.1); font-size:10px;">
             <span style="color:var(--text-muted);">DIRECT SSH:</span> 
-            <code style="color:#00ff66; background:#000; padding:2px 6px; border-radius:3px;">ssh user1@172.198.77.33</code>
+            <code style="color:#00ff66; background:#000; padding:2px 6px; border-radius:3px;">ssh -i "C:/Users/TUF GAMING/.ssh/shubh.pem" azureuser@20.89.42.47</code>
           </div>
         </div>
 
@@ -1478,7 +1588,7 @@ class MainActivity : AppCompatActivity() {
           <input 
             id="kali-input-custom-url" 
             type="text" 
-            value="https://std-blonde-besides-dice.trycloudflare.com" 
+            value="https://shipped-cleveland-matches-fall.trycloudflare.com" 
             class="terminal-input" 
             style="width:100%; padding:8px 10px; background:#070A0F; border:1px solid var(--border-bright); color:#00ff66; font-size:11px;"
             placeholder="https://your-tunnel-url.trycloudflare.com or http://localhost:7681"
@@ -1528,6 +1638,105 @@ class MainActivity : AppCompatActivity() {
           <div style="color:#00ff66; font-weight:700;">Ctrl + B 0..2</div>
           <div style="color:var(--text-muted); font-size:10px;">Switch window tab directly</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNISOC Hardware Video Access & VoLTE Exploit Chain Research Modal -->
+  <div id="unisoc-video-modal" class="siem-modal-overlay">
+    <div class="siem-modal-box unisoc-video-modal-box" style="max-width:980px; width:95%; max-height:92vh; overflow-y:auto;">
+      <div class="siem-modal-header" style="background:#04070B; border-bottom:1px solid var(--border-dim); padding:10px 16px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:16px;">📹</span>
+          <div>
+            <div style="font-weight:800; font-size:12px; color:var(--warning-amber); letter-spacing:0.5px;">UNISOC HARDWARE VIDEO ACCESS &amp; KERNEL VECTOR EXPLORER</div>
+            <div style="font-size:9.5px; color:var(--text-muted); font-family:var(--font-mono);">RESEARCH DOSSIER // /dev/sprd_vsp CODEC &amp; VoLTE VIDEO BASEBAND-TO-KERNEL DMA (CWE-1189)</div>
+          </div>
+        </div>
+        <button id="btn-close-unisoc-video-modal" class="btn-tactical" style="padding:2px 8px; font-size:11px;">✕ CLOSE</button>
+      </div>
+
+      <div class="siem-modal-body" style="padding:14px; gap:14px; background:#070A0F;">
+        
+        <!-- Top Status Banner -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:#0B0F17; border:1px solid var(--border-dim); border-left:3px solid var(--warning-amber); padding:8px 12px; border-radius:4px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="pulse-dot" style="background:#00ff66;"></span>
+            <span id="unisoc-current-mode-badge" style="font-size:10px; font-weight:700; color:var(--cyan-telemetry); border:1px solid var(--cyan-telemetry); background:rgba(0,229,255,0.1); padding:2px 6px; border-radius:3px;">MODE A: /dev/sprd_vsp HW CODEC</span>
+            <span style="font-size:10px; color:var(--text-muted);">TARGET: <strong style="color:var(--text-primary);">MOB-UNISOC-DEV01 (SC9863A / T606 / T612)</strong></span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button id="btn-unisoc-toggle-mode" class="btn-tactical" style="font-size:9.5px; padding:3px 10px; border-color:var(--cyan-telemetry); color:var(--cyan-telemetry);">🔄 SWITCH TO VoLTE EXPLOIT CHAIN</button>
+            <button id="btn-unisoc-capture-frame" class="btn-tactical" style="font-size:9.5px; padding:3px 10px; border-color:var(--warning-amber); color:var(--warning-amber);">📸 CAPTURE FRAME</button>
+          </div>
+        </div>
+
+        <div id="unisoc-mode-description" style="font-size:10px; color:var(--text-secondary); line-height:1.5; background:#04070B; padding:6px 10px; border:1px solid var(--border-dim); border-radius:4px;">
+          Direct driver IOCTL stream to <strong>/dev/sprd_vsp</strong>. Bypasses Android HAL to read decoded H.264/H.265 raw frames from ION shared DMA memory.
+        </div>
+
+        <!-- 2-Column Split: Canvas Stream (Left) & Architectural Technical Dossier (Right) -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:14px;">
+          
+          <!-- LEFT: Interactive Canvas Stream -->
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="position:relative; border-radius:4px; overflow:hidden; border:1px solid var(--border-dim); box-shadow:0 0 20px rgba(0,0,0,0.8);">
+              <canvas id="unisoc-video-canvas" width="460" height="260" style="width:100%; height:auto; display:block; background:#020509;"></canvas>
+            </div>
+            
+            <div style="display:flex; gap:6px;">
+              <button id="btn-unisoc-inject-packet" class="btn-tactical active" style="flex:1; font-size:10px; padding:5px 8px; border-color:var(--crimson-alert); color:var(--crimson-alert); background:rgba(255,0,85,0.1);">⚡ SIMULATE VoLTE SIP INGESTION</button>
+            </div>
+
+            <!-- Live Telemetry Log -->
+            <div style="background:#04070B; border:1px solid var(--border-dim); border-radius:4px; padding:8px; height:120px; overflow-y:auto;" id="unisoc-telemetry-log">
+              <!-- Dynamically populated by unisoc-video.js -->
+            </div>
+          </div>
+
+          <!-- RIGHT: Technical Dossier & Learning Architecture -->
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:10px; color:var(--text-secondary);">
+            
+            <!-- Card 1: Hardware VSP Architecture -->
+            <div class="cyber-card" style="padding:10px 12px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:4px;">
+              <div style="font-weight:700; color:var(--cyan-telemetry); margin-bottom:5px; font-size:10.5px;">1. UNISOC VIDEO HARDWARE PIPELINE (/dev/sprd_vsp)</div>
+              <p style="margin:0 0 6px 0; line-height:1.4;">
+                UNISOC (Spreadtrum) SoCs handle high-speed video encoding/decoding via dedicated hardware accelerators:
+                <strong>VSP (Video Signal Processor)</strong> and <strong>VPP (Video Post-Processor)</strong>.
+              </p>
+              <ul style="margin:0; padding-left:16px; line-height:1.4; color:var(--text-muted);">
+                <li><strong style="color:var(--text-primary);">Kernel Node:</strong> Accessible via <code>/dev/sprd_vsp</code> and <code>/dev/sprd_vpp</code>.</li>
+                <li><strong style="color:var(--text-primary);">Shared Buffers:</strong> Frames use Android <code>ion</code> or <code>dma-buf</code> physical contiguous allocations to avoid CPU copying.</li>
+                <li><strong style="color:var(--text-primary);">Driver IOCTLs:</strong> Commands like <code>VSP_DEC_START</code>, <code>VSP_GET_FRAME</code> configure hardware registers for H.264/H.265/VP9 bitstream processing.</li>
+              </ul>
+            </div>
+
+            <!-- Card 2: 2-Stage VoLTE Video Exploit Chain -->
+            <div class="cyber-card" style="padding:10px 12px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:4px; border-left:3px solid var(--crimson-alert);">
+              <div style="font-weight:700; color:var(--crimson-alert); margin-bottom:5px; font-size:10.5px;">2. 2-STAGE VoLTE VIDEO EXPLOIT VECTOR (CWE-1189)</div>
+              <p style="margin:0 0 6px 0; line-height:1.4;">
+                Recent mobile security research revealed how an incoming video call can grant full Android kernel access on UNISOC chipsets (T606, T612, T7250, etc.):
+              </p>
+              <ol style="margin:0; padding-left:16px; line-height:1.4; color:var(--text-muted);">
+                <li><strong style="color:#ffaa00;">Stage 1 (Modem RCE):</strong> Attacker initiates a VoLTE video call with malformed SDP/SIP payload. The baseband DSP parses the video stream in RTOS and experiences heap overflow.</li>
+                <li><strong style="color:var(--crimson-alert);">Stage 2 (Baseband-to-Kernel DMA):</strong> Due to improper SoC isolation (<strong>CWE-1189</strong>), the compromised modem disables MPU memory restrictions and writes across shared DRAM directly into the Application Processor (AP) Linux kernel memory (e.g., <code>swapper_pg_dir</code>), achieving Ring-0 root control!</li>
+              </ol>
+            </div>
+
+            <!-- Card 3: Mitigations & Defense Posture -->
+            <div class="cyber-card" style="padding:10px 12px; background:#0B0F17; border:1px solid var(--border-dim); border-radius:4px;">
+              <div style="font-weight:700; color:var(--phosphor-green); margin-bottom:5px; font-size:10.5px;">3. SECURITY MITIGATIONS &amp; DEFENSE POSTURE</div>
+              <ul style="margin:0; padding-left:16px; line-height:1.4; color:var(--text-muted);">
+                <li><strong style="color:var(--text-primary);">Hardware IOMMU / TrustZone:</strong> Hardware memory firewalls must isolate baseband DMA completely from AP kernel page tables.</li>
+                <li><strong style="color:var(--text-primary);">SELinux Sandbox:</strong> Restrict <code>/dev/sprd_vsp</code> access strictly to the isolated <code>mediacodec</code> domain.</li>
+                <li><strong style="color:var(--text-primary);">Firmware Updates:</strong> Baseband DSP SIP/SDP parser patches and disabling unauthenticated video call renegotiations.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
     </div>
   </div>

@@ -22,15 +22,15 @@ export class TmuxManager {
     this.maxPackets = 50;
 
     this.termMode = (typeof localStorage !== 'undefined' && localStorage.getItem('exploit_term_mode')) || 'sim'; // Default to 'sim' so exploit-x operator console is immediately visible
-    this.remoteVmUrl = 'https://std-blonde-besides-dice.trycloudflare.com';
+    this.remoteVmUrl = 'https://shipped-cleveland-matches-fall.trycloudflare.com';
     this.localWslUrl = 'http://localhost:7681';
-    this.vmIp = '172.198.77.33';
-    this.vmUser = 'user1';
+    this.vmIp = '20.89.42.47';
+    this.vmUser = 'azureuser';
 
     // On HTTPS or public domains (e.g. GitHub Pages), http://localhost:7681 is blocked by browsers as Mixed Content.
     // Always enforce remote-vm by default on public domains.
     const isPublicHost = typeof window !== 'undefined' && (
-      window.location.protocol === 'https:' || 
+      window.location.protocol === 'https:' ||
       (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
     );
 
@@ -45,7 +45,7 @@ export class TmuxManager {
     }
 
     this.customTerminalUrl = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_terminal_custom_url') || '') : '';
-    this.kaliHost = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_kali_host') || '172.198.77.33') : '172.198.77.33';
+    this.kaliHost = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_kali_host') || '20.89.42.47') : '20.89.42.47';
     this.kaliPort = typeof localStorage !== 'undefined' ? (localStorage.getItem('exploitx_kali_port') || '7681') : '7681';
     this.kaliToken = 'kali_c2_token_alpha9';
     this.kaliSynced = true;
@@ -244,11 +244,11 @@ export class TmuxManager {
     if (this.btnSwitchLocal) {
       this.btnSwitchLocal.addEventListener('click', () => {
         const isPublic = typeof window !== 'undefined' && (
-          window.location.protocol === 'https:' || 
+          window.location.protocol === 'https:' ||
           (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
         );
         if (isPublic) {
-          alert("⚠️ LOCAL WSL NOT AVAILABLE ON PUBLIC HTTPS:\n\nYou are viewing this dashboard on a public HTTPS domain. Browsers strictly block unencrypted http://localhost in HTTPS pages (Mixed Content).\n\nThe terminal is connected live to Remote Azure VM1 (172.198.77.33).");
+          alert("⚠️ LOCAL WSL NOT AVAILABLE ON PUBLIC HTTPS:\n\nYou are viewing this dashboard on a public HTTPS domain. Browsers strictly block unencrypted http://localhost in HTTPS pages (Mixed Content).\n\nThe terminal is connected live to Remote Azure VM (20.89.42.47).");
           this.setTerminalSource('remote-vm');
           return;
         }
@@ -350,14 +350,14 @@ export class TmuxManager {
     }
 
     if (this.pane0Title) {
-      this.pane0Title.textContent = mode === 'live' 
-        ? (this.terminalSource === 'remote-vm' ? `[0] remote-vm1 (${this.vmIp}) live pty` : `[0] kali-linux wsl live pty`)
+      this.pane0Title.textContent = mode === 'live'
+        ? (this.terminalSource === 'remote-vm' ? `[0] remote-azure (${this.vmIp}) live pty` : `[0] kali-linux wsl live pty`)
         : '[0] kali-c2 operator console (sim)';
     }
 
     if (this.pane0Badge) {
-      this.pane0Badge.textContent = mode === 'live' 
-        ? (this.terminalSource === 'remote-vm' ? 'VM1 CLOUD PTY' : 'LIVE PTY')
+      this.pane0Badge.textContent = mode === 'live'
+        ? (this.terminalSource === 'remote-vm' ? 'AZURE CLOUD PTY' : 'LIVE PTY')
         : 'C2 SIMULATOR';
     }
 
@@ -640,7 +640,7 @@ export class TmuxManager {
 
       const randomMock = mockIPs[Math.floor(Math.random() * mockIPs.length)];
       const now = new Date();
-      const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}.${Math.floor(now.getMilliseconds()/10).toString().padStart(2,'0')}`;
+      const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${Math.floor(now.getMilliseconds() / 10).toString().padStart(2, '0')}`;
 
       const packet = {
         id: this.packets.length + 1,
@@ -705,10 +705,10 @@ export class TmuxManager {
   startHtopMonitor() {
     const processes = [
       { pid: 1420, user: 'SYSTEM', cpu: '12.4%', mem: '142MB', cmd: 'spoolsv.exe [INJECTED_METERPRETER]' },
-      { pid: 884,  user: 'root',   cpu: '8.1%',  mem: '84MB',  cmd: 'python3 c2_worker.py --port 4444' },
+      { pid: 884, user: 'root', cpu: '8.1%', mem: '84MB', cmd: 'python3 c2_worker.py --port 4444' },
       { pid: 3912, user: 'www-data', cpu: '4.5%', mem: '62MB', cmd: 'sh -i [REVERSE_BASH_DAEMON]' },
-      { pid: 512,  user: 'admin',  cpu: '2.8%',  mem: '110MB', cmd: 'nmap -sS -T4 192.168.1.0/24' },
-      { pid: 720,  user: 'root',   cpu: '1.2%',  mem: '45MB',  cmd: 'openssl s_server -key listener.key' }
+      { pid: 512, user: 'admin', cpu: '2.8%', mem: '110MB', cmd: 'nmap -sS -T4 192.168.1.0/24' },
+      { pid: 720, user: 'root', cpu: '1.2%', mem: '45MB', cmd: 'openssl s_server -key listener.key' }
     ];
 
     setInterval(() => {
@@ -879,7 +879,7 @@ export class TmuxManager {
       const latencyEl = document.getElementById('kali-sync-latency');
       if (latencyEl) {
         latencyEl.textContent = this.terminalSource === 'remote-vm'
-          ? `~${this.kaliLatency}ms (Azure VM1)`
+          ? `~${this.kaliLatency}ms (Azure VM)`
           : `< ${this.kaliLatency}ms (WSL2)`;
       }
 

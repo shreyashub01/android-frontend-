@@ -3251,6 +3251,26 @@
   color: #00ff66;
 }
 
+/* UNISOC Video Access Research Modal */
+#unisoc-video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 6, 12, 0.94);
+  backdrop-filter: blur(14px);
+  z-index: 10005;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.unisoc-video-modal-box {
+  border: 1px solid var(--warning-amber) !important;
+  box-shadow: 0 0 35px rgba(255, 170, 0, 0.25), 0 20px 60px rgba(0, 0, 0, 0.95) !important;
+}
+
 
 
 
