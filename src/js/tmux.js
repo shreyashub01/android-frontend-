@@ -22,7 +22,7 @@ export class TmuxManager {
     this.maxPackets = 50;
 
     this.termMode = (typeof localStorage !== 'undefined' && localStorage.getItem('exploit_term_mode')) || 'sim'; // Default to 'sim' so exploit-x operator console is immediately visible
-    this.remoteVmUrl = 'https://shipped-cleveland-matches-fall.trycloudflare.com';
+    this.remoteVmUrl = 'https://applying-projection-eligibility-heath.trycloudflare.com';
     this.localWslUrl = 'http://localhost:7681';
     this.vmIp = '20.89.42.47';
     this.vmUser = 'azureuser';
