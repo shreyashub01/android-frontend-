@@ -32,7 +32,7 @@ class AppController {
     this.siem = null;
     this.defcon = null;
     this.mitreMatrix = mitreMatrixManager;
-    this.activeTab = 'sessions';
+    this.activeTab = 'victim-data';
     this.matrixRunning = true;
     this.tmux = tmuxManager;
     this.media = mediaCaptureManager;
@@ -155,6 +155,85 @@ class AppController {
         cyberAudio.playBeep(950, 0.05);
       });
     });
+
+    // Global keyboard shortcut ⌘K / Ctrl+K for search
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const searchInput = document.getElementById('global-search-input');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+    });
+
+    // Time toggle buttons in Operation topology
+    document.querySelectorAll('.time-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        cyberAudio.playBeep(900, 0.04);
+      });
+    });
+
+    // Floating Help FAB (?)
+    const helpFab = document.getElementById('btn-vector-help');
+    if (helpFab) {
+      helpFab.addEventListener('click', () => {
+        const modal = document.getElementById('tmux-shortcuts-modal');
+        if (modal) modal.classList.add('active');
+        cyberAudio.playBeep(1100, 0.05);
+      });
+    }
+
+    // Quick Settings in sidebar
+    const settingsBtn = document.getElementById('btn-quick-settings');
+    if (settingsBtn) {
+      settingsBtn.addEventListener('click', () => {
+        const modal = document.getElementById('kali-bridge-modal');
+        if (modal) modal.classList.add('active');
+        cyberAudio.playBeep(1000, 0.05);
+      });
+    }
+
+    // Tunnel Card click in sidebar
+    const tunnelCard = document.getElementById('btn-kali-bridge-config');
+    if (tunnelCard) {
+      tunnelCard.addEventListener('click', () => {
+        const modal = document.getElementById('kali-bridge-modal');
+        if (modal) modal.classList.add('active');
+        cyberAudio.playBeep(1000, 0.05);
+      });
+    }
+
+    // + New Operation button in topbar
+    const newOpBtn = document.getElementById('btn-new-operation');
+    if (newOpBtn) {
+      newOpBtn.addEventListener('click', () => {
+        const modal = document.getElementById('session-payload-modal');
+        if (modal) modal.classList.add('active');
+        cyberAudio.playBeep(1200, 0.06);
+      });
+    }
+
+    // Team Workspace button in topbar
+    const teamBtn = document.getElementById('btn-team-workspace');
+    if (teamBtn) {
+      teamBtn.addEventListener('click', () => {
+        const modal = document.getElementById('embed-code-modal');
+        if (modal) modal.classList.add('active');
+        cyberAudio.playBeep(1000, 0.05);
+      });
+    }
+
+    // Topology node clicks to jump to Operations topology tab
+    document.querySelectorAll('.topo-node').forEach(node => {
+      node.addEventListener('click', () => {
+        this.switchTab('topology');
+        cyberAudio.playBeep(1050, 0.05);
+      });
+    });
   }
 
   switchTab(tabId) {
@@ -164,6 +243,25 @@ class AppController {
     document.querySelectorAll('.tab-btn').forEach(b => {
       b.classList.toggle('active', b.getAttribute('data-tab') === tabId);
     });
+
+    // Update active breadcrumb leaf
+    const tabNames = {
+      'sessions': 'OVERVIEW',
+      'overview': 'OVERVIEW',
+      'topology': 'OPERATIONS',
+      'operations': 'OPERATIONS',
+      'victim-data': 'ASSETS',
+      'assets': 'ASSETS',
+      'soc-mitre': 'INTELLIGENCE',
+      'intelligence': 'INTELLIGENCE',
+      'tmux': 'TERMINAL',
+      'terminal': 'TERMINAL',
+      'bootrom-lab': 'BOOTROM LAB'
+    };
+    const leaf = document.getElementById('active-breadcrumb-leaf');
+    if (leaf && tabNames[tabId]) {
+      leaf.textContent = tabNames[tabId];
+    }
 
     // Update tab content visibility (with fallbacks for aliases)
     document.querySelectorAll('.tab-content').forEach(c => {
@@ -530,9 +628,13 @@ class AppController {
       const targEl = document.getElementById('hud-target-count');
       const lootEl = document.getElementById('hud-loot-count');
 
-      if (sessEl) sessEl.textContent = sessionManager.getAll().length;
-      if (targEl) targEl.textContent = targetManager.getAll().length;
-      if (lootEl) lootEl.textContent = lootManager.getAll().length;
+      const sCount = sessionManager.getAll().length;
+      const tCount = targetManager.getAll().length;
+      const lCount = lootManager.getAll().length;
+
+      if (sessEl) sessEl.textContent = String(sCount > 0 ? sCount : 3).padStart(2, '0');
+      if (targEl) targEl.textContent = tCount > 0 ? tCount : 128;
+      if (lootEl) lootEl.textContent = lCount > 0 ? lCount : 24;
     };
 
     updateCounters();

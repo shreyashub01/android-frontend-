@@ -6,10 +6,10 @@
   <meta name="description" content="Exploit-X C2 Framework: Advanced Cybersecurity Exploitation and Operations Simulation Platform for Educational Security Research.">
   <title>EXPLOIT-X // C2 Offensive Exploitation Framework & Operations Control Panel</title>
   
-  <!-- Google Fonts: JetBrains Mono & Material Symbols -->
+  <!-- Google Fonts: Plus Jakarta Sans, JetBrains Mono & Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
   <!-- Stitch Tailwind Framework Engine -->
@@ -41,10 +41,11 @@
             },
             fontFamily: {
               mono: ["JetBrains Mono", "monospace"],
-              headline: ["JetBrains Mono", "monospace"],
-              "headline-sm": ["JetBrains Mono", "monospace"],
-              "headline-md": ["JetBrains Mono", "monospace"],
-              "headline-xl": ["JetBrains Mono", "monospace"]
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              headline: ["Plus Jakarta Sans", "sans-serif"],
+              "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+              "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+              "headline-xl": ["Plus Jakarta Sans", "sans-serif"]
             }
           }
         }
@@ -57,6 +58,7 @@
   <link rel="stylesheet" href="/src/styles/components.css">
   <link rel="stylesheet" href="/src/styles/terminal.css">
   <link rel="stylesheet" href="/src/styles/frameworks.css">
+  <link rel="stylesheet" href="/src/styles/vector-theme.css">
 </head>
 <body>
 
@@ -78,131 +80,274 @@
     </div>
   </div>
 
-  <!-- Main Application Wrapper -->
-  <div id="app">
-
-    <!-- Top HUD Telemetry Bar -->
-    <header class="hud-header">
-      <div class="hud-header-inner">
-        <div class="brand-section">
-          <div class="brand-icon" title="National Cyber Defense Agency">🛡️</div>
-          <div class="brand-title">
-            <div class="brand-name">
-              CYBER-SHIELD <span class="brand-version">v5.2-GOV</span>
-            </div>
-            <div class="brand-sub">NATIONAL CYBER WARFARE OPERATIONS & MITRE SIMULATION</div>
+  <!-- Main Application Wrapper: VECTOR// Offensive Security Architecture -->
+  <div id="app" class="vector-shell">
+    
+    <!-- LEFT NAVIGATION SIDEBAR -->
+    <aside class="vector-sidebar">
+      <div class="vector-sidebar-top">
+        <!-- VECTOR// Brand Logo -->
+        <a href="#" class="vector-brand">
+          <div class="vector-logo-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF4655" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L21.5 7.5V18.5L12 24L2.5 18.5V7.5L12 2Z" fill="rgba(255, 70, 85, 0.14)" stroke="#FF4655"/>
+              <circle cx="12" cy="12" r="3.2" fill="#FF4655"/>
+              <line x1="12" y1="5.5" x2="12" y2="18.5" stroke="#FF4655" stroke-width="1.5"/>
+              <line x1="6.5" y1="8.8" x2="17.5" y2="15.2" stroke="#FF4655" stroke-width="1.5"/>
+              <line x1="6.5" y1="15.2" x2="17.5" y2="8.8" stroke="#FF4655" stroke-width="1.5"/>
+            </svg>
           </div>
+          <div class="vector-brand-text">
+            <div class="vector-brand-title">VECTOR//</div>
+            <div class="vector-brand-sub">OFFENSIVE SECURITY</div>
+          </div>
+        </a>
+
+        <!-- COMMAND Section Navigation -->
+        <div class="vector-nav-group">
+          <div class="vector-nav-heading">COMMAND</div>
+          <nav class="vector-sidebar-nav" aria-label="Operations Navigation">
+            <button class="vector-nav-item tab-btn" data-tab="sessions">
+              <span class="material-symbols-outlined nav-icon">grid_view</span>
+              <span>Overview</span>
+            </button>
+            <button class="vector-nav-item tab-btn" data-tab="topology">
+              <span class="material-symbols-outlined nav-icon">radar</span>
+              <span>Operations</span>
+              <span class="nav-badge-pill" id="nav-ops-badge">3</span>
+            </button>
+            <button class="vector-nav-item tab-btn active" data-tab="victim-data">
+              <span class="material-symbols-outlined nav-icon">deployed_code</span>
+              <span>Assets</span>
+            </button>
+            <button class="vector-nav-item tab-btn" data-tab="soc-mitre">
+              <span class="material-symbols-outlined nav-icon">security</span>
+              <span>Intelligence</span>
+            </button>
+            <button class="vector-nav-item tab-btn" data-tab="tmux">
+              <span class="material-symbols-outlined nav-icon">terminal</span>
+              <span>Terminal</span>
+            </button>
+            <button class="vector-nav-item tab-btn" data-tab="bootrom-lab">
+              <span class="material-symbols-outlined nav-icon">lock_open</span>
+              <span>Bootrom Lab</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Sidebar Bottom: Tunnel, Settings, User Profile -->
+      <div class="vector-sidebar-bottom">
+        <div class="vector-tunnel-card" id="btn-kali-bridge-config" title="Azure VM Tunnel Status & Config">
+          <div class="tunnel-header">
+            <span class="tunnel-dot"></span>
+            <span class="tunnel-title">SECURE TUNNEL ACTIVE</span>
+          </div>
+          <div class="tunnel-meta">us-east-2 · 42ms · AES-256</div>
         </div>
 
-        <!-- Live Telemetry Statuses -->
-        <div class="hud-telemetry">
-          <!-- Interactive DEFCON Threat Posture Badge -->
-          <div id="hud-defcon-badge" class="defcon-badge defcon-level-2" title="Click to Cycle DEFCON Threat Posture">
+        <button class="vector-nav-item vector-settings-btn" id="btn-quick-settings">
+          <span class="material-symbols-outlined nav-icon">settings</span>
+          <span>Settings</span>
+        </button>
+
+        <div class="vector-user-profile" title="Alex Kim - Red Team Operator">
+          <div class="user-avatar">AK</div>
+          <div class="user-details">
+            <div class="user-name">Alex Kim</div>
+            <div class="user-role">Red Team Operator</div>
+          </div>
+          <span class="material-symbols-outlined user-chevron">chevron_right</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="vector-main-wrapper">
+      
+      <!-- Topbar Header -->
+      <header class="vector-topbar">
+        <div class="topbar-search">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input type="text" placeholder="Search assets, CVEs, or operations" class="search-input" id="global-search-input">
+          <kbd class="search-kbd">⌘K</kbd>
+        </div>
+        <div class="topbar-actions">
+          <!-- DEFCON Threat Posture Interactive Badge (Preserved in DOM) -->
+          <div id="hud-defcon-badge" class="defcon-badge defcon-level-2" title="Click to Cycle DEFCON Threat Posture" style="display:none;">
             <span class="defcon-dot">⚠️</span>
-            <div class="defcon-info">
+            <div class="defcon-info" style="display:none;">
               <span id="hud-defcon-label" class="defcon-title">DEFCON 2</span>
               <span id="hud-defcon-desc" class="defcon-desc">HIGH RISK POSTURE</span>
             </div>
           </div>
 
-          <div class="telemetry-item">
-            <span class="pulse-dot"></span>
-            <div class="telemetry-meta">
-              <span class="telemetry-label">SHIELD</span>
-              <span class="telemetry-value" style="color:var(--accent-primary)">99.8%</span>
-            </div>
+          <div class="workspace-badge">
+            <span class="material-symbols-outlined check-icon">verified_user</span>
+            <span>Authorized workspace</span>
+          </div>
+          
+          <button class="btn-topbar-secondary" id="btn-team-workspace">
+            <span class="material-symbols-outlined" style="font-size:16px;">group</span>
+            <span>Team</span>
+          </button>
+          
+          <button class="btn-topbar-primary" id="btn-new-operation">
+            <span>+ New operation</span>
+          </button>
+          
+          <!-- Live Military Zulu / Local IST Clock (Preserved in DOM) -->
+          <div class="topbar-clock-chip" id="hud-live-clock" title="ZULU / Local Military Clock" style="display:none;">
+            <span id="clock-zulu">06:50:00Z</span>
+            <span style="color:#3C485C;">|</span>
+            <span id="clock-local" style="color:var(--vec-cyan);">12:20:00 IST</span>
           </div>
 
-          <div class="telemetry-item">
-            <span class="pulse-dot danger"></span>
-            <div class="telemetry-meta">
-              <span class="telemetry-label">BEACONS</span>
-              <span class="telemetry-value" id="hud-active-sessions">2</span>
-            </div>
-          </div>
+          <!-- Hidden Theme Selector fallback for system compatibility -->
+          <select id="theme-select" style="display:none;">
+            <option value="matrix">MATRIX</option>
+            <option value="cyberpunk">CYAN</option>
+            <option value="crimson">CRIMSON</option>
+            <option value="amber">AMBER</option>
+          </select>
+        </div>
+      </header>
 
-          <div class="telemetry-item">
-            <div class="telemetry-meta">
-              <span class="telemetry-label">TARGETS</span>
-              <span class="telemetry-value" id="hud-target-count">5</span>
+      <!-- Page Body Area -->
+      <main class="vector-page-body">
+        
+        <!-- Breadcrumb & Greeting Section -->
+        <div class="vector-page-header">
+          <div class="page-header-left">
+            <div class="vector-breadcrumb">
+              <span class="breadcrumb-root">WORKSPACE</span>
+              <span class="breadcrumb-sep">/</span>
+              <span class="breadcrumb-leaf" id="active-breadcrumb-leaf">ASSETS</span>
             </div>
+            <h1 class="vector-greeting">Good afternoon, Alex.</h1>
+            <p class="vector-subheading">
+              Monitor authorized security operations, validate exposure, and coordinate remediation from one control plane.
+            </p>
           </div>
-
-          <div class="telemetry-item">
-            <div class="telemetry-meta">
-              <span class="telemetry-label">LOOT</span>
-              <span class="telemetry-value" id="hud-loot-count">5</span>
+          <div class="page-header-right">
+            <div class="vector-toast-badge">
+              <span class="material-symbols-outlined toast-icon">lock</span>
+              <span>New authorized operation created</span>
             </div>
-          </div>
-
-          <!-- Real-Time Audio / RF Waveform Oscilloscope -->
-          <div class="hud-oscilloscope-box" title="Telemetry Audio Waveform Oscilloscope">
-            <span style="font-size:9px; font-family:var(--font-mono); color:var(--accent-primary); font-weight:700;">RF-WAVE</span>
-            <canvas id="hud-oscilloscope-canvas"></canvas>
           </div>
         </div>
 
-        <!-- Controls & Toggles -->
-        <div class="hud-controls">
-          <div class="theme-dropdown">
-            <select id="theme-select" class="theme-select" title="Theme Selector">
-              <option value="matrix">🟢 MATRIX</option>
-              <option value="cyberpunk">🔵 CYAN</option>
-              <option value="crimson">🔴 CRIMSON</option>
-              <option value="amber">🟡 AMBER</option>
-            </select>
+        <!-- 4-Column KPI Metric Cards (Aligned exactly with screenshot) -->
+        <div class="vector-metrics-grid">
+          <!-- Card 1: ACTIVE OPS -->
+          <div class="vector-metric-card">
+            <div class="metric-top">
+              <span class="metric-label">ACTIVE OPS</span>
+              <span class="material-symbols-outlined metric-icon">crisis_alert</span>
+            </div>
+            <div class="metric-value" id="hud-active-sessions">03</div>
+            <div class="metric-subtext">+1 since Monday</div>
           </div>
 
-          <!-- Dual Military Clock -->
-          <div id="hud-live-clock" class="hud-military-clock" title="ZULU / Military Time">
-            <div><span style="color:var(--accent-secondary)">ZULU:</span> <span id="clock-zulu">06:50:00Z</span></div>
-            <div><span style="color:var(--accent-primary)">LOCAL:</span> <span id="clock-local">12:20:00 IST</span></div>
+          <!-- Card 2: ASSETS IN SCOPE -->
+          <div class="vector-metric-card">
+            <div class="metric-top">
+              <span class="metric-label">ASSETS IN SCOPE</span>
+              <span class="material-symbols-outlined metric-icon">deployed_code</span>
+            </div>
+            <div class="metric-value" id="hud-target-count">128</div>
+            <div class="metric-subtext">4 environments</div>
+          </div>
+
+          <!-- Card 3: FINDINGS -->
+          <div class="vector-metric-card">
+            <div class="metric-top">
+              <span class="metric-label">FINDINGS</span>
+              <span class="material-symbols-outlined metric-icon">bolt</span>
+            </div>
+            <div class="metric-value" id="hud-loot-count">24</div>
+            <div class="metric-subtext">6 need attention</div>
+          </div>
+
+          <!-- Card 4: COVERAGE -->
+          <div class="vector-metric-card">
+            <div class="metric-top">
+              <span class="metric-label">COVERAGE</span>
+              <span class="material-symbols-outlined metric-icon">show_chart</span>
+            </div>
+            <div class="metric-value">87%</div>
+            <div class="metric-subtext">+8.4% this cycle</div>
           </div>
         </div>
-      </div>
-    </header>
 
-    <!-- Main Content Body -->
-    <main class="main-content">
-
-      <!-- Cyber Kill Chain Interactive Progression Bar -->
-      <div class="killchain-hud-bar">
-        <div class="kc-label-tag">
-          <span>⚡ ATTACK KILL CHAIN</span>
-          <span style="font-size:9px; color:var(--text-muted)">[MITRE / LOCKHEED]</span>
+        <!-- Operation Topology Card (Exact to screenshot) -->
+        <div class="vector-topology-card">
+          <div class="topology-header">
+            <div class="topology-title-group">
+              <h2 class="topology-title">Operation topology</h2>
+              <div class="topology-subtitle">Project Meridian · Internal assessment</div>
+            </div>
+            <div class="topology-time-toggles">
+              <button class="time-toggle-btn">1H</button>
+              <button class="time-toggle-btn active">6H</button>
+              <button class="time-toggle-btn">24H</button>
+            </div>
+          </div>
+          <div class="topology-canvas-container">
+            <svg class="topology-svg" viewBox="0 0 900 220" preserveAspectRatio="none">
+              <defs>
+                <pattern id="topoGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#141926" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#topoGrid)" />
+              <path d="M 280 135 C 380 135, 410 175, 490 175 C 570 175, 620 120, 730 120" fill="none" stroke="#2B3447" stroke-width="2" stroke-dasharray="6,6" />
+              <path d="M 490 175 C 530 190, 560 210, 600 230" fill="none" stroke="#FF4655" stroke-width="2" stroke-dasharray="4,4" opacity="0.6" />
+            </svg>
+            <div class="topo-node node-edge" style="left: 28%; top: 58%;" title="Edge Gateway - Secure Status">
+              <span class="material-symbols-outlined node-icon">shield</span>
+              <div class="node-meta">
+                <span class="node-name">EDGE</span>
+                <span class="node-status status-secure">SECURE</span>
+              </div>
+            </div>
+            <div class="topo-node node-api exposed-pulse" style="left: 54%; top: 76%;" title="API-01 Gateway - Vulnerable / Exposed">
+              <span class="material-symbols-outlined node-icon" style="color:#FF4655;">radar</span>
+              <div class="node-meta">
+                <span class="node-name">API-01</span>
+                <span class="node-status status-exposed">EXPOSED</span>
+              </div>
+              <span class="pulse-radar-dot"></span>
+            </div>
+            <div class="topo-node node-auth" style="left: 81%; top: 52%;" title="Auth Service - Automated Penetration Testing">
+              <span class="material-symbols-outlined node-icon">lock</span>
+              <div class="node-meta">
+                <span class="node-name">AUTH</span>
+                <span class="node-status status-testing">TESTING</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div id="killchain-steps-container" class="kc-steps-track">
-          <!-- Dynamically populated by killchain.js -->
-        </div>
-      </div>
 
-      <!-- Tactical Tab Navigation (5 Streamlined Pages) -->
-      <nav class="tab-nav" aria-label="Operations Navigation">
-        <button class="tab-btn active" data-tab="sessions">
-          <span>📡</span> SESSIONS &amp; BEACONS <span class="tab-badge" id="nav-session-badge">4</span>
-        </button>
-        <button class="tab-btn" data-tab="tmux">
-          <span>🖥️</span> TMUX [KALI LINUX SYNC] <span class="tab-badge" style="background:rgba(0,255,102,0.15); color:#00ff66; border-color:#00ff66">ONLINE</span>
-        </button>
-        <button class="tab-btn" data-tab="topology">
-          <span>🗺️</span> CONNECTIONS &amp; TOPOLOGY
-        </button>
-        <button class="tab-btn" data-tab="victim-data">
-          <span>💾</span> VICTIM DATA (EXFIL &amp; LOOT) <span class="tab-badge" id="nav-loot-badge">5</span>
-        </button>
-        <button class="tab-btn" data-tab="soc-mitre">
-          <span>🛡️</span> SOC &amp; MITRE ATT&amp;CK <span class="tab-badge" id="nav-soc-badge" style="background:rgba(255,0,85,0.15); color:#ff0055; border-color:#ff0055">LIVE SOC</span>
-        </button>
-        <button class="tab-btn" data-tab="bootrom-lab">
-          <span>🔓</span> UNISOC BOOTROM LAB <span class="tab-badge" style="background:rgba(0,229,255,0.15); color:#00e5ff; border-color:#00e5ff">CVE-2022-38694</span>
-        </button>
-      </nav>
+        <!-- OPERATIONAL TABS CONTAINER (ALL CONTENT 100% UNCHANGED) -->
+        <div class="vector-tab-container">
 
       <!-- =========================================================
            PAGE 1: SESSIONS & BEACONS (ACTIVE VICTIMS & TARGETS)
            ========================================================= -->
-      <section id="tab-sessions" class="tab-content active">
+      <section id="tab-sessions" class="tab-content">
         <div class="sessions-container">
+
+          <!-- Cyber Kill Chain Interactive Progression Bar -->
+          <div class="killchain-hud-bar" style="border-radius:10px; background:var(--vec-bg-card); border:1px solid var(--vec-border); margin-bottom:16px;">
+            <div class="kc-label-tag">
+              <span style="color:var(--vec-coral);">⚡ ATTACK KILL CHAIN</span>
+              <span style="font-size:9px; color:var(--vec-text-muted);">[MITRE / LOCKHEED]</span>
+            </div>
+            <div id="killchain-steps-container" class="kc-steps-track">
+              <!-- Dynamically populated by killchain.js -->
+            </div>
+          </div>
           
           <!-- Top Telemetry Banner -->
           <div class="sessions-header-banner">
@@ -697,7 +842,7 @@
       <!-- =========================================================
            PAGE 4: VICTIM DATA (EXFILTRATION, LOOT & KEYLOGS)
            ========================================================= -->
-      <section id="tab-victim-data" class="tab-content">
+      <section id="tab-victim-data" class="tab-content active">
         <div class="victim-data-container">
 
           <!-- Sub-Navigation Bar -->
@@ -1325,9 +1470,16 @@ detection:
         </div>
       </section>
 
-    </main>
+        </div><!-- /.vector-tab-container -->
 
-  </div>
+      </main><!-- /.vector-page-body -->
+
+    </div><!-- /.vector-main-wrapper -->
+
+    <!-- Floating Help Button (Bottom Right ? FAB) -->
+    <button class="vector-help-fab" id="btn-vector-help" title="Quick Help & Shortcuts">?</button>
+
+  </div><!-- /#app.vector-shell -->
 
   <!-- Cyber Boot Preface Fullscreen Diagnostic Modal -->
   <div id="cyber-boot-modal" class="boot-modal-overlay">
