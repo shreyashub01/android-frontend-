@@ -56,7 +56,7 @@ export class DefconController {
     const selector = document.getElementById('defcon-select');
 
     if (badge) {
-      badge.className = `defcon-badge defcon-level-${lvl}`;
+      badge.className = `topbar-defcon-chip defcon-badge defcon-level-${lvl}`;
       badge.style.borderColor = info.color;
       badge.style.boxShadow = `0 0 15px ${info.glow}`;
     }

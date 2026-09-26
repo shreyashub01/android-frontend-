@@ -32,7 +32,7 @@ class AppController {
     this.siem = null;
     this.defcon = null;
     this.mitreMatrix = mitreMatrixManager;
-    this.activeTab = 'victim-data';
+    this.activeTab = 'sessions';
     this.matrixRunning = true;
     this.tmux = tmuxManager;
     this.media = mediaCaptureManager;
@@ -177,55 +177,88 @@ class AppController {
       });
     });
 
+    // Modal triggers & close handlers
+    const openModal = (id) => {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('open');
+        modal.classList.add('active');
+        cyberAudio.playBeep(1000, 0.05);
+      }
+    };
+
+    const closeModal = (id) => {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('open');
+        modal.classList.remove('active');
+        cyberAudio.playBeep(700, 0.04);
+      }
+    };
+
     // Floating Help FAB (?)
     const helpFab = document.getElementById('btn-vector-help');
     if (helpFab) {
-      helpFab.addEventListener('click', () => {
-        const modal = document.getElementById('tmux-shortcuts-modal');
-        if (modal) modal.classList.add('active');
-        cyberAudio.playBeep(1100, 0.05);
-      });
+      helpFab.addEventListener('click', () => openModal('tmux-shortcuts-modal'));
     }
 
-    // Quick Settings in sidebar
+    const closeShortcuts = document.getElementById('btn-close-shortcuts-modal');
+    if (closeShortcuts) {
+      closeShortcuts.addEventListener('click', () => closeModal('tmux-shortcuts-modal'));
+    }
+
+    // Quick Settings & Tunnel in sidebar
     const settingsBtn = document.getElementById('btn-quick-settings');
     if (settingsBtn) {
-      settingsBtn.addEventListener('click', () => {
-        const modal = document.getElementById('kali-bridge-modal');
-        if (modal) modal.classList.add('active');
-        cyberAudio.playBeep(1000, 0.05);
-      });
+      settingsBtn.addEventListener('click', () => openModal('kali-bridge-modal'));
     }
 
-    // Tunnel Card click in sidebar
-    const tunnelCard = document.getElementById('btn-kali-bridge-config');
-    if (tunnelCard) {
-      tunnelCard.addEventListener('click', () => {
-        const modal = document.getElementById('kali-bridge-modal');
-        if (modal) modal.classList.add('active');
-        cyberAudio.playBeep(1000, 0.05);
-      });
+    const sidebarTunnel = document.getElementById('btn-sidebar-tunnel-card');
+    if (sidebarTunnel) {
+      sidebarTunnel.addEventListener('click', () => openModal('kali-bridge-modal'));
     }
 
-    // + New Operation button in topbar
+    const closeKali = document.getElementById('btn-close-kali-modal');
+    if (closeKali) {
+      closeKali.addEventListener('click', () => closeModal('kali-bridge-modal'));
+    }
+
+    // + New Operation button & Toast in topbar
     const newOpBtn = document.getElementById('btn-new-operation');
     if (newOpBtn) {
-      newOpBtn.addEventListener('click', () => {
-        const modal = document.getElementById('session-payload-modal');
-        if (modal) modal.classList.add('active');
-        cyberAudio.playBeep(1200, 0.06);
-      });
+      newOpBtn.addEventListener('click', () => openModal('session-payload-modal'));
+    }
+
+    const toastNewOp = document.getElementById('btn-toast-new-op');
+    if (toastNewOp) {
+      toastNewOp.addEventListener('click', () => openModal('session-payload-modal'));
+    }
+
+    const closePayload = document.getElementById('btn-close-payload-modal');
+    if (closePayload) {
+      closePayload.addEventListener('click', () => closeModal('session-payload-modal'));
     }
 
     // Team Workspace button in topbar
     const teamBtn = document.getElementById('btn-team-workspace');
     if (teamBtn) {
-      teamBtn.addEventListener('click', () => {
-        const modal = document.getElementById('embed-code-modal');
-        if (modal) modal.classList.add('active');
-        cyberAudio.playBeep(1000, 0.05);
-      });
+      teamBtn.addEventListener('click', () => openModal('embed-code-modal'));
     }
+
+    const closeEmbed = document.getElementById('btn-close-embed-modal');
+    if (closeEmbed) {
+      closeEmbed.addEventListener('click', () => closeModal('embed-code-modal'));
+    }
+
+    // Close on overlay backdrop click
+    document.querySelectorAll('.kali-modal-overlay, .embed-modal-overlay, .payload-modal-overlay, .siem-modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+          overlay.classList.remove('active');
+        }
+      });
+    });
 
     // Topology node clicks to jump to Operations topology tab
     document.querySelectorAll('.topo-node').forEach(node => {
@@ -244,24 +277,49 @@ class AppController {
       b.classList.toggle('active', b.getAttribute('data-tab') === tabId);
     });
 
-    // Update active breadcrumb leaf
-    const tabNames = {
-      'sessions': 'OVERVIEW',
-      'overview': 'OVERVIEW',
-      'topology': 'OPERATIONS',
-      'operations': 'OPERATIONS',
-      'victim-data': 'ASSETS',
-      'assets': 'ASSETS',
-      'soc-mitre': 'INTELLIGENCE',
-      'intelligence': 'INTELLIGENCE',
-      'tmux': 'TERMINAL',
-      'terminal': 'TERMINAL',
-      'bootrom-lab': 'BOOTROM LAB'
+    // Update active breadcrumb leaf and headers
+    const tabHeaders = {
+      'sessions': {
+        leaf: 'OVERVIEW',
+        title: 'Good afternoon, Alex.',
+        sub: 'Monitor authorized security operations, validate exposure, and coordinate remediation from one control plane.'
+      },
+      'tmux': {
+        leaf: 'TERMINAL',
+        title: 'Kali Linux C2 Terminal Multiplexer',
+        sub: 'Execute synchronized tactical commands, monitor promiscuous packet traffic, and track system resources.'
+      },
+      'topology': {
+        leaf: 'OPERATIONS',
+        title: 'Operation Topology & Attack Graph',
+        sub: 'Real-time multi-subnet lateral movement map, node telemetry, and pfSense perimeter firewall inspection.'
+      },
+      'victim-data': {
+        leaf: 'ASSETS',
+        title: 'Assets & Exfiltrated Data Vault',
+        sub: 'Comprehensive credential stores, live keylogger telemetry, forensic captures, and mobile exploits.'
+      },
+      'soc-mitre': {
+        leaf: 'INTELLIGENCE',
+        title: 'Threat Intelligence & MITRE ATT&CK Matrix',
+        sub: 'Real-time SIEM event correlation, defense evasion analysis, and active incident response control.'
+      },
+      'bootrom-lab': {
+        leaf: 'BOOTROM LAB',
+        title: 'UNISOC Bootrom & Hardware Codec Lab',
+        sub: 'Interactive CVE-2022-38694 memory corruption sandbox and baseband-to-kernel DMA exploit simulations.'
+      }
     };
+
+    const info = tabHeaders[tabId] || tabHeaders['sessions'];
     const leaf = document.getElementById('active-breadcrumb-leaf');
-    if (leaf && tabNames[tabId]) {
-      leaf.textContent = tabNames[tabId];
-    }
+    if (leaf) leaf.textContent = info.leaf;
+
+    const greeting = document.getElementById('vector-main-greeting');
+    if (greeting) greeting.textContent = info.title;
+
+    const sub = document.getElementById('vector-main-subheading');
+    if (sub) sub.textContent = info.sub;
 
     // Update tab content visibility (with fallbacks for aliases)
     document.querySelectorAll('.tab-content').forEach(c => {
@@ -285,6 +343,12 @@ class AppController {
       }
       if (this.mitreMatrix) {
         this.mitreMatrix.render();
+      }
+    } else if (tabId === 'tmux' || tabId === 'terminal') {
+      if (this.tmux) {
+        setTimeout(() => {
+          this.tmux.setLayout(this.tmux.currentLayout);
+        }, 50);
       }
     }
   }
@@ -635,6 +699,11 @@ class AppController {
       if (sessEl) sessEl.textContent = String(sCount > 0 ? sCount : 3).padStart(2, '0');
       if (targEl) targEl.textContent = tCount > 0 ? tCount : 128;
       if (lootEl) lootEl.textContent = lCount > 0 ? lCount : 24;
+
+      const navSessBadge = document.getElementById('nav-session-badge');
+      if (navSessBadge) navSessBadge.textContent = sCount > 0 ? sCount : 4;
+      const navLootBadge = document.getElementById('nav-loot-badge');
+      if (navLootBadge) navLootBadge.textContent = lCount > 0 ? lCount : 5;
     };
 
     updateCounters();
